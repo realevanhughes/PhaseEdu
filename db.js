@@ -1,6 +1,10 @@
 const mysql = require('mysql2');
 const fs = require('fs');
 require('dotenv').config();
+const baseLogger = require('./logger');
+const path = require("path");
+const logger = baseLogger.child({label: path.basename(__filename)});
+
 
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
