@@ -44,12 +44,12 @@ Please ensure the following npm packages are installed:
 - fs
 - dotenv
 
-You can install these by running
+You can install these by running:
 ```bash
-$ npm install express bcrypt body-parser mysql2 fs dotenv
+$ npm install express bcrypt body-parser mysql2 fs dotenv winston
 ```
 
-Clone this repo using
+Clone this repo using:
 ```bash
 $ git clone https://github.com/realevanhughes/EduCore
 ```
@@ -57,10 +57,32 @@ $ git clone https://github.com/realevanhughes/EduCore
 Ensure the .env file contains your specific mySQL credentials and configuration.
 
 Next, simply run the NodeJS application using express via
-Clone this repo using
+Clone this repo using:
 ```bash
 $ npm run educore
 ```
 
 Note:
 > There is NO default user so you will need to add a row in your SQL database manually for initial config
+
+# Configuration
+The .env file located at the root directory contains all the usual (and supported) config options.
+Changing things outside the .env file is not recommended.
+
+The following table describes exactly what line changes what setting.
+
+| Line               | Default    | Use                                                           |
+|--------------------|------------|---------------------------------------------------------------|
+| NODE_ENV           | prod       | Allows the changing of environment types                      |
+| APP_SECRET         | default    | Secrete used for express JS (should be a random string)       |
+| SESSION_COOKIE_KEY | default    | Key for cookie generation (should be a random string)         |
+| BANNER             | banner.txt | Banner text file for initialisation                           |
+|                    |            |                                                               |
+| DB_HOST            | localhost  | The hostname for the database of choice                       |
+| DB_PORT            | 25060      | The port for the database of choice                           |
+| DB_USER            | douser     | The user that the server will interact with the database with |
+| DB_PASSWORD        | password   | The password for the aforementioned user                      |
+| DB_NAME            | defaultdb  | The database where the tables are located                     |
+|                    |            |                                                               |
+| HOST_PORT          | 3000       | The host port for the express JS server                       |
+
