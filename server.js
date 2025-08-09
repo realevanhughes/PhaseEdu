@@ -1,4 +1,5 @@
 // NPM package imports
+var pjson = require('./package.json');
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
@@ -13,7 +14,9 @@ const db = require('./db');
 const baseLogger = require('./logger');
 const people = require('./people');
 const points = require('./points');
-const orgs = require('./org');
+const org = require('./org');
+const composite = require('./composite');
+const {username_to_uuid} = require("./people");
 
 // Logger setup with component script
 const logger = baseLogger.child({label: path.basename(__filename)});
@@ -26,13 +29,15 @@ if (process.env.BANNER !== "") {
     try {
         const data = fs.readFileSync(process.env.BANNER, 'utf8');
         console.log(data);
+        console.log("Version: "+pjson.version+" built by "+pjson.author+"\n");
     } catch (err) {
         logger.error(`Banner failed: ${err.message || err}`);
-        console.log("EduCore Main")
+        console.log("\n"+pjson.name + " version "+pjson.version+" built by "+pjson.author+"\n");
     }
 }
 else {
-    console.log("EduCore Main")
+    console.log("\n"+pjson.name + " version "+pjson.version+" built by "+pjson.author+"\n");
+    console.log(pjson.version);
 }
 
 // Generic express setup with env referencing
@@ -51,9 +56,33 @@ app.use(session({
     cookie: {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 1000 * 60 * 60 * 24 // 1 day
+        maxAge: 1000 * 60 * 60 * 24
     }
 }));
+
+//Authentication and permissions check
+function requireAuth(req, res, next) {
+    if (!req.session || !req.session.uuid) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    next();
+}
+
+function requireRole(...allowedRoles) {
+    return async (req, res, next) => {
+        try {
+            for (const role of allowedRoles) {
+                if ((await people.check_role(req.session.uuid, role)).result === "success") {
+                    return next();
+                }
+            }
+            return res.status(403).json({ error: 'Forbidden' });
+        } catch (err) {
+            console.error('Role check failed:', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+    };
+}
 
 // Login handler
 logger.log({ level: 'info', message: "Setting up express routes..." });
@@ -125,10 +154,43 @@ app.get("/", (req, res) => {
     res.redirect('/dashboard');
 })
 
+// Dev routes for testing - only authorized for dev roles
+app.get(
+    "/dev/account",
+    requireAuth,
+    requireRole("dev"),
+    (req, res) => {
+        res.send(
+            `Session data: username=${req.session.user} uuid=${req.session.uuid} org=${req.session.org}`
+        );
+    }
+);
+
+
 // START TESTING
 
-
 // END TESTING
+
+// API routes mapped to functions
+const handlers = {
+    getPointDict: async (req, res) => {
+        const point_dict = await composite.point_dict(req.session.uuid);
+        res.json(point_dict);
+    }
+};
+
+const routeMap = {
+    '/API/pointdict': { method: 'get', handler: handlers.getPointDict, roles: ['user', 'admin', 'dev'] },
+};
+
+for (const [path, config] of Object.entries(routeMap)) {
+    app[config.method](
+        path,
+        requireAuth,
+        requireRole(...config.roles),
+        config.handler
+    );
+}
 
 // Final webhost launch
 app.listen(PORT, () => {

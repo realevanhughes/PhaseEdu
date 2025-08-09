@@ -51,6 +51,19 @@ async function general_user_data(uuid){
     return rows.length > 0 ? rows[0] : null;
 }
 
+async function check_role(uuid, role) {
+    const [rows] = await db.query("SELECT role FROM people WHERE uuid = ?", [uuid]);
+    if (rows.length === 0) {
+        return {"result": "failed", "message": "Invalid role or uuid!"}
+    }
+    if (rows[0].role === role) {
+        return {"result": "success", "message": "Role check successful!"}
+    }
+    else {
+        return {"result": "failed", "message": "User does not posses the role."}
+    }
+}
+
 
 module.exports = {
     username_to_uuid,
@@ -58,5 +71,6 @@ module.exports = {
     uuid_exists,
     check_uuid_password,
     uuid_org_id,
-    general_user_data
+    general_user_data,
+    check_role
 };

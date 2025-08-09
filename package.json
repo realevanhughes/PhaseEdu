@@ -1,10 +1,25 @@
 {
   "name": "EduCore",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "A powerful open-source student management platform.",
+  "keywords": ["Education"],
   "main": "server.js",
   "scripts": {
     "educore": "node server.js"
+  },
+  "contributors":[
+    {
+      "name": "Evan Hughes",
+      "email": "evanhughes12@outlook.com",
+      "url": "unit.link/evanh"
+    },
+    {
+      "name": "Thomas Charleston"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realevanhughes/EduCore.git"
   },
   "private": true,
   "dependencies": {
