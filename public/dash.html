@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div>
+        <canvas id="myChart" width="400" height="100"></canvas>
+    </div>
+</body>
+<script>
+    const ctx = document.getElementById('myChart');
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', "/API/pointdict", false);
+    xhr.send(null);
+
+    const rawData = JSON.parse(xhr.responseText);
+
+    const chartData = {
+        labels: Object.keys(rawData),
+        datasets: [{
+            label: 'Points',
+            data: Object.values(rawData).map(item => item[0])
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                colors: {
+                    enabled: true
+                }
+            }
+        }
+    });
+
+</script>
+</html>

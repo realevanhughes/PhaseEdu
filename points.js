@@ -24,8 +24,9 @@ async function total_by_cat(uuid, pts_cat_id) {
     for (let row of rows) {
         total = total + row.value
     }
-    return rows.length > 0 ? total : null;
+    return total;
 }
+
 
 module.exports = {
     total,
