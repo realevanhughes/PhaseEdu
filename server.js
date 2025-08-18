@@ -16,6 +16,8 @@ const people = require('./people');
 const points = require('./points');
 const org = require('./org');
 const composite = require('./composite');
+const presence = require('./presence');
+const classes = require('./classes');
 const {username_to_uuid} = require("./people");
 
 // Logger setup with component script
@@ -25,18 +27,22 @@ const logger = baseLogger.child({label: path.basename(__filename)});
 const sessionStore = new MySQLStore({}, db);
 
 // Banner
+let dev_names = ""
+pjson.contributors.forEach(function (key) {dev_names = dev_names+key.name+", "})
+dev_names = dev_names.substring(0, dev_names.length - 2);
 if (process.env.BANNER !== "") {
+
     try {
         const data = fs.readFileSync(process.env.BANNER, 'utf8');
         console.log(data);
-        console.log("Version: "+pjson.version+" built by "+pjson.author+"\n");
+        console.log("You are running version "+pjson.version+" built by "+dev_names+".\n");
     } catch (err) {
         logger.error(`Banner failed: ${err.message || err}`);
-        console.log("\n"+pjson.name + " version "+pjson.version+" built by "+pjson.author+"\n");
+        console.log("You are running version "+pjson.version+" built by "+dev_names+".\n");
     }
 }
 else {
-    console.log("\n"+pjson.name + " version "+pjson.version+" built by "+pjson.author+"\n");
+    console.log("\n"+pjson.name + " version "+pjson.version+" built by "+dev_names+"\n");
     console.log(pjson.version);
 }
 
@@ -169,18 +175,38 @@ app.get(
 
 // START TESTING
 
+
 // END TESTING
 
 // API routes mapped to functions
 const handlers = {
     getPointDict: async (req, res) => {
+        logger.http({message: `API call made to getPointDict (SID: ${req.sessionID})`});
         const point_dict = await composite.point_dict(req.session.uuid);
         res.json(point_dict);
+    },
+    getCountPresence: async (req, res) => {
+        logger.http({message: `API call made to getCountPresence (SID: ${req.sessionID})`});
+        const presence_dict = await presence.count(req.session.uuid);
+        res.json(presence_dict);
+    },
+    getPresenceDict: async (req, res) => {
+        logger.http({message: `API call made to getPresenceDict (SID: ${req.sessionID})`});
+        const presence_dict = await presence.presence_dict(req.session.uuid);
+        res.json({ data: presence_dict });
+    },
+    getUsername: async (req, res) => {
+        logger.http({message: `API call made to getPresenceDict (SID: ${req.sessionID})`});
+        const username = people.uuid_to_username(req.body)
+        res.json({'status': 'success', 'username': username});
     }
 };
 
 const routeMap = {
-    '/API/pointdict': { method: 'get', handler: handlers.getPointDict, roles: ['user', 'admin', 'dev'] },
+    '/api/points/dict': { method: 'get', handler: handlers.getPointDict, roles: ['student', 'dev'] },
+    '/api/presence/count': { method: 'get', handler: handlers.getCountPresence, roles: ['student', 'dev'] },
+    '/api/presence/dict': { method: 'get', handler: handlers.getPresenceDict, roles: ['student', 'dev'] },
+    '/api/people/uuid-lookup': {method: 'post', handler: handlers.getUsername, roles: ['student', 'dev', 'admin', 'teacher'] },
 };
 
 for (const [path, config] of Object.entries(routeMap)) {
