@@ -1,4 +1,5 @@
 const db = require('./db');
+const utils = require('./utils');
 const people = require('./people');
 const baseLogger = require('./logger');
 const path = require("path");
@@ -27,9 +28,15 @@ async function total_by_cat(uuid, pts_cat_id) {
     return total;
 }
 
+async function give_point(uuid, class_id, assignee_id, value, comments, category) {
+    const point_id = await utils.get_unique_id("points", "point_id", 10)
+    await db.query("INSERT INTO points (point_id, uuid, class_id, assignee_id, value, comments, category) values (?, ?, ?, ?, ?, ?, ?)", [point_id, uuid, class_id, assignee_id, value, comments, category])
+}
+
 
 module.exports = {
     total,
     point_cats,
     total_by_cat,
+    give_point,
 };

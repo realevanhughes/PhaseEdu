@@ -11,6 +11,11 @@ async function username_to_uuid(username) {
     return rows.length > 0 ? rows[0].uuid : null;
 }
 
+async function uuid_to_username(uuid) {
+    const [rows] = await db.query("SELECT uuid FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows[0].username : null;
+}
+
 async function email_to_uuid(email) {
     const [rows] = await db.query("SELECT uuid FROM people WHERE email = ?", [email]);
     return rows.length > 0 ? rows[0].uuid : null;
@@ -67,6 +72,7 @@ async function check_role(uuid, role) {
 
 module.exports = {
     username_to_uuid,
+    uuid_to_username,
     email_to_uuid,
     uuid_exists,
     check_uuid_password,

@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
 </head>
 <body>
     <div>
         <canvas id="myChart" width="400" height="100"></canvas>
     </div>
+    <div>
+        <canvas id="heatmap" width="1200" height="400"></canvas>
+    </div>
 </body>
 <script>
-    const ctx = document.getElementById('myChart');
+    const ctx1 = document.getElementById('myChart');
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', "/API/pointdict", false);
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', "/api/points/dict", false);
     xhr.send(null);
 
     const rawData = JSON.parse(xhr.responseText);
@@ -27,7 +31,7 @@
         }]
     };
 
-    new Chart(ctx, {
+    new Chart(ctx1, {
         type: 'bar',
         data: chartData,
         options: {
@@ -43,6 +47,94 @@
             }
         }
     });
+
+
+    (async () => {
+        // 1. Fetch from your backend API
+        const res = await fetch("/api/presence/dict");
+        const { data: apiData } = await res.json(); // unwrap { data: [...] }
+
+        // 2. Extract unique days and hours
+        const days = [...new Set(apiData.map(d => d.day))].sort();
+        const hours = [...new Set(apiData.map(d => d.hour))].sort();
+
+        // 3. Map states to colors
+        const stateColors = {
+            present: "#4caf50",
+            late: "#ff9800",
+            excused: "#2196f3",
+            absent: "#f44336"
+        };
+        const getColor = (state) => stateColors[state] || "#ccc";
+
+        // 4. Transform into matrix points
+        const points = apiData.map(d => ({ x: d.day, y: d.hour, v: d.state, user: d.user_id }));
+
+        // 5. Render Chart.js heatmap
+        const ctx = document.getElementById("heatmap").getContext("2d");
+
+        ctx.canvas.style.width = "100%";
+        ctx.canvas.style.height = "420px";
+
+        const GAP = 2;
+
+        new Chart(ctx, {
+            type: "matrix",
+            data: {
+                datasets: [{
+                    label: "User presence",
+                    data: points,
+                    backgroundColor: (ctx) => getColor(ctx.raw.v),
+                    width: ({ chart }) => {
+                        const ca = chart.chartArea;
+                        if (!ca) return 10;
+                        return Math.max((ca.width / days.length) - GAP, 1);
+                    },
+                    height: ({ chart }) => {
+                        const ca = chart.chartArea;
+                        if (!ca) return 10;
+                        return Math.max((ca.height / hours.length) - GAP, 1);
+                    },
+                    borderRadius: 3
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: "category",
+                        labels: days,
+                        offset: true,
+                        title: { display: true, text: "Day" },
+                        grid: { display: false }
+                    },
+                    y: {
+                        type: "category",
+                        labels: hours,
+                        offset: true,
+                        reverse: true, // puts 00:00 at top
+                        title: { display: true, text: "Hour" },
+                        grid: { display: false }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: (items) => {
+                                const d = items[0].raw;
+                                return `${d.x} @ ${d.y}`;
+                            },
+                            label: (ctx) => {
+                                const d = ctx.raw;
+                                return `User: ${d.user}, State: ${d.v}`;
+                            }
+                        }
+                    },
+                    legend: { display: false }
+                }
+            }
+        });
+    })();
 
 </script>
 </html>
