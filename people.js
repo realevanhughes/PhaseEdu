@@ -69,6 +69,11 @@ async function check_role(uuid, role) {
     }
 }
 
+async function year_group(uuid) {
+    const [rows] = await db.query("SELECT school_year FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows[0].school_year : null;
+}
+
 
 module.exports = {
     username_to_uuid,
@@ -78,5 +83,6 @@ module.exports = {
     check_uuid_password,
     uuid_org_id,
     general_user_data,
-    check_role
+    check_role,
+    year_group
 };
