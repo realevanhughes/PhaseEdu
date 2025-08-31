@@ -7,6 +7,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
 </head>
 <body>
+    <form method="get" action="/internal/logout">
+        <button type="submit">Logout</button>
+    </form>
     <div>
         <canvas id="myChart" width="400" height="100"></canvas>
     </div>
@@ -48,6 +51,9 @@
         }
     });
 
+    fetch("/api/periods")
+        .then((response) => response.json())
+        .then((json) => console.log(json));
 
     (async () => {
         // 1. Fetch from your backend API
@@ -56,7 +62,7 @@
 
         // 2. Extract unique days and hours
         const days = [...new Set(apiData.map(d => d.day))].sort();
-        const hours = [...new Set(apiData.map(d => d.hour))].sort();
+        const periods = [...new Set(apiData.map(d => d.period))].sort();
 
         // 3. Map states to colors
         const stateColors = {
@@ -68,7 +74,7 @@
         const getColor = (state) => stateColors[state] || "#ccc";
 
         // 4. Transform into matrix points
-        const points = apiData.map(d => ({ x: d.day, y: d.hour, v: d.state, user: d.user_id }));
+        const points = apiData.map(d => ({ x: d.day, y: d.period, v: d.state}));
 
         // 5. Render Chart.js heatmap
         const ctx = document.getElementById("heatmap").getContext("2d");
@@ -126,7 +132,7 @@
                             },
                             label: (ctx) => {
                                 const d = ctx.raw;
-                                return `User: ${d.user}, State: ${d.v}`;
+                                return `State: ${d.v}`;
                             }
                         }
                     },

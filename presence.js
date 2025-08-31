@@ -38,29 +38,17 @@ async function count_by_status(uuid, status) {
     return statuses[status] || 0;
 }
 
-const parseRegisters = (rows) => {
-    return rows.flatMap(row => {
-        const ts = new Date(row.submit_date_time);
-
-        const day = ts.toISOString().split("T")[0];   // YYYY-MM-DD
-        const hour = ts.getHours().toString().padStart(2, "0") + ":00";
-
-        // contents is already a JS object
-        const contents = row.contents;
-
-        return Object.entries(contents).map(([userId, state]) => ({
-            user_id: userId,
-            day,
-            hour,
-            state
-        }));
-    });
-};
-
 
 async function presence_dict(uuid) {
     const [rows] = await db.query("SELECT contents, submit_date_time FROM registers");
-    return parseRegisters(rows);
+    let result = []
+    for (let row of rows) {
+        if (uuid in row.contents) {
+            const ts = new Date(row.submit_date_time);
+            result.push({"day" : ts.toISOString().split("T")[0], "period" : row.period, "state": row.contents[uuid]});
+        }
+    }
+    return result;
 }
 
 module.exports = {

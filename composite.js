@@ -4,6 +4,7 @@ const logger = baseLogger.child({label: path.basename(__filename)});
 const points = require('./points');
 const org = require('./org');
 const people = require('./people');
+const db = require("./db");
 
 async function point_dict(uuid) {
     const pts = {};
@@ -16,6 +17,17 @@ async function point_dict(uuid) {
     return pts;
 }
 
+async function periods_dict(uuid) {
+    const year = await people.year_group(uuid);
+    const [rows] = await db.query("SELECT name, start_time, end_time FROM periods WHERE year_group = ?", [year]);
+    let result = {}
+    for (let row of rows) {
+        result[row.name] = {"start_time": row.start_time, "end_time": row.end_time};
+    }
+    return result;
+}
+
 module.exports = {
     point_dict,
+    periods_dict,
 };
