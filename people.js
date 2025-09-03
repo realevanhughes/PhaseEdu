@@ -1,4 +1,5 @@
 const db = require('./db');
+const utils = require('./utils');
 const bcrypt = require("bcrypt");
 const baseLogger = require('./logger');
 const path = require("path");
@@ -74,6 +75,23 @@ async function year_group(uuid) {
     return rows.length > 0 ? rows[0].school_year : null;
 }
 
+async function new_user(username, password, email, org, firstname, lastname, role, date_joined, school_year) {
+    let uuid = await utils.get_unique_id("people", "uuid", 10)
+    let hashed_password = await bcrypt.hash(password, 10);
+    await db.query("INSERT INTO people (username, uuid, password, email, org, firstname, lastname, role, date_joined, school_year) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [username, uuid, hashed_password, email, org, firstname, lastname, role, date_joined, school_year])
+    return {"result": "success", "message": "Created user "+uuid+"!"}
+}
+
+async function list() {
+    const [rows] = await db.query("SELECT * FROM people");
+    return rows;
+}
+
+async function list_org(org_id) {
+    const [rows] = await db.query("SELECT * FROM people WHERE org_id = ?", [org_id]);
+    return rows;
+}
+
 
 module.exports = {
     username_to_uuid,
@@ -84,5 +102,8 @@ module.exports = {
     uuid_org_id,
     general_user_data,
     check_role,
-    year_group
+    year_group,
+    new_user,
+    list,
+    list_org,
 };

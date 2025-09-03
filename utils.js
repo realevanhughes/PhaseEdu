@@ -21,7 +21,17 @@ async function get_unique_id(table, column, length=10) {
     return id;
 }
 
+async function list_roles() {
+    let all = {};
+    const [rows] = await db.query("SELECT * FROM roles");
+    for (let org of rows) {
+        all[org.name] = org.description;
+    }
+    return rows.length > 0 ? all : null;
+}
+
 module.exports = {
     generate_id,
     get_unique_id,
+    list_roles,
 };

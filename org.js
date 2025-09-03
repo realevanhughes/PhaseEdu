@@ -14,7 +14,17 @@ async function name_to_id(name){
     return rows.length > 0 ? rows[0].org_id : null;
 }
 
+async function list_orgs() {
+    let all = [];
+    const [rows] = await db.query("SELECT name FROM orgs");
+    for (let org of rows) {
+        all.push(org.name);
+    }
+    return rows.length > 0 ? all : null;
+}
+
 module.exports = {
     org_info,
-    name_to_id
+    name_to_id,
+    list_orgs,
 };

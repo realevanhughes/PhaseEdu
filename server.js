@@ -16,12 +16,14 @@ const db = require('./db');
 const baseLogger = require('./logger');
 const people = require('./people');
 const points = require('./points');
-const org = require('./org');
+const orgs = require('./org');
 const composite = require('./composite');
 const presence = require('./presence');
 const classes = require('./classes');
 const {username_to_uuid} = require("./people");
+const utils = require('./utils');
 const {route} = require("express/lib/application");
+const util = require("node:util");
 
 // Logger setup with component script
 const logger = baseLogger.child({label: path.basename(__filename)});
@@ -60,7 +62,8 @@ else {
 const app = express();
 const PORT = process.env.HOST_PORT;
 app.use(express.static('web/static'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // More session config
 app.use(session({
@@ -116,7 +119,6 @@ function requireRole(type, ...allowedRoles) {
 
 // START TESTING
 
-
 // END TESTING
 
 // routes mapped to functions
@@ -144,8 +146,45 @@ const api_handlers = {
     getPeriods: async (req, res) => {
         logger.http({message: `API call made to getPeriods (SID: ${req.sessionID})`});
         const periods = await composite.periods_dict(req.session.uuid)
-        console.log(periods);
         res.json(periods);
+    },
+    newUser: async (req, res) => {
+        let result;
+            if ((await people.check_role(req.session.uuid, "dev")).result === "success") {
+                let {username, password, email, org, firstname, lastname, role, date_joined, year_group} = req.body;
+                logger.http({message: `Dev API call made to newUser (SID: ${req.sessionID})`});
+                org = await orgs.name_to_id(org)
+                result = await people.new_user(username, password, email, org, firstname, lastname, role, date_joined, year_group);
+            }
+            else {
+                const {username, password, email, firstname, lastname, role, date_joined, year_group} = req.body;
+                logger.http({message: `Admin API call made to newUser (SID: ${req.sessionID})`});
+                result = await people.new_user(username, password, email, req.session.org, firstname, lastname, role, date_joined, year_group);
+            }
+        res.json(result);
+    },
+    getOrgs: async (req, res) => {
+        logger.http({message: `API call made to getOrgs (SID: ${req.sessionID})`});
+        const all_orgs = await orgs.list_orgs()
+        res.json({"result": "success", "orgs": all_orgs});
+    },
+    getRoles: async (req, res) => {
+        logger.http({message: `API call made to getRoles (SID: ${req.sessionID})`});
+        const all_roles = await utils.list_roles()
+        res.json({"result": "success", "roles": all_roles});
+    },
+    getUsers: async (req, res) => {
+        let result;
+        if ((await people.check_role(req.session.uuid, "dev")).result === "success") {
+            logger.http({message: `Dev API call made to getUsers (SID: ${req.sessionID})`});
+            const users = await people.list();
+            res.json({"result": "success", "users": users});
+        }
+        else {
+            logger.http({message: `Admin API call made to getUsers (SID: ${req.sessionID})`});
+            const users = await people.list_org(req.session.org);
+            res.json({"result": "success", "users": users});
+        }
     }
 };
 
@@ -259,9 +298,14 @@ const routeMap = {
     '/api/presence/count': {type: "api", method: 'get', handler: api_handlers.getCountPresence, roles: ['student', 'dev'], authRequired: true  },
     '/api/presence/dict': {type: "api", method: 'get', handler: api_handlers.getPresenceDict, roles: ['student', 'dev'], authRequired: true  },
     '/api/people/uuid-lookup': {type: "api", method: 'post', handler: api_handlers.getUsername, roles: ['student', 'dev', 'admin', 'teacher'], authRequired: true  },
+    '/api/people/new': {type: "api", method: 'post', handler: api_handlers.newUser, roles: ['dev', 'admin'], authRequired: true  },
     '/api/periods': {type: "api", method: 'get', handler: api_handlers.getPeriods, roles: ['student', 'dev', 'admin', 'teacher'], authRequired: true  },
+    '/api/orgs/list': {type: "api", method: 'get', handler: api_handlers.getOrgs, roles: ['dev'], authRequired: true  },
+    '/api/roles/list': {type: "api", method: 'get', handler: api_handlers.getRoles, roles: ['dev', 'admin'], authRequired: true  },
+    '/api/people/list': {type: "api", method: 'get', handler: api_handlers.getUsers, roles: ['dev', 'admin'], authRequired: true  },
 
     '/dev/account': {type: "page", method: 'get', handler: dev_handlers.account, roles: ['dev'], authRequired: true  },
+    '/dev': {type: "page", method: 'get', handler: page_handlers.html("web/html/dev-panel.html"), roles: ['dev'], authRequired: true  },
 
     '/': {type: "page", method: 'get', handler: page_handlers.redirect("/dash"), roles: [], authRequired: false },
     '/dash': {type: "page", method: 'get', handler: page_handlers.html("web/html/dash.html"), roles: [], authRequired: true },

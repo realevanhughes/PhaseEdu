@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .button-container {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .close-btn {
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            background: none;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<form method="get" action="/internal/logout">
+    <button type="submit">Logout</button>
+</form>
+<h1>User Management</h1>
+<div class="button-container">
+    <button id="addUserBtn">Add User</button>
+</div>
+
+<div id="userModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Create User</h2>
+            <button class="close-btn" id="closeModal">&times;</button>
+        </div>
+        <form id="userForm">
+            <div class="form-group">
+                <label for="username">Name:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="org">Organization:</label>
+                <select id="org" name="org" required>
+                    <option value="">Loading...</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="firstname">First name:</label>
+                <input type="text" id="firstname" name="firstname" required>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Last name:</label>
+                <input type="text" id="lastname" name="lastname" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="">Loading...</option>
+                </select>
+                <small id="roleDescription" style="display:block; margin-top:5px; color:#555;">
+                    Unknown
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="date-joined">Date joined (optional):</label>
+                <input type="text" id="date-joined" name="date-joined">
+            </div>
+            <div class="form-group">
+                <label for="year-group">Year group (optional):</label>
+                <input type="text" id="year-group" name="year-group">
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const orgSelect = document.getElementById('org');
+    const roleSelect = document.getElementById('role');
+    const roleDescription = document.getElementById('roleDescription');
+    const modal = document.getElementById('userModal');
+    const addUserBtn = document.getElementById('addUserBtn');
+    const closeModal = document.getElementById('closeModal');
+    const userForm = document.getElementById('userForm');
+
+    let roles = {};
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const response = await fetch('/api/orgs/list');
+            const orgs = (await response.json()).orgs;
+
+            orgSelect.innerHTML = '<option value="">Select an organization</option>';
+
+            orgs.forEach(org => {
+                const option = document.createElement('option');
+                option.value = org;
+                option.textContent = org;
+                orgSelect.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Failed to load organizations:', error);
+            orgSelect.innerHTML = '<option value="">Error loading orgs</option>';
+        }
+
+        try {
+            const response = await fetch('/api/roles/list');
+            roles = await (response.json());
+            roles = roles.roles
+
+            roleSelect.innerHTML = '<option value="">Select a role</option>';
+
+            Object.entries(roles).forEach(([name, description]) => {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                roleSelect.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Failed to load roles:', error);
+            roleSelect.innerHTML = '<option value="">Error loading roles</option>';
+        }
+
+
+    });
+
+    roleSelect.addEventListener('change', () => {
+        const selectedRole = roleSelect.value;
+        roleDescription.textContent = roles[selectedRole] || '';
+    });
+
+    addUserBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+    });
+
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    userForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(userForm);
+        const data = Object.fromEntries(formData.entries());
+        console.log(data);
+        try {
+            const response = await fetch('/api/people/new', { // Change endpoint as needed
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                alert('User created successfully!');
+                userForm.reset();
+                modal.style.display = 'none';
+            } else {
+                alert('Error creating user.');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Request failed.');
+        }
+    });
+</script>
+
+</body>
+</html>
