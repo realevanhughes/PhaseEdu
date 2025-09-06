@@ -1,0 +1,1023 @@
+[2025-07-26 05:33:19] [logger.js] info: Setting up express routes...
+[2025-07-26 05:33:19] [logger.js] warn: Server running on http://localhost:3000
+[2025-07-26 05:33:41] [logger.js] info: Setting up express routes...
+[2025-07-26 05:33:41] [logger.js] warn: Server running on http://localhost:3000
+[2025-07-26 05:33:56] [logger.js] http: Login requested
+[2025-07-26 05:41:24] [logger.js] warn: Server running on http://localhost:3000
+[2025-07-26 07:21:26] [logger.js] warn: Server running on http://localhost:3000
+[2025-07-26 07:21:49] [logger.js] error: Login failed: getaddrinfo EAI_AGAIN hw-db-bfs-do-user-19516271-0.m.db.ondigitalocean.com
+[2025-07-26 07:22:04] [logger.js] info: Setting up express routes...
+[2025-07-26 07:22:04] [logger.js] warn: Server running on http://localhost:3000
+[2025-07-26 07:22:09] [logger.js] http: Login requested
+[2025-07-26 07:22:09] [logger.js] error: Login failed: getaddrinfo EAI_AGAIN hw-db-bfs-do-user-19516271-0.m.db.ondigitalocean.com
+[2025-07-26 20:05:45] [logger.js] info: Setting up express routes...
+[2025-07-26 20:05:45] [logger.js] warn: Server running on http://localhost:3000
+[2025-07-26 20:06:04] [logger.js] info: Setting up express routes...
+[2025-07-26 20:06:04] [logger.js] warn: Server running on http://localhost:3000
+[2025-07-26 20:06:24] [logger.js] info: Setting up express routes...
+[2025-07-26 20:06:24] [logger.js] warn: Server running on http://localhost:3000
+[2025-07-26 20:09:07] [logger.js] info: Setting up express routes...
+[2025-07-26 20:09:07] [logger.js] warn: Server running on http://localhost:3000
+[2025-07-26 22:04:05] [logger.js] info: Setting up express routes...
+[2025-07-26 22:04:05] [logger.js] warn: Server running on http://localhost:3000
+[2025-07-26 22:06:52] [logger.js] info: Setting up express routes...
+[2025-07-26 22:06:52] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-07 12:16:42] [logger.js] info: Setting up express routes...
+[2025-08-07 12:16:42] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-07 12:44:09] [logger.js] info: Setting up express routes...
+[2025-08-07 12:44:09] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-07 12:44:10] [logger.js] http: Root requested, forwarding to dash (SID: Uo-MYvh0aZn9Sa5CmjgszugXBb7wkU0w)
+[2025-08-07 12:44:10] [logger.js] http: Dashboard failed due to lack of credentials (SID: 95GmCgUcHsO8_MKnf5ZHwCMNzizs_IGs)
+[2025-08-07 12:44:23] [logger.js] http: Login requested
+[2025-08-07 12:44:23] [logger.js] http: Login failed!
+[2025-08-07 12:44:29] [logger.js] http: Login requested
+[2025-08-07 12:44:29] [logger.js] http: Login success (SID: coVVl1GGGbrWUDNJLz1hHjeDNNHcOkYY), sending username=19hughes.e uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-08-07 12:45:02] [logger.js] info: Setting up express routes...
+[2025-08-07 12:45:02] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-07 12:47:00] [logger.js] info: Setting up express routes...
+[2025-08-07 12:47:00] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-07 12:47:27] [logger.js] http: Logout requested (SID: coVVl1GGGbrWUDNJLz1hHjeDNNHcOkYY)
+[2025-08-07 12:47:47] [logger.js] http: Login requested
+[2025-08-07 12:47:47] [logger.js] http: Login success (SID: V5CiiioOmepHzT8v31xFP4SljLBTb8lS), sending username=19charleston.t uuid=r8JYjT4VES org=pLHgGvrcQb
+[2025-08-07 12:49:18] [logger.js] info: Setting up express routes...
+[2025-08-07 12:49:18] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-07 12:50:13] [logger.js] info: Setting up express routes...
+[2025-08-07 12:50:13] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-07 13:32:24] [logger.js] info: Setting up express routes...
+[2025-08-07 13:32:24] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-07 17:55:07] [logger.js] info: Setting up express routes...
+[2025-08-07 17:55:07] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:11:11] [logger.js] info: Setting up express routes...
+[2025-08-08 20:11:11] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:11:24] [logger.js] info: Setting up express routes...
+[2025-08-08 20:11:24] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:13:11] [logger.js] info: Setting up express routes...
+[2025-08-08 20:13:11] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:14:04] [logger.js] info: Setting up express routes...
+[2025-08-08 20:14:04] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:15:07] [logger.js] info: Setting up express routes...
+[2025-08-08 20:15:07] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:19:52] [logger.js] info: Setting up express routes...
+[2025-08-08 20:19:52] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:26:39] [logger.js] info: Setting up express routes...
+[2025-08-08 20:26:39] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:27:36] [logger.js] info: Setting up express routes...
+[2025-08-08 20:27:36] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:35:30] [logger.js] info: Setting up express routes...
+[2025-08-08 20:35:30] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:35:38] [logger.js] info: Setting up express routes...
+[2025-08-08 20:35:38] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:36:00] [logger.js] info: Setting up express routes...
+[2025-08-08 20:36:00] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:36:37] [logger.js] info: Setting up express routes...
+[2025-08-08 20:36:37] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:37:32] [logger.js] info: Setting up express routes...
+[2025-08-08 20:37:32] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:39:00] [logger.js] info: Setting up express routes...
+[2025-08-08 20:39:00] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:39:48] [logger.js] info: Setting up express routes...
+[2025-08-08 20:39:48] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:40:29] [logger.js] info: Setting up express routes...
+[2025-08-08 20:40:29] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:41:52] [logger.js] info: Setting up express routes...
+[2025-08-08 20:41:52] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:42:15] [logger.js] info: Setting up express routes...
+[2025-08-08 20:42:15] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-08 20:42:52] [logger.js] info: Setting up express routes...
+[2025-08-08 20:42:52] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:12:59] [logger.js] info: Setting up express routes...
+[2025-08-09 12:12:59] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:13:34] [logger.js] info: Setting up express routes...
+[2025-08-09 12:13:34] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:15:34] [logger.js] info: Setting up express routes...
+[2025-08-09 12:15:34] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:16:25] [logger.js] info: Setting up express routes...
+[2025-08-09 12:16:25] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:18:21] [logger.js] info: Setting up express routes...
+[2025-08-09 12:18:22] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:20:14] [logger.js] info: Setting up express routes...
+[2025-08-09 12:20:14] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:20:36] [logger.js] info: Setting up express routes...
+[2025-08-09 12:20:36] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:21:02] [logger.js] info: Setting up express routes...
+[2025-08-09 12:21:02] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:21:18] [logger.js] info: Setting up express routes...
+[2025-08-09 12:21:18] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:23:41] [logger.js] info: Setting up express routes...
+[2025-08-09 12:23:41] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:25:05] [logger.js] info: Setting up express routes...
+[2025-08-09 12:25:05] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:26:05] [logger.js] info: Setting up express routes...
+[2025-08-09 12:26:05] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:48:59] [logger.js] info: Setting up express routes...
+[2025-08-09 12:49:00] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:49:09] [logger.js] info: Setting up express routes...
+[2025-08-09 12:49:09] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:49:11] [logger.js] http: Root requested, forwarding to dash (SID: RJqIUve-AiCVtsYnhlX9FCw42dikDnyE)
+[2025-08-09 12:49:11] [logger.js] http: Dashboard failed due to lack of credentials (SID: 1q3OypHwTa8kY7gL8vLoFEyKUCXEymuI)
+[2025-08-09 12:49:20] [logger.js] http: Login requested
+[2025-08-09 12:49:20] [logger.js] http: Login success (SID: 0kNBkpS3I4TWk8xRv5isQDcYEJBhpauG), sending username=19hughes.e uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-08-09 12:50:27] [logger.js] info: Setting up express routes...
+[2025-08-09 12:50:27] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 12:52:04] [logger.js] info: Setting up express routes...
+[2025-08-09 12:52:04] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:03:43] [logger.js] info: Setting up express routes...
+[2025-08-09 13:03:43] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:08:28] [logger.js] info: Setting up express routes...
+[2025-08-09 13:08:28] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:09:00] [logger.js] info: Setting up express routes...
+[2025-08-09 13:09:00] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:12:12] [logger.js] info: Setting up express routes...
+[2025-08-09 13:12:12] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:13:10] [logger.js] info: Setting up express routes...
+[2025-08-09 13:13:10] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:13:52] [logger.js] info: Setting up express routes...
+[2025-08-09 13:13:52] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:14:28] [logger.js] info: Setting up express routes...
+[2025-08-09 13:14:28] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:16:42] [logger.js] info: Setting up express routes...
+[2025-08-09 13:16:42] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:17:02] [logger.js] info: Setting up express routes...
+[2025-08-09 13:17:02] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:17:39] [logger.js] info: Setting up express routes...
+[2025-08-09 13:17:39] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:17:52] [logger.js] info: Setting up express routes...
+[2025-08-09 13:17:52] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:18:01] [logger.js] info: Setting up express routes...
+[2025-08-09 13:18:01] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:18:09] [logger.js] info: Setting up express routes...
+[2025-08-09 13:18:10] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:21:32] [logger.js] info: Setting up express routes...
+[2025-08-09 13:21:32] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:22:53] [logger.js] info: Setting up express routes...
+[2025-08-09 13:22:53] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:23:17] [logger.js] info: Setting up express routes...
+[2025-08-09 13:23:17] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 13:59:57] [logger.js] http: Root requested, forwarding to dash (SID: Qmgi-KrNYSQkMreqEEPvfPuFSu_264RY)
+[2025-08-09 13:59:57] [logger.js] http: Dashboard failed due to lack of credentials (SID: Tn6BQbpvNpXuCobal52XqBlr6tytwFvy)
+[2025-08-09 14:00:37] [logger.js] http: Login requested
+[2025-08-09 14:00:37] [logger.js] http: Login success (SID: k3vM5RAnciM-OzEhBA8SNiNSZQjYbOqn), sending username=19hughes.e uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-08-09 15:33:30] [logger.js] info: Setting up express routes...
+[2025-08-09 15:33:30] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 15:35:15] [logger.js] info: Setting up express routes...
+[2025-08-09 15:35:15] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 15:37:03] [logger.js] info: Setting up express routes...
+[2025-08-09 15:37:03] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 15:37:52] [logger.js] info: Setting up express routes...
+[2025-08-09 15:37:52] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 15:38:12] [logger.js] info: Setting up express routes...
+[2025-08-09 15:38:12] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 15:38:55] [logger.js] info: Setting up express routes...
+[2025-08-09 15:38:55] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 15:39:17] [logger.js] info: Setting up express routes...
+[2025-08-09 15:39:17] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 17:35:08] [logger.js] info: Setting up express routes...
+[2025-08-09 17:35:08] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 20:10:31] [logger.js] info: Setting up express routes...
+[2025-08-09 20:10:31] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 20:10:34] [logger.js] http: Root requested, forwarding to dash (SID: 0kNBkpS3I4TWk8xRv5isQDcYEJBhpauG)
+[2025-08-09 20:10:34] [logger.js] http: Dashboard requested (SID: 0kNBkpS3I4TWk8xRv5isQDcYEJBhpauG)
+[2025-08-09 20:11:26] [logger.js] info: Setting up express routes...
+[2025-08-09 20:11:26] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 20:11:30] [logger.js] http: API call made to  (SID: 0kNBkpS3I4TWk8xRv5isQDcYEJBhpauG)
+[2025-08-09 20:11:47] [logger.js] info: Setting up express routes...
+[2025-08-09 20:11:47] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 20:11:50] [logger.js] http: API call made to  (SID: 0kNBkpS3I4TWk8xRv5isQDcYEJBhpauG)
+[2025-08-09 20:12:25] [logger.js] info: Setting up express routes...
+[2025-08-09 20:12:25] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 20:12:28] [logger.js] http: API call made to getPointDict (SID: 0kNBkpS3I4TWk8xRv5isQDcYEJBhpauG)
+[2025-08-09 20:20:16] [logger.js] info: Setting up express routes...
+[2025-08-09 20:20:16] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 20:20:26] [logger.js] info: Setting up express routes...
+[2025-08-09 20:20:26] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 20:20:32] [logger.js] info: Setting up express routes...
+[2025-08-09 20:20:32] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 20:21:50] [logger.js] info: Setting up express routes...
+[2025-08-09 20:21:50] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-09 20:22:01] [logger.js] info: Setting up express routes...
+[2025-08-09 20:22:01] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-10 18:18:42] [logger.js] info: Setting up express routes...
+[2025-08-10 18:18:42] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-10 18:18:44] [logger.js] http: Root requested, forwarding to dash (SID: nPSzSIXnoNxtL61AA2WfQBDx8U4Iq3MK)
+[2025-08-10 18:18:44] [logger.js] http: Dashboard failed due to lack of credentials (SID: aN6ieCi-kCx0IjtmZ7DR9Vf1F0lo_PpR)
+[2025-08-10 20:50:25] [logger.js] info: Setting up express routes...
+[2025-08-10 20:50:25] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-10 20:51:36] [logger.js] info: Setting up express routes...
+[2025-08-10 20:51:36] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-10 20:51:55] [logger.js] info: Setting up express routes...
+[2025-08-10 20:51:55] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-10 20:59:05] [logger.js] info: Setting up express routes...
+[2025-08-10 20:59:05] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-12 11:23:58] [logger.js] info: Setting up express routes...
+[2025-08-12 11:23:58] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-12 11:34:40] [logger.js] info: Setting up express routes...
+[2025-08-12 11:34:40] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-12 11:34:57] [logger.js] info: Setting up express routes...
+[2025-08-12 11:34:57] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-12 11:35:22] [logger.js] info: Setting up express routes...
+[2025-08-12 11:35:22] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-12 11:36:02] [logger.js] info: Setting up express routes...
+[2025-08-12 11:36:02] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-12 11:37:12] [logger.js] info: Setting up express routes...
+[2025-08-12 11:37:12] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-12 11:37:35] [logger.js] info: Setting up express routes...
+[2025-08-12 11:37:35] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-12 11:38:56] [logger.js] info: Setting up express routes...
+[2025-08-12 11:38:56] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:09:08] [logger.js] info: Setting up express routes...
+[2025-08-15 14:09:08] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:10:00] [logger.js] info: Setting up express routes...
+[2025-08-15 14:10:00] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:11:27] [logger.js] info: Setting up express routes...
+[2025-08-15 14:11:27] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:11:43] [logger.js] info: Setting up express routes...
+[2025-08-15 14:11:43] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:12:04] [logger.js] info: Setting up express routes...
+[2025-08-15 14:12:04] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:12:52] [logger.js] info: Setting up express routes...
+[2025-08-15 14:12:52] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:14:36] [logger.js] info: Setting up express routes...
+[2025-08-15 14:14:36] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:14:50] [logger.js] info: Setting up express routes...
+[2025-08-15 14:14:50] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:16:13] [logger.js] info: Setting up express routes...
+[2025-08-15 14:16:13] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:16:31] [logger.js] info: Setting up express routes...
+[2025-08-15 14:16:31] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:17:25] [logger.js] info: Setting up express routes...
+[2025-08-15 14:17:25] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:17:38] [logger.js] info: Setting up express routes...
+[2025-08-15 14:17:38] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:17:46] [logger.js] info: Setting up express routes...
+[2025-08-15 14:17:46] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:18:16] [logger.js] info: Setting up express routes...
+[2025-08-15 14:18:16] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:18:43] [logger.js] info: Setting up express routes...
+[2025-08-15 14:18:43] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:18:59] [logger.js] info: Setting up express routes...
+[2025-08-15 14:18:59] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:19:17] [logger.js] info: Setting up express routes...
+[2025-08-15 14:19:17] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:20:16] [logger.js] info: Setting up express routes...
+[2025-08-15 14:20:16] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:21:36] [logger.js] info: Setting up express routes...
+[2025-08-15 14:21:36] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:22:13] [logger.js] info: Setting up express routes...
+[2025-08-15 14:22:13] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:23:23] [logger.js] info: Setting up express routes...
+[2025-08-15 14:23:23] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:23:31] [logger.js] info: Setting up express routes...
+[2025-08-15 14:23:31] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 14:23:40] [logger.js] info: Setting up express routes...
+[2025-08-15 14:23:40] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 16:31:12] [logger.js] info: Setting up express routes...
+[2025-08-15 16:31:12] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 16:42:23] [logger.js] info: Setting up express routes...
+[2025-08-15 16:42:23] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 16:46:02] [logger.js] info: Setting up express routes...
+[2025-08-15 16:46:02] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 16:46:17] [logger.js] info: Setting up express routes...
+[2025-08-15 16:46:17] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 16:46:24] [logger.js] info: Setting up express routes...
+[2025-08-15 16:46:24] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 17:16:20] [logger.js] info: Setting up express routes...
+[2025-08-15 17:16:20] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-15 17:31:18] [logger.js] info: Setting up express routes...
+[2025-08-15 17:31:18] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 13:35:09] [logger.js] info: Setting up express routes...
+[2025-08-18 13:35:09] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 13:35:15] [logger.js] info: Setting up express routes...
+[2025-08-18 13:35:15] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 13:35:17] [logger.js] http: Root requested, forwarding to dash (SID: Hh055hZwVwDkcnoa9bWeZsDnOzcI_eEy)
+[2025-08-18 13:35:17] [logger.js] http: Dashboard failed due to lack of credentials (SID: kQVNP292_VWiwkRsCTiwsHu1udmGPGPp)
+[2025-08-18 13:35:30] [logger.js] http: Login requested
+[2025-08-18 13:35:30] [logger.js] http: Login success (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc), sending username=19hughes.e uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-08-18 13:36:15] [logger.js] info: Setting up express routes...
+[2025-08-18 13:36:15] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 13:36:17] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 13:38:01] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:13:39] [logger.js] info: Setting up express routes...
+[2025-08-18 16:13:39] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 16:13:41] [logger.js] http: Root requested, forwarding to dash (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:13:42] [logger.js] http: Dashboard requested (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:13:50] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:20:03] [logger.js] info: Setting up express routes...
+[2025-08-18 16:20:03] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 16:20:06] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:22:34] [logger.js] info: Setting up express routes...
+[2025-08-18 16:22:34] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 16:22:37] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:22:37] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:22:51] [logger.js] info: Setting up express routes...
+[2025-08-18 16:22:51] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 16:22:53] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:22:53] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:23:49] [logger.js] info: Setting up express routes...
+[2025-08-18 16:23:49] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 16:23:52] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:23:52] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:25:23] [logger.js] info: Setting up express routes...
+[2025-08-18 16:25:23] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 16:25:25] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:25:25] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:27:52] [logger.js] info: Setting up express routes...
+[2025-08-18 16:27:52] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 16:27:54] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:27:55] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:31:54] [logger.js] info: Setting up express routes...
+[2025-08-18 16:31:54] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 16:34:09] [logger.js] info: Setting up express routes...
+[2025-08-18 16:34:09] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 16:34:14] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 16:34:14] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 17:05:16] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 17:05:16] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 17:35:50] [logger.js] info: Setting up express routes...
+[2025-08-18 17:35:50] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 17:35:53] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 17:35:53] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 17:39:27] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 17:39:27] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 17:39:51] [logger.js] info: Setting up express routes...
+[2025-08-18 17:39:51] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 17:39:53] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 17:39:54] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 17:48:19] [logger.js] info: Setting up express routes...
+[2025-08-18 17:48:19] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 17:48:21] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 17:48:21] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 17:51:03] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 17:51:04] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:21:19] [logger.js] info: Setting up express routes...
+[2025-08-18 18:21:19] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 18:21:26] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:21:26] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:23:47] [logger.js] info: Setting up express routes...
+[2025-08-18 18:23:47] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 18:23:51] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:23:51] [logger.js] http: API call made to getPeriods (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:23:52] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:24:44] [logger.js] info: Setting up express routes...
+[2025-08-18 18:24:44] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 18:24:46] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:24:46] [logger.js] http: API call made to getPeriods (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:24:47] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:25:24] [logger.js] info: Setting up express routes...
+[2025-08-18 18:25:24] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 18:25:26] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:25:27] [logger.js] http: API call made to getPeriods (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:25:27] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:25:54] [logger.js] info: Setting up express routes...
+[2025-08-18 18:25:54] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 18:25:57] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:25:57] [logger.js] http: API call made to getPeriods (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:25:58] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:26:25] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:26:26] [logger.js] http: API call made to getPeriods (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:26:26] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:26:54] [logger.js] info: Setting up express routes...
+[2025-08-18 18:26:54] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 18:26:57] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:26:57] [logger.js] http: API call made to getPeriods (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:26:58] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:27:47] [logger.js] info: Setting up express routes...
+[2025-08-18 18:27:47] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-18 18:27:49] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:27:50] [logger.js] http: API call made to getPeriods (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:27:50] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:33:56] [logger.js] http: API call made to getPointDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:33:56] [logger.js] http: API call made to getPeriods (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-18 18:33:56] [logger.js] http: API call made to getPresenceDict (SID: mmqeF6l16kLWVsEnKs8B1hWHhLUaaHtc)
+[2025-08-26 14:08:06] [logger.js] info: Setting up express routes...
+[2025-08-26 14:08:06] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-26 14:08:08] [logger.js] http: Root requested, forwarding to dash (SID: XxsqepJWV87UW00CWq_GfUUCQyUy0o6Z)
+[2025-08-26 14:08:08] [logger.js] http: Dashboard failed due to lack of credentials (SID: DT68DkXPRUnTpHUU3zHrQJ_gGEh1Iyje)
+[2025-08-26 14:25:17] [logger.js] info: Setting up express routes...
+[2025-08-26 14:25:17] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-26 14:25:18] [logger.js] http: Root requested, forwarding to dash (SID: MSPYfh_S028JXT8hRKY6EKh-NtmoKGlW)
+[2025-08-26 14:25:18] [logger.js] http: Dashboard failed due to lack of credentials (SID: 6oE_JBtbfq5kJRg4xCL5rQun2bA_qQk0)
+[2025-08-26 14:25:30] [logger.js] http: Login success (SID: EOYunRzoTnWUlyfpinvsowP3HlkY18Ad), sending username=19hughes.e uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-08-26 14:28:49] [logger.js] info: Setting up express routes...
+[2025-08-26 14:28:49] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-26 14:28:52] [logger.js] http: Root requested, forwarding to dash (SID: EOYunRzoTnWUlyfpinvsowP3HlkY18Ad)
+[2025-08-26 14:28:52] [logger.js] http: Dashboard requested (SID: EOYunRzoTnWUlyfpinvsowP3HlkY18Ad)
+[2025-08-26 14:29:00] [logger.js] http: Logout requested (SID: EOYunRzoTnWUlyfpinvsowP3HlkY18Ad)
+[2025-08-26 14:32:31] [logger.js] info: Setting up express routes...
+[2025-08-26 14:32:31] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-26 14:32:33] [logger.js] http: Root requested, forwarding to dash (SID: hj0esHFJw2eaaMY24U1vj_pGBpjEGCIW)
+[2025-08-26 14:32:33] [logger.js] http: Dashboard failed due to lack of credentials (SID: 7-03Wde5ppKRxPZcWvqrRoK_KkpMRqDh)
+[2025-08-26 14:33:04] [logger.js] http: Quick login granted (SID: 1Lw15WHdfO7YW0ErQOUfXuWflYb6OxiB), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-08-29 12:24:34] [logger.js] info: Setting up express routes...
+[2025-08-29 12:24:34] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 12:24:35] [logger.js] http: Root requested, forwarding to dash (SID: ciopjvnb8izvLapl6MloqZw246spvLPw)
+[2025-08-29 12:28:13] [logger.js] info: Setting up express routes...
+[2025-08-29 12:28:13] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 12:28:50] [logger.js] info: Setting up express routes...
+[2025-08-29 12:28:50] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 12:28:58] [logger.js] info: Setting up express routes...
+[2025-08-29 12:28:58] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 12:29:03] [logger.js] http: Root requested, forwarding to dash (SID: lxdZXsotrzWwvSeqUvb0QF8ImXtw2tOM)
+[2025-08-29 12:29:44] [logger.js] info: Setting up express routes...
+[2025-08-29 12:29:44] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:02:04] [logger.js] info: Setting up express routes...
+[2025-08-29 13:02:04] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:02:34] [logger.js] info: Setting up express routes...
+[2025-08-29 13:02:34] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:02:54] [logger.js] info: Setting up express routes...
+[2025-08-29 13:02:54] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:03:10] [logger.js] info: Setting up express routes...
+[2025-08-29 13:03:10] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:04:36] [logger.js] info: Setting up express routes...
+[2025-08-29 13:04:36] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:06:15] [logger.js] info: Setting up express routes...
+[2025-08-29 13:06:15] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:06:41] [logger.js] info: Setting up express routes...
+[2025-08-29 13:06:41] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:06:58] [logger.js] info: Setting up express routes...
+[2025-08-29 13:06:58] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:08:19] [logger.js] info: Setting up express routes...
+[2025-08-29 13:08:19] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:09:17] [logger.js] info: Setting up express routes...
+[2025-08-29 13:09:17] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:09:46] [logger.js] info: Setting up express routes...
+[2025-08-29 13:09:46] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:10:02] [logger.js] info: Setting up express routes...
+[2025-08-29 13:10:02] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:10:29] [logger.js] info: Setting up express routes...
+[2025-08-29 13:10:29] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:10:31] [logger.js] http: Dashboard failed due to lack of credentials (SID: 2kOvtzWCK7sEs6jtqQ5mNiwnYzW-SC3w)
+[2025-08-29 13:11:19] [logger.js] http: Quick login granted (SID: v26Ujg0qFVTMxVJrUHQoyOH2AsqUBvPi), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-08-29 13:11:24] [logger.js] http: API call made to getPeriods (SID: v26Ujg0qFVTMxVJrUHQoyOH2AsqUBvPi)
+[2025-08-29 13:12:46] [logger.js] http: Logout requested (SID: v26Ujg0qFVTMxVJrUHQoyOH2AsqUBvPi)
+[2025-08-29 13:12:49] [logger.js] http: Root requested, forwarding to dash (SID: ogYq6ZvtduzfVDNRdVWHFRr04ZIZM8hC)
+[2025-08-29 13:12:54] [logger.js] info: Setting up express routes...
+[2025-08-29 13:12:54] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:12:57] [logger.js] http: Root requested, forwarding to dash (SID: Xgx38vs1vNSQxGeGCN3eqeNw-UGI72oK)
+[2025-08-29 13:12:57] [logger.js] http: Dashboard failed due to lack of credentials (SID: OnEp5t79QhEwYVhpc7rwOzmGcIqfOZpy)
+[2025-08-29 13:13:21] [logger.js] http: Quick login granted (SID: Gk9EXnpj3lofNas4NaooL8HgYR7xuslQ), sending username=s.king uuid=9IwHl47LMT org=pLHgGvrcQb
+[2025-08-29 13:14:20] [logger.js] info: Setting up express routes...
+[2025-08-29 13:14:20] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:26:16] [logger.js] info: Setting up express routes...
+[2025-08-29 13:26:16] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:26:26] [logger.js] info: Setting up express routes...
+[2025-08-29 13:26:26] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:26:30] [logger.js] http: Root requested, forwarding to dash (SID: JI8B5fXrcVTJF-k6akPGzb9eKUhSXW9e)
+[2025-08-29 13:26:30] [logger.js] http: Dashboard failed due to lack of credentials (SID: 2-g_B6SHm7k3z4QXXxdAuU9ZeG-c0kbt)
+[2025-08-29 13:26:37] [logger.js] http: Quick login granted (SID: z1UJ0LvJyhLtlPBOeHr98sMRnZ5or5SS), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-08-29 13:26:58] [logger.js] info: Setting up express routes...
+[2025-08-29 13:26:58] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:27:06] [logger.js] http: Logout requested (SID: z1UJ0LvJyhLtlPBOeHr98sMRnZ5or5SS)
+[2025-08-29 13:27:11] [logger.js] http: Root requested, forwarding to dash (SID: R551cIaUrFPxWNLMIW4or6SgCd9Del6t)
+[2025-08-29 13:27:11] [logger.js] http: Dashboard failed due to lack of credentials (SID: UbliIMf26qNw_Wm3riE3qlSKbLB1A9VR)
+[2025-08-29 13:27:22] [logger.js] http: Quick login granted (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-08-29 13:27:23] [logger.js] http: Dashboard requested (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 13:27:49] [logger.js] info: Setting up express routes...
+[2025-08-29 13:27:49] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:27:54] [logger.js] http: Root requested, forwarding to dash (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 13:27:54] [logger.js] http: Dashboard requested (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 13:27:55] [logger.js] http: API call made to getPointDict (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 13:27:55] [logger.js] http: API call made to getPresenceDict (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 13:27:55] [logger.js] http: API call made to getPeriods (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 13:31:27] [logger.js] http: Root requested, forwarding to dash (SID: -A3adCAlixW9XJZSr2G-SGK-ra8XYl9F)
+[2025-08-29 13:31:27] [logger.js] http: Dashboard failed due to lack of credentials (SID: jeLUz0dJSmOZt6QszPLRtXFT0qw4t_3E)
+[2025-08-29 13:46:20] [logger.js] info: Setting up express routes...
+[2025-08-29 13:46:20] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:48:10] [logger.js] info: Setting up express routes...
+[2025-08-29 13:48:10] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 13:48:11] [logger.js] http: Root requested, forwarding to dash (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 13:48:12] [logger.js] http: API call made to getPointDict (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 13:48:12] [logger.js] http: API call made to getPeriods (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 13:48:12] [logger.js] http: API call made to getPresenceDict (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 14:28:36] [logger.js] info: Setting up express routes...
+[2025-08-29 14:28:36] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 14:29:38] [logger.js] info: Setting up express routes...
+[2025-08-29 14:29:38] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 14:29:43] [logger.js] http: API call made to getPointDict (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 14:29:43] [logger.js] http: API call made to getPeriods (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 14:29:44] [logger.js] http: API call made to getPresenceDict (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 14:29:51] [logger.js] http: Logout requested (SID: q7yW14yduzLWFOcjhQx4GHL3V9eA5NNQ)
+[2025-08-29 14:31:16] [logger.js] info: Setting up express routes...
+[2025-08-29 14:31:16] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 14:31:26] [logger.js] http: Root requested, forwarding to dash (SID: 9ynLsvVdYonLj28c4uTt0BJzucHmTrrj)
+[2025-08-29 14:31:34] [logger.js] http: Quick login granted (SID: FxFiIBL4K6a8OUYgJIADVPToFIqrSOyX), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-08-29 14:31:35] [logger.js] http: API call made to getPointDict (SID: FxFiIBL4K6a8OUYgJIADVPToFIqrSOyX)
+[2025-08-29 14:31:35] [logger.js] http: API call made to getPeriods (SID: FxFiIBL4K6a8OUYgJIADVPToFIqrSOyX)
+[2025-08-29 14:31:35] [logger.js] http: API call made to getPresenceDict (SID: FxFiIBL4K6a8OUYgJIADVPToFIqrSOyX)
+[2025-08-29 15:39:46] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 15:39:49] [logger.js] http: API call made to getPointDict (SID: FxFiIBL4K6a8OUYgJIADVPToFIqrSOyX)
+[2025-08-29 15:39:50] [logger.js] http: API call made to getPeriods (SID: FxFiIBL4K6a8OUYgJIADVPToFIqrSOyX)
+[2025-08-29 15:39:50] [logger.js] http: API call made to getPresenceDict (SID: FxFiIBL4K6a8OUYgJIADVPToFIqrSOyX)
+[2025-08-29 15:39:53] [logger.js] http: Logout requested (SID: FxFiIBL4K6a8OUYgJIADVPToFIqrSOyX)
+[2025-08-29 15:40:32] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 15:43:08] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 15:43:49] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 15:51:16] [logger.js] warn: Server running on http://localhost:3000
+[2025-08-29 15:51:26] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-01 18:06:59] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-01 18:07:27] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-01 18:08:40] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-01 18:09:07] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-01 18:09:36] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-01 18:11:48] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 19:40:06] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 19:40:39] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 19:40:55] [logger.js] http: Login requested
+[2025-09-02 19:40:55] [logger.js] http: Login failed!
+[2025-09-02 19:41:02] [logger.js] http: Quick login granted (SID: qlHjwNxSmzeUTc14J9HGiaSco_x0gzXY), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-09-02 19:41:02] [logger.js] http: API call made to getPointDict (SID: qlHjwNxSmzeUTc14J9HGiaSco_x0gzXY)
+[2025-09-02 19:41:03] [logger.js] http: API call made to getPeriods (SID: qlHjwNxSmzeUTc14J9HGiaSco_x0gzXY)
+[2025-09-02 19:41:03] [logger.js] http: API call made to getPresenceDict (SID: qlHjwNxSmzeUTc14J9HGiaSco_x0gzXY)
+[2025-09-02 19:42:01] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 19:42:03] [logger.js] http: API call made to getPointDict (SID: qlHjwNxSmzeUTc14J9HGiaSco_x0gzXY)
+[2025-09-02 19:42:03] [logger.js] http: API call made to getPeriods (SID: qlHjwNxSmzeUTc14J9HGiaSco_x0gzXY)
+[2025-09-02 19:42:03] [logger.js] http: API call made to getPresenceDict (SID: qlHjwNxSmzeUTc14J9HGiaSco_x0gzXY)
+[2025-09-02 19:43:42] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 19:43:44] [logger.js] http: API call made to getPointDict (SID: qlHjwNxSmzeUTc14J9HGiaSco_x0gzXY)
+[2025-09-02 19:43:44] [logger.js] http: API call made to getPeriods (SID: qlHjwNxSmzeUTc14J9HGiaSco_x0gzXY)
+[2025-09-02 19:43:44] [logger.js] http: API call made to getPresenceDict (SID: qlHjwNxSmzeUTc14J9HGiaSco_x0gzXY)
+[2025-09-02 19:45:48] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 19:46:38] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 19:47:49] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 19:48:57] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 19:49:39] [logger.js] http: Logout requested (SID: qlHjwNxSmzeUTc14J9HGiaSco_x0gzXY)
+[2025-09-02 19:49:51] [logger.js] http: Login requested
+[2025-09-02 19:49:51] [logger.js] http: Login success (SID: TXrPrH0ATAEUAR0HHTgjYkzQt_IpJ2Fo), sending username=19hughes.e uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-09-02 19:49:52] [logger.js] http: API call made to getPointDict (SID: TXrPrH0ATAEUAR0HHTgjYkzQt_IpJ2Fo)
+[2025-09-02 19:49:52] [logger.js] http: API call made to getPeriods (SID: TXrPrH0ATAEUAR0HHTgjYkzQt_IpJ2Fo)
+[2025-09-02 19:49:52] [logger.js] http: API call made to getPresenceDict (SID: TXrPrH0ATAEUAR0HHTgjYkzQt_IpJ2Fo)
+[2025-09-02 19:49:57] [logger.js] http: Logout requested (SID: TXrPrH0ATAEUAR0HHTgjYkzQt_IpJ2Fo)
+[2025-09-02 19:50:07] [logger.js] http: Quick login granted (SID: aNmUCt8upnku26vS3d69RX0u_nwhzncb), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-09-02 19:50:08] [logger.js] http: API call made to getPointDict (SID: aNmUCt8upnku26vS3d69RX0u_nwhzncb)
+[2025-09-02 19:50:08] [logger.js] http: API call made to getPeriods (SID: aNmUCt8upnku26vS3d69RX0u_nwhzncb)
+[2025-09-02 19:50:08] [logger.js] http: API call made to getPresenceDict (SID: aNmUCt8upnku26vS3d69RX0u_nwhzncb)
+[2025-09-02 19:56:09] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 19:56:14] [logger.js] http: Dev API call made to getPeriods (SID: aNmUCt8upnku26vS3d69RX0u_nwhzncb)
+[2025-09-02 19:56:57] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 19:57:29] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 19:57:34] [logger.js] http: Logout requested (SID: aNmUCt8upnku26vS3d69RX0u_nwhzncb)
+[2025-09-02 19:57:52] [logger.js] http: Quick login granted (SID: iMhtmY7vtznjbVQJ6lswmm9BjbwdH8AA), sending username=s.king uuid=9IwHl47LMT org=pLHgGvrcQb
+[2025-09-02 19:57:53] [logger.js] http: API call made to getPeriods (SID: iMhtmY7vtznjbVQJ6lswmm9BjbwdH8AA)
+[2025-09-02 19:59:43] [logger.js] http: Admin API call made to getPeriods (SID: iMhtmY7vtznjbVQJ6lswmm9BjbwdH8AA)
+[2025-09-02 20:00:45] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 20:03:05] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 20:04:18] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 20:04:28] [logger.js] http: Logout requested (SID: iMhtmY7vtznjbVQJ6lswmm9BjbwdH8AA)
+[2025-09-02 20:04:34] [logger.js] http: Quick login granted (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-09-02 20:04:34] [logger.js] http: API call made to getPointDict (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-02 20:04:35] [logger.js] http: API call made to getPeriods (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-02 20:04:35] [logger.js] http: API call made to getPresenceDict (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-02 20:09:19] [logger.js] http: Dev API call made to getPeriods (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-02 20:10:27] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 20:10:32] [logger.js] http: Dev API call made to getPeriods (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-02 20:10:50] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-02 20:10:53] [logger.js] http: Dev API call made to getPeriods (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-03 10:46:46] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 10:46:48] [logger.js] http: API call made to getPointDict (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-03 10:46:49] [logger.js] http: API call made to getPeriods (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-03 10:46:49] [logger.js] http: API call made to getPresenceDict (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-03 10:49:33] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 10:49:37] [logger.js] http: API call made to getPointDict (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-03 10:49:38] [logger.js] http: API call made to getPeriods (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-03 10:49:38] [logger.js] http: API call made to getPresenceDict (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-03 10:50:52] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 11:00:33] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 11:01:35] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 11:02:05] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 11:02:23] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 11:06:50] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 11:07:10] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 11:07:34] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 11:08:09] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 11:08:41] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 11:09:59] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 11:11:13] [logger.js] http: Dev API call made to newUser (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-03 11:25:10] [logger.js] http: Dev API call made to newUser (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-03 11:25:38] [logger.js] http: Logout requested (SID: Gj4Zqo8yh1iT_cpfX3yqSqFt7kq7l6FB)
+[2025-09-03 11:25:43] [logger.js] http: Quick login granted (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-09-03 11:25:44] [logger.js] http: API call made to getPointDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 11:25:45] [logger.js] http: API call made to getPeriods (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 11:25:45] [logger.js] http: API call made to getPresenceDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 14:01:08] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 14:01:12] [logger.js] http: API call made to getPointDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 14:01:13] [logger.js] http: API call made to getPeriods (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 14:01:13] [logger.js] http: API call made to getPresenceDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 14:01:18] [logger.js] http: Dev API call made to getUsers (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 14:25:28] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 14:25:59] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 14:26:03] [logger.js] http: API call made to getPointDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 14:26:04] [logger.js] http: API call made to getPresenceDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 14:26:04] [logger.js] http: API call made to getPeriods (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 15:58:54] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 15:58:56] [logger.js] http: API call made to getPointDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 15:58:57] [logger.js] http: API call made to getPeriods (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 15:58:57] [logger.js] http: API call made to getPresenceDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 15:59:00] [logger.js] http: API call made to getOrgs (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 15:59:00] [logger.js] http: API call made to getRoles (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 15:59:34] [logger.js] http: API call made to getOrgs (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 16:01:04] [logger.js] http: API call made to getOrgs (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 16:01:49] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 16:01:52] [logger.js] http: Dev API call made to getUsers (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 16:01:53] [logger.js] http: API call made to getRoles (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 16:01:53] [logger.js] http: API call made to getOrgs (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 16:02:10] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 16:02:22] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 16:02:26] [logger.js] http: Dev API call made to getUsers (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 16:02:27] [logger.js] http: API call made to getRoles (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 16:02:27] [logger.js] http: API call made to getOrgs (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 16:35:16] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 16:35:25] [logger.js] http: API call made to getObject (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-03 16:35:59] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 16:36:01] [logger.js] http: API call made to getObject (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-03 16:36:31] [logger.js] http: API call made to getObject (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-03 16:36:58] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 16:37:01] [logger.js] http: API call made to getObject (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-03 16:37:53] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 16:37:56] [logger.js] http: API call made to getObject (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-03 16:38:16] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 16:38:21] [logger.js] http: API call made to getObject (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-03 16:38:32] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 16:38:34] [logger.js] http: API call made to getObject (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-03 16:40:03] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 16:40:06] [logger.js] http: API call made to getObject (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-03 16:43:14] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 16:43:20] [logger.js] http: API call made to getObject (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-03 16:45:59] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 16:46:03] [logger.js] http: API call made to getObject (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-03 17:20:37] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 17:20:39] [logger.js] http: API call made to getPointDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:20:39] [logger.js] http: API call made to getPeriods (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:20:39] [logger.js] http: API call made to getPresenceDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:20:42] [logger.js] http: API call made to getOrgs (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:20:42] [logger.js] http: API call made to getRoles (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:22:01] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 17:25:02] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 17:25:15] [logger.js] http: API call made to getOrgs (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:25:15] [logger.js] http: API call made to getRoles (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:28:03] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 17:28:12] [logger.js] http: API call made to getPointDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:28:13] [logger.js] http: API call made to getPeriods (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:28:13] [logger.js] http: API call made to getPresenceDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:28:45] [logger.js] http: API call made to getOrgs (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:28:45] [logger.js] http: API call made to getRoles (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:29:14] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 17:29:16] [logger.js] http: API call made to getOrgs (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:29:16] [logger.js] http: API call made to getRoles (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:30:36] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 17:31:34] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 17:31:38] [logger.js] http: New object uploaded (OID: 4tVdh3FUcVkdkcCZYrRW, SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:32:38] [logger.js] http: API call made to getOrgs (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:32:38] [logger.js] http: API call made to getRoles (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:33:16] [logger.js] http: New object uploaded (OID: eqyKy8SUFl5rOyDRp1LI, SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 17:57:58] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 17:58:00] [logger.js] http: API call made to getObject (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg) for the object eqyKy8SUFl5rOyDRp1LI
+[2025-09-03 18:00:42] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 18:00:54] [logger.js] http: API call made to getOrgs (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 18:00:54] [logger.js] http: API call made to getRoles (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 18:02:25] [logger.js] http: New object uploaded (OID: AldZzeLwQ8ij6XqWiMXL, SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 18:19:22] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 18:19:29] [logger.js] http: API call made to getPointDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 18:19:30] [logger.js] http: API call made to getPresenceDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 18:19:30] [logger.js] http: API call made to getPeriods (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-03 18:20:19] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-03 18:21:27] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 11:03:20] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 11:03:25] [logger.js] http: API call made to getPointDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-04 11:03:26] [logger.js] http: API call made to getPeriods (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-04 11:03:26] [logger.js] http: API call made to getPresenceDict (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-04 11:03:36] [logger.js] http: API call made to getOrgs (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-04 11:03:36] [logger.js] http: API call made to getRoles (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-04 11:04:34] [logger.js] http: API call made to getOrgs (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-04 11:04:35] [logger.js] http: API call made to getRoles (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-04 11:04:39] [logger.js] http: Logout requested (SID: Wn_oXScZNJg7YL9hGc7W6_iSLYMcVUNg)
+[2025-09-04 11:05:28] [logger.js] http: Quick login granted (SID: o3lmRc3LAsophbOKpOA4OArrIBUKU9K1), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-09-04 11:05:28] [logger.js] http: API call made to getPointDict (SID: o3lmRc3LAsophbOKpOA4OArrIBUKU9K1)
+[2025-09-04 11:05:28] [logger.js] http: API call made to getPresenceDict (SID: o3lmRc3LAsophbOKpOA4OArrIBUKU9K1)
+[2025-09-04 11:05:28] [logger.js] http: API call made to getPeriods (SID: o3lmRc3LAsophbOKpOA4OArrIBUKU9K1)
+[2025-09-04 11:07:07] [logger.js] http: API call made to getObject (SID: o3lmRc3LAsophbOKpOA4OArrIBUKU9K1) for the object upload
+[2025-09-04 11:20:26] [logger.js] http: API call made to getPointDict (SID: o3lmRc3LAsophbOKpOA4OArrIBUKU9K1)
+[2025-09-04 11:20:27] [logger.js] http: API call made to getPresenceDict (SID: o3lmRc3LAsophbOKpOA4OArrIBUKU9K1)
+[2025-09-04 11:20:27] [logger.js] http: API call made to getPeriods (SID: o3lmRc3LAsophbOKpOA4OArrIBUKU9K1)
+[2025-09-04 11:20:30] [logger.js] http: API call made to getOrgs (SID: o3lmRc3LAsophbOKpOA4OArrIBUKU9K1)
+[2025-09-04 11:20:31] [logger.js] http: API call made to getRoles (SID: o3lmRc3LAsophbOKpOA4OArrIBUKU9K1)
+[2025-09-04 11:20:48] [logger.js] http: New object uploaded (OID: uCzBTW2o32UBl5iKUYz7, SID: o3lmRc3LAsophbOKpOA4OArrIBUKU9K1)
+[2025-09-04 11:21:37] [logger.js] http: API call made to getFile (SID: o3lmRc3LAsophbOKpOA4OArrIBUKU9K1) for the object uCzBTW2o32UBl5iKUYz7
+[2025-09-04 11:31:06] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 11:31:08] [logger.js] http: Logout requested (SID: o3lmRc3LAsophbOKpOA4OArrIBUKU9K1)
+[2025-09-04 11:31:13] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 11:32:01] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 11:32:31] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 11:35:51] [logger.js] http: Login requested
+[2025-09-04 11:35:51] [logger.js] http: Login failed!
+[2025-09-04 11:36:05] [logger.js] http: Login requested
+[2025-09-04 11:36:05] [logger.js] http: Login success (SID: HjepPbavVLEy_TVMLOJXEXdWGjY1C8ZN), sending username=19hughes.e uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-09-04 11:36:05] [logger.js] http: API call made to getPointDict (SID: HjepPbavVLEy_TVMLOJXEXdWGjY1C8ZN)
+[2025-09-04 11:36:06] [logger.js] http: API call made to getPeriods (SID: HjepPbavVLEy_TVMLOJXEXdWGjY1C8ZN)
+[2025-09-04 11:36:06] [logger.js] http: API call made to getPresenceDict (SID: HjepPbavVLEy_TVMLOJXEXdWGjY1C8ZN)
+[2025-09-04 11:36:10] [logger.js] http: API call made to getOrgs (SID: HjepPbavVLEy_TVMLOJXEXdWGjY1C8ZN)
+[2025-09-04 11:36:11] [logger.js] http: API call made to getRoles (SID: HjepPbavVLEy_TVMLOJXEXdWGjY1C8ZN)
+[2025-09-04 12:00:10] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 12:01:05] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 12:01:11] [logger.js] http: API call made to getPointDict (SID: HjepPbavVLEy_TVMLOJXEXdWGjY1C8ZN)
+[2025-09-04 12:01:11] [logger.js] http: API call made to getPresenceDict (SID: HjepPbavVLEy_TVMLOJXEXdWGjY1C8ZN)
+[2025-09-04 12:01:11] [logger.js] http: API call made to getPeriods (SID: HjepPbavVLEy_TVMLOJXEXdWGjY1C8ZN)
+[2025-09-04 12:01:21] [logger.js] http: API call made to getOrgs (SID: HjepPbavVLEy_TVMLOJXEXdWGjY1C8ZN)
+[2025-09-04 12:01:21] [logger.js] http: API call made to getRoles (SID: HjepPbavVLEy_TVMLOJXEXdWGjY1C8ZN)
+[2025-09-04 12:09:42] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 12:09:57] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 20:35:09] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 20:35:23] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 20:35:30] [logger.js] http: Quick login granted (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-09-04 20:35:37] [logger.js] http: Quick login granted (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-09-04 20:35:37] [logger.js] http: API call made to getPointDict (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:35:38] [logger.js] http: API call made to getPeriods (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:35:38] [logger.js] http: API call made to getPresenceDict (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:35:42] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:35:42] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:35:42] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user undefined
+[2025-09-04 20:35:43] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:36:30] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 20:36:32] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:36:32] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user undefined
+[2025-09-04 20:36:32] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:36:32] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:37:07] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 20:37:08] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:37:09] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user undefined
+[2025-09-04 20:37:09] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:37:09] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:37:32] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 20:37:34] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:37:34] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user [object Object]
+[2025-09-04 20:37:34] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:37:34] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:37:54] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 20:37:56] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:37:56] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user [object Object]
+[2025-09-04 20:37:56] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:37:56] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:38:37] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 20:38:39] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:38:39] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user ARbaypELPf
+[2025-09-04 20:38:39] [logger.js] http: API call made to getObject (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-04 20:38:39] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:38:39] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:39:00] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 20:39:02] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:39:02] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user ARbaypELPf
+[2025-09-04 20:39:02] [logger.js] http: API call made to getObject (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-04 20:39:02] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:39:03] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:40:02] [logger.js] http: API call made to getObject (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-04 20:56:20] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:56:20] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:56:20] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user ARbaypELPf
+[2025-09-04 20:56:20] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:56:20] [logger.js] http: API call made to getObject (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-04 20:58:21] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 20:58:23] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:58:23] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user ARbaypELPf
+[2025-09-04 20:58:23] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:58:24] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:58:52] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:58:52] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 20:58:52] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user ARbaypELPf
+[2025-09-04 20:58:52] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:02:09] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 21:02:12] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:02:12] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user ARbaypELPf
+[2025-09-04 21:02:12] [logger.js] http: API call made to getObject (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-04 21:02:12] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:02:13] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:02:34] [logger.js] http: New object uploaded (OID: 0GgVrVFG1M06FDYTPDbt, SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:02:48] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:02:48] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:02:48] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user ARbaypELPf
+[2025-09-04 21:02:48] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:02:48] [logger.js] http: API call made to getObject (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the object 0GgVrVFG1M06FDYTPDbt
+[2025-09-04 21:03:30] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 21:03:32] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:03:32] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:03:32] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user ARbaypELPf
+[2025-09-04 21:03:32] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:03:32] [logger.js] http: API call made to getObject (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the object 0GgVrVFG1M06FDYTPDbt
+[2025-09-04 21:05:34] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-04 21:05:38] [logger.js] http: API call made to whoami (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:05:38] [logger.js] http: API call made to getOrgs (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:05:38] [logger.js] http: API call made to getProfileInfo (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the user ARbaypELPf
+[2025-09-04 21:05:38] [logger.js] http: API call made to getRoles (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:05:38] [logger.js] http: API call made to getObject (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I) for the object 0GgVrVFG1M06FDYTPDbt
+[2025-09-04 21:05:39] [logger.js] http: Logout requested (SID: O5iR6B-VK_6vhmaOFDgIDdIIzAFwjL6I)
+[2025-09-04 21:05:45] [logger.js] http: Quick login granted (SID: LCu1Pp6GHLjluApW_9b2ZIZp-Q5j-aBP), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-09-04 21:05:45] [logger.js] http: API call made to getPointDict (SID: LCu1Pp6GHLjluApW_9b2ZIZp-Q5j-aBP)
+[2025-09-04 21:05:46] [logger.js] http: API call made to getPresenceDict (SID: LCu1Pp6GHLjluApW_9b2ZIZp-Q5j-aBP)
+[2025-09-04 21:05:46] [logger.js] http: API call made to getPeriods (SID: LCu1Pp6GHLjluApW_9b2ZIZp-Q5j-aBP)
+[2025-09-04 21:05:51] [logger.js] http: API call made to whoami (SID: LCu1Pp6GHLjluApW_9b2ZIZp-Q5j-aBP)
+[2025-09-04 21:05:51] [logger.js] http: API call made to getOrgs (SID: LCu1Pp6GHLjluApW_9b2ZIZp-Q5j-aBP)
+[2025-09-04 21:05:51] [logger.js] http: API call made to getProfileInfo (SID: LCu1Pp6GHLjluApW_9b2ZIZp-Q5j-aBP) for the user ARbaypELPf
+[2025-09-04 21:05:51] [logger.js] http: API call made to getRoles (SID: LCu1Pp6GHLjluApW_9b2ZIZp-Q5j-aBP)
+[2025-09-04 21:05:52] [logger.js] http: API call made to getObject (SID: LCu1Pp6GHLjluApW_9b2ZIZp-Q5j-aBP) for the object 0GgVrVFG1M06FDYTPDbt
+[2025-09-04 21:06:21] [logger.js] http: Logout requested (SID: LCu1Pp6GHLjluApW_9b2ZIZp-Q5j-aBP)
+[2025-09-04 21:06:30] [logger.js] http: Quick login granted (SID: f0d8yeMEAWJBmjiRp0lEMgzSzN3KsFK_), sending username=s.king uuid=9IwHl47LMT org=pLHgGvrcQb
+[2025-09-04 21:06:31] [logger.js] http: API call made to getPeriods (SID: f0d8yeMEAWJBmjiRp0lEMgzSzN3KsFK_)
+[2025-09-04 21:06:40] [logger.js] http: Logout requested (SID: f0d8yeMEAWJBmjiRp0lEMgzSzN3KsFK_)
+[2025-09-04 21:07:09] [logger.js] http: Quick login granted (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI), sending username=19charleston.t uuid=r8JYjT4VES org=pLHgGvrcQb
+[2025-09-04 21:07:09] [logger.js] http: API call made to getPointDict (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-04 21:07:10] [logger.js] http: API call made to getPeriods (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-04 21:07:10] [logger.js] http: API call made to getPresenceDict (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-04 21:07:15] [logger.js] http: API call made to whoami (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-04 21:07:15] [logger.js] http: API call made to getOrgs (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-04 21:07:15] [logger.js] http: API call made to getProfileInfo (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI) for the user r8JYjT4VES
+[2025-09-04 21:07:15] [logger.js] http: API call made to getRoles (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-04 21:07:15] [logger.js] http: API call made to getObject (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI) for the object YJjto5Nph4bNcn97uO3e
+[2025-09-05 09:07:03] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 09:07:09] [logger.js] http: API call made to getPointDict (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:07:10] [logger.js] http: API call made to getPeriods (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:07:10] [logger.js] http: API call made to getPresenceDict (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:07:21] [logger.js] http: Quick login granted (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-09-05 09:07:22] [logger.js] http: API call made to getPointDict (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:07:22] [logger.js] http: API call made to getPeriods (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:07:22] [logger.js] http: API call made to getPresenceDict (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:07:27] [logger.js] http: API call made to whoami (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:07:27] [logger.js] http: API call made to getOrgs (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:07:27] [logger.js] http: API call made to getProfileInfo (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI) for the user ARbaypELPf
+[2025-09-05 09:07:27] [logger.js] http: API call made to getObject (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI) for the object 0GgVrVFG1M06FDYTPDbt
+[2025-09-05 09:07:27] [logger.js] http: API call made to getRoles (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:08:37] [logger.js] http: API call made to getPointDict (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:08:37] [logger.js] http: API call made to getPresenceDict (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:08:37] [logger.js] http: API call made to getPeriods (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:09:28] [logger.js] http: API call made to whoami (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:09:28] [logger.js] http: API call made to getOrgs (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:09:28] [logger.js] http: API call made to getRoles (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:09:28] [logger.js] http: API call made to getProfileInfo (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI) for the user ARbaypELPf
+[2025-09-05 09:09:28] [logger.js] http: API call made to getObject (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI) for the object 0GgVrVFG1M06FDYTPDbt
+[2025-09-05 09:09:37] [logger.js] http: New object uploaded (OID: cDGKdn70aT7s3DtmoJDH, SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 09:10:09] [logger.js] http: API call made to getObject (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI) for the object cDGKdn70aT7s3DtmoJDH
+[2025-09-05 15:59:43] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 15:59:49] [logger.js] http: API call made to getPointDict (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 15:59:49] [logger.js] http: API call made to getPeriods (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 15:59:49] [logger.js] http: API call made to getPresenceDict (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 15:59:55] [logger.js] http: API call made to whoami (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 16:00:03] [logger.js] http: Logout requested (SID: 9LMsZRNlPq7yb1lOSh6W6uxumawDRYrI)
+[2025-09-05 16:17:27] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:17:33] [logger.js] http: Quick login granted (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN), sending username=19hughes.e@bristolfreeschool.org.uk uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-09-05 16:18:39] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:19:37] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:19:39] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:19:39] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:19:39] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:50:01] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:50:25] [logger.js] http: Login requested
+[2025-09-05 16:50:25] [logger.js] http: Login success (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN), sending username=19hughes.e uuid=ARbaypELPf org=pLHgGvrcQb
+[2025-09-05 16:50:25] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:50:26] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:50:26] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:51:05] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:51:06] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:51:07] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:51:07] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:51:57] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:52:46] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:53:13] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:53:14] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:53:14] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:53:45] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:53:47] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:53:47] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:53:47] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:54:27] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:54:29] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:54:29] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:54:30] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:54:51] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:54:53] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:54:53] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:54:53] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:55:27] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:55:29] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:55:29] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:55:29] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:55:43] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:55:46] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:55:47] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:55:47] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:55:57] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:56:17] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:56:51] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:57:01] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:57:54] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:57:56] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:57:57] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:57:57] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 16:58:02] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:58:42] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:58:56] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 16:59:43] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:00:36] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:00:59] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:05:58] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:06:44] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:13:00] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:13:05] [logger.js] http: API call made to whoami (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:13:05] [logger.js] http: API call made to getProfileInfo (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN) for the user ARbaypELPf
+[2025-09-05 17:13:06] [logger.js] http: API call made to getOrgs (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:13:06] [logger.js] http: API call made to getObject (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN) for the object 0GgVrVFG1M06FDYTPDbt
+[2025-09-05 17:13:06] [logger.js] http: API call made to getRoles (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:16:26] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:16:29] [logger.js] http: API call made to whoami (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:16:29] [logger.js] http: API call made to getProfileInfo (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN) for the user ARbaypELPf
+[2025-09-05 17:16:29] [logger.js] http: API call made to getOrgs (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:16:29] [logger.js] http: API call made to getObject (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN) for the object 0GgVrVFG1M06FDYTPDbt
+[2025-09-05 17:16:29] [logger.js] http: API call made to getRoles (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:16:35] [logger.js] http: API call made to whoami (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:16:35] [logger.js] http: API call made to getOrgs (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:16:35] [logger.js] http: API call made to getProfileInfo (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN) for the user ARbaypELPf
+[2025-09-05 17:16:35] [logger.js] http: API call made to getRoles (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:16:35] [logger.js] http: API call made to getObject (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN) for the object 0GgVrVFG1M06FDYTPDbt
+[2025-09-05 17:16:45] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:16:45] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:16:45] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:17:36] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:20:17] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:22:17] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:22:44] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:25:12] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:32:12] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:49:23] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:50:01] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:50:04] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:50:11] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:51:57] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:51:59] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:52:01] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:52:15] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:52:35] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:52:39] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:53:00] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:53:04] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:53:06] [logger.js] http: Dismissed warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:54:39] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:54:41] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:54:44] [logger.js] http: Dismissed warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:55:13] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:55:15] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:55:15] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:55:15] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:55:15] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:55:16] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:55:16] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:55:16] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:55:16] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:55:16] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:55:16] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:55:16] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:56:46] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:56:50] [logger.js] http: Dismissed warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:56:55] [logger.js] http: Dismissed warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:57:12] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 17:57:15] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:57:16] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:57:16] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 17:57:16] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:02:00] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 18:02:44] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 18:02:47] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:04:19] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:14:40] [logger.js] http: Dismissed warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:14:58] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:14:59] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:14:59] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:14:59] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:15:06] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:15:06] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:15:06] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:15:06] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:15:53] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:16:17] [logger.js] http: Dismissed warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:19:50] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 18:19:56] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:19:57] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:19:57] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:19:57] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:20:22] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:20:26] [logger.js] http: Dismissed warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:20:54] [logger.js] http: Dishing out warning (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:20:54] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:20:54] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:20:54] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:21:35] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-05 18:21:40] [logger.js] http: API call made to getPointDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:21:42] [logger.js] http: API call made to getPeriods (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-05 18:21:43] [logger.js] http: API call made to getPresenceDict (SID: 2tJo0-4KVH_gH-jcrYwEvrzaFETbHReN)
+[2025-09-06 11:29:33] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-06 11:39:14] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-06 11:43:07] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-06 11:43:15] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-06 11:44:26] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-06 11:47:15] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-06 11:48:07] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-06 11:49:45] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-06 11:51:06] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-06 11:51:31] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-06 11:54:07] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-06 11:54:28] [logger.js] warn: Server running on http://localhost:3000
+[2025-09-06 11:55:14] [logger.js] warn: Server running on http://localhost:3000
