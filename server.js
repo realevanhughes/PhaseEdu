@@ -460,7 +460,6 @@ const routeMap = {
     '/dev/account': {type: "page", method: 'get', handler: dev_handlers.account, roles: ['dev'], authRequired: true  },
     '/dev': {type: "page", method: 'get', handler: page_handlers.file("web/html/dev-panel.html"), roles: ['dev'], authRequired: true  },
 
-    '/': {type: "redirect", method: 'get', handler: page_handlers.redirect("/dash"), roles: [], authRequired: false },
     '/dash': {type: "page", method: 'get', handler: page_handlers.file("web/html/dash.html"), roles: [], authRequired: true },
     '/login': {type: "page", method: 'get', handler: page_handlers.file("web/html/login.html"), roles: [], authRequired: false },
     '/warning': {type: "warning", method: 'get', handler: page_handlers.specialMessage, roles: [], authRequired: true },
@@ -473,9 +472,12 @@ const routeMap = {
 
 devOut("The following routes are active: "+Object.keys(routeMap).join(', '))
 
+let non_react = []
+
 for (const [key, value] of Object.entries(routeMap)) {
+    let new_path = key.split("/")
     if (value.type === "page") {
-        let new_path = key.split("/")
+
         for (const extension of permitted_route_extensions) {
             if (fs.existsSync("web/"+extension+"/"+new_path[new_path.length-1]+"."+extension)) {
                 routeMap[key+"."+extension] = {type: "page", method: value.method, handler: page_handlers.file("web/"+extension+"/"+new_path[new_path.length-1]+"."+extension), roles: value.roles, authRequired: value.authRequired };
@@ -483,7 +485,11 @@ for (const [key, value] of Object.entries(routeMap)) {
         }
 
     }
+    if (non_react.includes(new_path[1]) === false && new_path[1] !== "") {
+        non_react.push(new_path[1]);
+    }
 }
+console.log(non_react)
 
 for (const [path, config] of Object.entries(routeMap)) {
     app[config.method](
@@ -494,6 +500,21 @@ for (const [path, config] of Object.entries(routeMap)) {
         config.handler
     );
 }
+
+// React initialization
+app.use('/react', express.static(path.join(__dirname, 'react-build')));
+
+// ✅ SPA fallback for React (only for non-/web routes)
+app.get(/^\/(?!api).*/, (req, res) => {
+    const firstSegment = req.path.split('/')[1];
+    if (non_react.includes(firstSegment)) {
+        res.status(404).send("Not Found");
+    } else {
+        res.sendFile(path.resolve(__dirname, 'react-build', 'index.html'));
+    }
+});
+
+
 
 // Final webhost launch
 app.listen(PORT, () => {
