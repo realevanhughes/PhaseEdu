@@ -1,6 +1,7 @@
 // NPM package imports
 var pjson = require('./package.json');
 const express = require('express');
+const multer = require("multer");
 const path = require('path');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
@@ -20,10 +21,11 @@ const orgs = require('./org');
 const composite = require('./composite');
 const presence = require('./presence');
 const classes = require('./classes');
-const {username_to_uuid} = require("./people");
+const {username_to_uuid, get_profile_oid} = require("./people");
 const utils = require('./utils');
 const {route} = require("express/lib/application");
 const util = require("node:util");
+const {object_info} = require("./utils");
 
 // Logger setup with component script
 const logger = baseLogger.child({label: path.basename(__filename)});
@@ -58,12 +60,24 @@ else {
     console.log(pjson.version);
 }
 
+const permitted_route_extensions = [
+    "css",
+    "js"
+]
+const warning_page_assignments = {
+    0: "./web/html/warn.html",
+    1: "./web/html/block.html",
+}
+
 // Generic express setup with env referencing
 const app = express();
 const PORT = process.env.HOST_PORT;
 app.use(express.static('web/static'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Multer in-memory uploads
+const upload = multer({ storage: multer.memoryStorage() });
 
 // More session config
 app.use(session({
@@ -96,25 +110,38 @@ function requireAuth(authRequired, type) {
 
 function requireRole(type, ...allowedRoles) {
     return async (req, res, next) => {
-        try {
-            for (const role of allowedRoles) {
-                if ((await people.check_role(req.session.uuid, role)).result === "success") {
-                    return next();
+            try {
+                if (type === "warning") {
+                    return next()
                 }
-            }
-            if (allowedRoles.length === 0) {
-                return next();
-            }
-            else {
-                if (type === "page" || type === "internal") {
-                    return res.redirect('/login');
+                const user = await people.role(req.session.uuid)
+                if (allowedRoles.length === 0) {
+                    if (user.special_action === 1) {
+                        return res.redirect('/warning');
+                    }
+                    else {
+                        return next();
+                    }
                 }
-                return res.status(403).json({error: 'Forbidden due to role requirements'});
+                if (allowedRoles.includes(user.role)) {
+                    if (user.special_action === 1) {
+                        return res.redirect('/warning');
+                    }
+                    else {
+                        return next();
+                    }
+                }
+
+                else {
+                    if (type === "page" || type === "internal") {
+                        return res.redirect('/login');
+                    }
+                    return res.status(403).json({error: 'Forbidden due to role requirements'});
+                }
+            } catch (err) {
+                return res.status(500).json({ error: 'Internal Server Error' });
             }
-        } catch (err) {
-            return res.status(500).json({ error: 'Internal Server Error' });
-        }
-    };
+    }
 }
 
 // START TESTING
@@ -185,11 +212,94 @@ const api_handlers = {
             const users = await people.list_org(req.session.org);
             res.json({"result": "success", "users": users});
         }
+    },
+    getFile: async (req, res) => {
+        const { oid } = req.params;
+        logger.http({message: `API call made to getFile (SID: ${req.sessionID}) for the object ${oid}`});
+        let object_info = await utils.object_info(oid);
+        if (object_info.access.includes(req.session.uuid) || object_info.access.includes("*")) {
+            res.download((object_info.location+oid), (object_info.name+"."+object_info.file_extension), (err) => {
+                if (err) {
+                    res.status(404).send("Object not found");
+                }
+            });
+        }
+        else {
+            return res.status(401).json({error: 'Unauthorized'});
+        }
+    },
+    getObject: async (req, res) => {
+        const { oid } = req.params;
+        logger.http({message: `API call made to getObject (SID: ${req.sessionID}) for the object ${oid}`});
+        let object_info = await utils.object_info(oid);
+        if (object_info.access.includes(req.session.uuid) || object_info.access.includes("*")) {
+            res.sendFile((object_info.location+oid), { root: path.join(__dirname) }, (err) => {
+                if (err) {
+                    res.status(404).send("Object not found");
+                }
+            });
+        }
+        else {
+            return res.status(401).json({error: 'Unauthorized'});
+        }
+    },
+    uploadObject: async (req, res) => {
+        try {
+            if (!req.file) {
+                return res.status(400).json({ error: "No file uploaded" });
+            }
+
+            const originalName = req.file.originalname;
+            const fileExtension = path.extname(originalName).substring(1);
+            const baseName = path.basename(originalName, fileExtension);
+
+            const owner = req.session.uuid;
+            const org = req.session.org;
+            const access = [owner];
+            const description = `Uploaded file ${originalName}`;
+            const type = req.file.mimetype;
+            const location = path.join("objects", "/");
+
+            const objectInfo = await utils.new_object(
+                baseName,
+                fileExtension,
+                owner,
+                org,
+                access,
+                description,
+                type,
+                location
+            );
+            const oid = objectInfo.oid;
+            const filePath = path.join(__dirname, "objects", oid);
+            fs.writeFileSync(filePath, req.file.buffer);
+
+            logger.http({ message: `New object uploaded (OID: ${oid}, SID: ${req.sessionID})` });
+
+            res.json(objectInfo);
+
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: "File upload failed" });
+        }
+    },
+    getProfileInfo: async (req, res) => {
+        const { uuid } = req.params;
+        console.log(uuid);
+        logger.http({message: `API call made to getProfileInfo (SID: ${req.sessionID}) for the user ${uuid}`});
+        let user_data = await people.general_user_data(uuid)
+        console.log(user_data);
+        user_data["result"] = "success";
+        res.json(user_data);
+    },
+    whoami: async (req, res) => {
+        logger.http({message: `API call made to whoami (SID: ${req.sessionID})`});
+        res.json({"result": "success", "uuid": req.session.uuid})
     }
 };
 
 const page_handlers = {
-    html: (file) => {
+    file: (file) => {
         return async (req, res) => {
             res.sendFile(path.join(__dirname, file));
         };
@@ -198,6 +308,27 @@ const page_handlers = {
         return async (req, res) => {
             res.redirect(url);
         }
+    },
+    specialMessage: async (req, res) => {
+        logger.http({message: `Dishing out warning (SID: ${req.sessionID})`});
+        let special = await utils.view_conditional(req.session.uuid)
+        if (!special) {
+            res.redirect(`/dash`);
+        }
+        else {
+            fs.readFile(warning_page_assignments[special.final], 'utf8', (err, data) => {
+                if (err) {
+                    res.status(404).send("Please contact your IT administrator immediately.");
+                }
+                else {
+                let warning_html = data;
+                warning_html = warning_html.replace("##MESSAGE##", special.message);
+                warning_html = warning_html.replace("##REDIRECT##", special.redirect);
+                res.send(warning_html);
+                }
+            });
+        }
+
     }
 };
 
@@ -291,6 +422,17 @@ const internal_handlers = {
             res.status(500).send(`Your request was not granted by server operator! Please contact ${process.env.ADMIN_EMAIL} for more information.`);
         }
     },
+    dismissWarning: async (req, res) => {
+        logger.http({message: `Dismissed warning (SID: ${req.sessionID})`});
+        let special = await utils.view_conditional(req.session.uuid)
+        if (!special) {
+            res.redirect(`/dash`);
+        }
+        if (special.final === 1){
+            res.json({"result": "failed", "message": "This access restriction is final!"});
+        }
+        return await utils.delete_conditional(req.session.uuid)
+    }
 };
 
 const routeMap = {
@@ -303,26 +445,52 @@ const routeMap = {
     '/api/orgs/list': {type: "api", method: 'get', handler: api_handlers.getOrgs, roles: ['dev'], authRequired: true  },
     '/api/roles/list': {type: "api", method: 'get', handler: api_handlers.getRoles, roles: ['dev', 'admin'], authRequired: true  },
     '/api/people/list': {type: "api", method: 'get', handler: api_handlers.getUsers, roles: ['dev', 'admin'], authRequired: true  },
+    '/api/people/:uuid/about': {type: "api", method: 'get', handler: api_handlers.getProfileInfo, roles: [], authRequired: true  },
+    '/api/whoami': {type: "api", method: 'get', handler: api_handlers.whoami, roles: [], authRequired: true  },
+
+    '/api/object/download/:oid': {type: "api", method: 'get', handler: api_handlers.getFile, roles: [], authRequired: true  },
+    '/api/object/:oid': {type: "api", method: 'get', handler: api_handlers.getObject, roles: [], authRequired: true  },
+    '/api/object/upload': {type: "api", method: 'post', handler: api_handlers.uploadObject, roles: [], authRequired: true, middleware: [ upload.single("file") ] },
+
+    '/api/login': {type: "internal", method: 'post', handler: internal_handlers.login, roles: [], authRequired: false },
+    '/api/quick-login': {type: "internal", method: 'post', handler: internal_handlers.quick_login, roles: [], authRequired: false },
+    '/api/logout': {type: "internal", method: 'get', handler: internal_handlers.logout, roles: ['student', 'dev', 'admin', 'teacher']},
+    '/api/warning/dismiss': {type: "warning", method: 'post', handler: internal_handlers.dismissWarning, roles: [], authRequired: true },
 
     '/dev/account': {type: "page", method: 'get', handler: dev_handlers.account, roles: ['dev'], authRequired: true  },
-    '/dev': {type: "page", method: 'get', handler: page_handlers.html("web/html/dev-panel.html"), roles: ['dev'], authRequired: true  },
+    '/dev': {type: "page", method: 'get', handler: page_handlers.file("web/html/dev-panel.html"), roles: ['dev'], authRequired: true  },
 
-    '/': {type: "page", method: 'get', handler: page_handlers.redirect("/dash"), roles: [], authRequired: false },
-    '/dash': {type: "page", method: 'get', handler: page_handlers.html("web/html/dash.html"), roles: [], authRequired: true },
-    '/login': {type: "page", method: 'get', handler: page_handlers.html("web/html/login.html"), roles: [], authRequired: false },
+    '/': {type: "redirect", method: 'get', handler: page_handlers.redirect("/dash"), roles: [], authRequired: false },
+    '/dash': {type: "page", method: 'get', handler: page_handlers.file("web/html/dash.html"), roles: [], authRequired: true },
+    '/login': {type: "page", method: 'get', handler: page_handlers.file("web/html/login.html"), roles: [], authRequired: false },
+    '/warning': {type: "warning", method: 'get', handler: page_handlers.specialMessage, roles: [], authRequired: true },
 
     '/internal/login': {type: "internal", method: 'post', handler: internal_handlers.login, roles: [], authRequired: false },
     '/internal/quick-login': {type: "internal", method: 'post', handler: internal_handlers.quick_login, roles: [], authRequired: false },
     '/internal/logout': {type: "internal", method: 'get', handler: internal_handlers.logout, roles: ['student', 'dev', 'admin', 'teacher']},
+    '/internal/warning/dismiss': {type: "warning", method: 'post', handler: internal_handlers.dismissWarning, roles: [], authRequired: true },
 };
 
 devOut("The following routes are active: "+Object.keys(routeMap).join(', '))
+
+for (const [key, value] of Object.entries(routeMap)) {
+    if (value.type === "page") {
+        let new_path = key.split("/")
+        for (const extension of permitted_route_extensions) {
+            if (fs.existsSync("web/"+extension+"/"+new_path[new_path.length-1]+"."+extension)) {
+                routeMap[key+"."+extension] = {type: "page", method: value.method, handler: page_handlers.file("web/"+extension+"/"+new_path[new_path.length-1]+"."+extension), roles: value.roles, authRequired: value.authRequired };
+            }
+        }
+
+    }
+}
 
 for (const [path, config] of Object.entries(routeMap)) {
     app[config.method](
         path,
         requireAuth(config.authRequired, config.type),
         requireRole(config.type, ...config.roles),
+        ...(config.middleware || []),
         config.handler
     );
 }
