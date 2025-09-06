@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Important Notice</title>
+    <style>
+        :root {
+            --bg: #0b0c10;
+            --panel: #121419;
+            --text: #e8eaed;
+            --muted: #b8c0cc;
+            --accent: #ff3b30;
+            --accent-2: #ff9f0a;
+            --focus: #4da3ff;
+        }
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #fff;
+                --panel: #ffffff;
+                --text: #111927;
+                --muted: #3a4a5a;
+                --accent: #c71712;
+                --accent-2: #b46a00;
+                --focus: #1a73e8;
+            }
+            .card { box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+            body { background: linear-gradient(180deg, #fff 0%, #f6f7f9 100%); }
+        }
+
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+            color: var(--text);
+            background: radial-gradient(1200px 600px at 50% -100px, rgba(255,59,48,.25), transparent 70%),
+            radial-gradient(800px 400px at -10% 20%, rgba(255,159,10,.2), transparent 60%),
+            var(--bg);
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+
+        .wrap { width: min(680px, 100%); }
+
+        .ribbon {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border: 2px solid var(--accent);
+            background: linear-gradient(180deg, rgba(255,59,48,.12), rgba(255,59,48,.08));
+            color: var(--text);
+            border-radius: 14px;
+            font-weight: 600;
+            letter-spacing: .2px;
+        }
+
+        .ribbon svg { flex: 0 0 auto; }
+
+        .card {
+            margin-top: 16px;
+            background: var(--panel);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 18px;
+            padding: 24px;
+        }
+
+        h1 {
+            margin: 0 0 8px 0;
+            font-size: clamp(22px, 2.2vw + 12px, 28px);
+            line-height: 1.2;
+        }
+
+        .sub {
+            margin: 0 0 18px 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .message {
+            margin: 16px 0 24px;
+            padding: 16px;
+            border-left: 4px solid var(--accent-2);
+            background: linear-gradient(180deg, rgba(255,159,10,.14), rgba(255,159,10,.08));
+            border-radius: 10px;
+            font-size: 15px;
+            line-height: 1.55;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 0;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1;
+            letter-spacing: .2px;
+            transition: transform .06s ease, box-shadow .2s ease;
+            outline-offset: 3px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(180deg, var(--accent), #b40f0b);
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(199,23,18,.35);
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .btn-primary:focus-visible { outline: 3px solid var(--focus); }
+        .btn-primary:hover:not(:disabled) { transform: translateY(-1px); }
+        .btn-primary:active:not(:disabled) { transform: translateY(0); box-shadow: 0 2px 8px rgba(199,23,18,.25); }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,.2);
+            color: var(--text);
+        }
+
+        .legal { margin-top: 14px; font-size: 12px; color: var(--muted); }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<main class="wrap" role="main" aria-labelledby="heading">
+    <div class="ribbon" role="alert" aria-live="assertive">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+            <path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Important action required
+    </div>
+
+    <section class="card">
+        <h1 id="heading">Please review before proceeding</h1>
+        <p class="sub">To protect your account and keep things secure, we need to share the following information:</p>
+
+        <div id="message" class="message">##MESSAGE##</div>
+
+        <div class="checkbox">
+            <input type="checkbox" id="acknowledge" />
+            <label for="acknowledge">I have read and understood this information</label>
+        </div>
+
+        <div class="actions">
+            <button id="proceed" class="btn btn-primary" disabled>I understand — continue</button>
+            <button class="btn btn-ghost" type="button" onclick="history.back()">Go back</button>
+        </div>
+
+        <p class="legal">By continuing, you acknowledge you have read and understood the information above.</p>
+    </section>
+</main>
+
+<noscript>
+    <div style="max-width:680px;margin:16px auto;padding:12px 16px;border:2px solid #c00;border-radius:10px;background:#fff0f0;color:#111">
+        JavaScript is disabled. You must enable JavaScript to proceed.
+    </div>
+</noscript>
+
+<script>
+    const checkbox = document.getElementById('acknowledge');
+    const proceedBtn = document.getElementById('proceed');
+
+    checkbox.addEventListener('change', async () => {
+        if (checkbox.checked) {
+            try {
+                const resp = await fetch('/internal/warning/dismiss', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ acknowledge: true })
+                });
+                const data = await resp.json();
+                if (data.result === 'success') {
+                    proceedBtn.removeAttribute("disabled");
+                    proceedBtn.addEventListener('click', () => {
+                        window.location.href = '##REDIRECT##';
+                    }, { once: true });
+                } else {
+                    checkbox.checked = false;
+                    alert('Unable to proceed at this time.');
+                }
+            } catch (e) {
+                checkbox.checked = false;
+                alert('An error occurred. Please try again later.');
+            }
+        } else {
+            proceedBtn.disabled = true;
+        }
+    });
+</script>
+</body>
+</html>

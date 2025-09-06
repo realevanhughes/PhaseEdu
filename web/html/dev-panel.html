@@ -57,12 +57,66 @@
             padding: 8px;
             box-sizing: border-box;
         }
+        .profile-box {
+            width: 250px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .profile-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .profile-email {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .logout-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #d9534f;
+            color: white;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #c9302c;
+        }
     </style>
 </head>
 <body>
-<form method="get" action="/internal/logout">
-    <button type="submit">Logout</button>
+
+<div class="profile-box">
+    <img src="https://via.placeholder.com/80" alt="Profile Picture" class="profile-pic" id="profilePic">
+    <div class="profile-name" id="profileName">Unknown Name</div>
+    <div class="profile-name" id="profileUsername">Unknown Username</div>
+    <div class="profile-name" id="profilePronouns">Unknown Pronouns</div>
+    <div class="profile-email" id="profileEmail">Unknown Email</div>
+    <form method="GET" action="/internal/logout">
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
+</div>
+
+<h1>File Uploader</h1>>
+<form action="/api/object/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit">Upload</button>
 </form>
+
 <h1>User Management</h1>
 <div class="button-container">
     <button id="addUserBtn">Add User</button>
@@ -127,13 +181,41 @@
     const orgSelect = document.getElementById('org');
     const roleSelect = document.getElementById('role');
     const roleDescription = document.getElementById('roleDescription');
-    const modal = document.getElementById('userModal');
+    const userModal = document.getElementById('userModal');
     const addUserBtn = document.getElementById('addUserBtn');
     const closeModal = document.getElementById('closeModal');
     const userForm = document.getElementById('userForm');
 
+    let uuid;
     let roles = {};
     document.addEventListener('DOMContentLoaded', async () => {
+        fetch('/api/whoami')
+            .then(res => res.json())
+            .then(async uuid => {
+                try {
+                    const response = await fetch('/api/people/' + uuid.uuid + '/about');
+                    const user = await response.json();
+                    console.log(user);
+
+                    document.getElementById('profileName').textContent = (user.firstname+" "+user.lastname) || 'Unknown User';
+                    document.getElementById('profileUsername').textContent = user.username || 'Unknown User';
+                    document.getElementById('profilePronouns').textContent = user.pronouns || 'Unknown Pronouns';
+                    document.getElementById('profileEmail').textContent = user.email || '';
+                    try {
+                        const response = await fetch("/api/object/" + user.profile_icon);
+                        if (response.ok) {
+                            const blob = await response.blob();
+                            document.getElementById('profilePic').src = URL.createObjectURL(blob);
+                        }
+
+                    }
+                    catch (err) {
+                        console.error('Failed to load profile image:', err);
+                    }
+                } catch (err) {
+                    console.error('Failed to load user:', err);
+                }
+            });
         try {
             const response = await fetch('/api/orgs/list');
             const orgs = (await response.json()).orgs;
@@ -164,11 +246,11 @@
                 option.textContent = name;
                 roleSelect.appendChild(option);
             });
-        } catch (error) {
+        }
+        catch (error) {
             console.error('Failed to load roles:', error);
             roleSelect.innerHTML = '<option value="">Error loading roles</option>';
         }
-
 
     });
 
@@ -178,16 +260,16 @@
     });
 
     addUserBtn.addEventListener('click', () => {
-        modal.style.display = 'flex';
+        userModal.style.display = 'flex';
     });
 
     closeModal.addEventListener('click', () => {
-        modal.style.display = 'none';
+        userModal.style.display = 'none';
     });
 
     window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.display = 'none';
+        if (e.target === userModal) {
+            userModal.style.display = 'none';
         }
     });
 
@@ -208,7 +290,7 @@
             if (response.ok) {
                 alert('User created successfully!');
                 userForm.reset();
-                modal.style.display = 'none';
+                userModal.style.display = 'none';
             } else {
                 alert('Error creating user.');
             }

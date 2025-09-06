@@ -53,21 +53,26 @@ async function check_uuid_password(uuid, password) {
 }
 
 async function general_user_data(uuid){
-    const [rows] = await db.query("SELECT firstname, lastname, email, role FROM people WHERE uuid = ?", [uuid]);
+    const [rows] = await db.query("SELECT username, firstname, lastname, email, role, profile_icon, pronouns FROM people WHERE uuid = ?", [uuid]);
     return rows.length > 0 ? rows[0] : null;
 }
 
 async function check_role(uuid, role) {
-    const [rows] = await db.query("SELECT role FROM people WHERE uuid = ?", [uuid]);
+    const [rows] = await db.query("SELECT role, special_action FROM people WHERE uuid = ?", [uuid]);
     if (rows.length === 0) {
         return {"result": "failed", "message": "Invalid role or uuid!"}
     }
     if (rows[0].role === role) {
-        return {"result": "success", "message": "Role check successful!"}
+        return {"result": "success", "message": "Role check successful!", "special_action": rows[0].special_action};
     }
     else {
         return {"result": "failed", "message": "User does not posses the role."}
     }
+}
+
+async function role(uuid) {
+    const [rows] = await db.query("SELECT role, special_action FROM people WHERE uuid = ?", [uuid]);
+    return {"result": "success", "role": rows[0].role, "special_action": rows[0].special_action};
 }
 
 async function year_group(uuid) {
@@ -92,6 +97,11 @@ async function list_org(org_id) {
     return rows;
 }
 
+async function get_profile_oid(uuid) {
+    const [rows] = await db.query("SELECT profile_icon FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows[0].profile_icon : null;
+}
+
 
 module.exports = {
     username_to_uuid,
@@ -106,4 +116,6 @@ module.exports = {
     new_user,
     list,
     list_org,
+    get_profile_oid,
+    role,
 };
