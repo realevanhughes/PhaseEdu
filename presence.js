@@ -10,11 +10,19 @@ async function count(uuid) {
         let class_register = await db.query("SELECT contents FROM registers WHERE class = ?", [given_class.class_id])
         all_records = all_records.concat(class_register[0])
     }
+    let status_types = []
+    let count = []
     let statuses = {}
     for (let entry of all_records) {
+        if (!status_types.includes(entry.contents[uuid])){
+            status_types.push(entry.contents[uuid])
+        }
         statuses[entry.contents[uuid]] = (statuses[entry.contents[uuid]] || 0) + 1;
     }
-    return statuses;
+    for (const [key, value] of Object.entries(statuses)) {
+        count.push(value)
+    }
+    return {"result": "success","status_types": status_types, "count": count};
 }
 
 async function percent(uuid) {

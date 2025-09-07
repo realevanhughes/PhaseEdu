@@ -189,7 +189,7 @@ h2 {
 
 .student-summary {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto auto;
     column-gap: 5em;
     border: 2px solid #0000001a;
     border-radius: 1rem;
