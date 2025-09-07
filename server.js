@@ -111,7 +111,7 @@ function requireAuth(authRequired, type) {
 function requireRole(type, ...allowedRoles) {
     return async (req, res, next) => {
             try {
-                if (type === "warning") {
+                if (type === "warning" || type === "login" || type === "login-page") {
                     return next()
                 }
                 const user = await people.role(req.session.uuid)
@@ -139,12 +139,15 @@ function requireRole(type, ...allowedRoles) {
                     return res.status(403).json({error: 'Forbidden due to role requirements'});
                 }
             } catch (err) {
+                console.log(err)
                 return res.status(500).json({ error: 'Internal Server Error' });
+
             }
     }
 }
 
 // START TESTING
+
 
 // END TESTING
 
@@ -152,7 +155,7 @@ function requireRole(type, ...allowedRoles) {
 const api_handlers = {
     getPointDict: async (req, res) => {
         logger.http({message: `API call made to getPointDict (SID: ${req.sessionID})`});
-        const point_dict = await composite.point_dict(req.session.uuid);
+        const point_dict = await composite.point_cats_basic(req.session.uuid);
         res.json(point_dict);
     },
     getCountPresence: async (req, res) => {
@@ -295,6 +298,11 @@ const api_handlers = {
     whoami: async (req, res) => {
         logger.http({message: `API call made to whoami (SID: ${req.sessionID})`});
         res.json({"result": "success", "uuid": req.session.uuid})
+    },
+    getPointPolarity: async (req, res) => {
+        logger.http({message: `API call made to getPointPolarity (SID: ${req.sessionID})`});
+        const point_polarity = await points.total_by_polarity(req.session.uuid);
+        res.json(point_polarity);
     }
 };
 
@@ -329,7 +337,7 @@ const page_handlers = {
             });
         }
 
-    }
+    },
 };
 
 const dev_handlers = {
@@ -365,7 +373,7 @@ const internal_handlers = {
                         org = org_id;
                         req.session.org = org;
                         logger.log({level: 'http', message: `Login success (SID: ${req.sessionID}), sending username=${username} uuid=${uuid} org=${org}`});
-                        res.redirect('/dash');
+                        res.redirect('/app');
                     });
                 })
             }
@@ -382,7 +390,7 @@ const internal_handlers = {
         logger.log({level: 'http', message: `Logout requested (SID: ${req.sessionID})`});
         req.session.destroy(() => {
             res.clearCookie('connect.sid');
-            res.redirect('/dash');
+            res.redirect('/app');
         });
     },
     quick_login: async (req, res) => {
@@ -410,7 +418,7 @@ const internal_handlers = {
                         org = org_id;
                         req.session.org = org;
                         logger.log({level: 'http', message: `Quick login granted (SID: ${req.sessionID}), sending username=${username} uuid=${uuid} org=${org}`});
-                        res.redirect('/dash');
+                        res.redirect('/app');
                     });
                 })
             }).catch(err => {
@@ -426,7 +434,7 @@ const internal_handlers = {
         logger.http({message: `Dismissed warning (SID: ${req.sessionID})`});
         let special = await utils.view_conditional(req.session.uuid)
         if (!special) {
-            res.redirect(`/dash`);
+            res.redirect(`/app`);
         }
         if (special.final === 1){
             res.json({"result": "failed", "message": "This access restriction is final!"});
@@ -437,6 +445,7 @@ const internal_handlers = {
 
 const routeMap = {
     '/api/points/dict': {type: "api", method: 'get', handler: api_handlers.getPointDict, roles: ['student', 'dev'], authRequired: true },
+    '/api/points/polarity': {type: "api", method: 'get', handler: api_handlers.getPointPolarity, roles: ['student', 'dev'], authRequired: true },
     '/api/presence/count': {type: "api", method: 'get', handler: api_handlers.getCountPresence, roles: ['student', 'dev'], authRequired: true  },
     '/api/presence/dict': {type: "api", method: 'get', handler: api_handlers.getPresenceDict, roles: ['student', 'dev'], authRequired: true  },
     '/api/people/uuid-lookup': {type: "api", method: 'post', handler: api_handlers.getUsername, roles: ['student', 'dev', 'admin', 'teacher'], authRequired: true  },
@@ -452,44 +461,45 @@ const routeMap = {
     '/api/object/:oid': {type: "api", method: 'get', handler: api_handlers.getObject, roles: [], authRequired: true  },
     '/api/object/upload': {type: "api", method: 'post', handler: api_handlers.uploadObject, roles: [], authRequired: true, middleware: [ upload.single("file") ] },
 
-    '/api/login': {type: "internal", method: 'post', handler: internal_handlers.login, roles: [], authRequired: false },
-    '/api/quick-login': {type: "internal", method: 'post', handler: internal_handlers.quick_login, roles: [], authRequired: false },
+    '/api/login': {type: "login", method: 'post', handler: internal_handlers.login, roles: [], authRequired: false },
+    '/api/quick-login': {type: "login", method: 'post', handler: internal_handlers.quick_login, roles: [], authRequired: false },
     '/api/logout': {type: "internal", method: 'get', handler: internal_handlers.logout, roles: ['student', 'dev', 'admin', 'teacher']},
     '/api/warning/dismiss': {type: "warning", method: 'post', handler: internal_handlers.dismissWarning, roles: [], authRequired: true },
 
     '/dev/account': {type: "page", method: 'get', handler: dev_handlers.account, roles: ['dev'], authRequired: true  },
     '/dev': {type: "page", method: 'get', handler: page_handlers.file("web/html/dev-panel.html"), roles: ['dev'], authRequired: true  },
 
+    '/': {type: "page", method: 'get', handler: page_handlers.redirect("/app"), roles: [], authRequired: true },
     '/dash': {type: "page", method: 'get', handler: page_handlers.file("web/html/dash.html"), roles: [], authRequired: true },
-    '/login': {type: "page", method: 'get', handler: page_handlers.file("web/html/login.html"), roles: [], authRequired: false },
+    '/login': {type: "login-page", method: 'get', handler: page_handlers.file("web/html/login.html"), roles: [], authRequired: false },
     '/warning': {type: "warning", method: 'get', handler: page_handlers.specialMessage, roles: [], authRequired: true },
 
-    '/internal/login': {type: "internal", method: 'post', handler: internal_handlers.login, roles: [], authRequired: false },
-    '/internal/quick-login': {type: "internal", method: 'post', handler: internal_handlers.quick_login, roles: [], authRequired: false },
+    '/internal/login': {type: "login", method: 'post', handler: internal_handlers.login, roles: [], authRequired: false },
+    '/internal/quick-login': {type: "login", method: 'post', handler: internal_handlers.quick_login, roles: [], authRequired: false },
     '/internal/logout': {type: "internal", method: 'get', handler: internal_handlers.logout, roles: ['student', 'dev', 'admin', 'teacher']},
     '/internal/warning/dismiss': {type: "warning", method: 'post', handler: internal_handlers.dismissWarning, roles: [], authRequired: true },
+
+
+    '/app': {type: "page", method: 'get', handler: page_handlers.file("/react-build/index.html"), roles: [], authRequired: true },
 };
 
 devOut("The following routes are active: "+Object.keys(routeMap).join(', '))
 
-let non_react = []
 
 for (const [key, value] of Object.entries(routeMap)) {
     let new_path = key.split("/")
-    if (value.type === "page") {
-
+    if (value.type === "page" || value.type === "login-page") {
         for (const extension of permitted_route_extensions) {
             if (fs.existsSync("web/"+extension+"/"+new_path[new_path.length-1]+"."+extension)) {
-                routeMap[key+"."+extension] = {type: "page", method: value.method, handler: page_handlers.file("web/"+extension+"/"+new_path[new_path.length-1]+"."+extension), roles: value.roles, authRequired: value.authRequired };
+                routeMap[key+"."+extension] = {type: value.type, method: value.method, handler: page_handlers.file("web/"+extension+"/"+new_path[new_path.length-1]+"."+extension), roles: value.roles, authRequired: value.authRequired };
             }
         }
 
     }
-    if (non_react.includes(new_path[1]) === false && new_path[1] !== "") {
-        non_react.push(new_path[1]);
-    }
 }
-console.log(non_react)
+
+app.use('/app/assets', express.static(path.join(__dirname, 'react-build/assets')));
+
 
 for (const [path, config] of Object.entries(routeMap)) {
     app[config.method](
@@ -502,17 +512,7 @@ for (const [path, config] of Object.entries(routeMap)) {
 }
 
 // React initialization
-app.use('/react', express.static(path.join(__dirname, 'react-build')));
 
-// ✅ SPA fallback for React (only for non-/web routes)
-app.get(/^\/(?!api).*/, (req, res) => {
-    const firstSegment = req.path.split('/')[1];
-    if (non_react.includes(firstSegment)) {
-        res.status(404).send("Not Found");
-    } else {
-        res.sendFile(path.resolve(__dirname, 'react-build', 'index.html'));
-    }
-});
 
 
 

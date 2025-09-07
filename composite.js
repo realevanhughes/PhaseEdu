@@ -6,6 +6,18 @@ const org = require('./org');
 const people = require('./people');
 const db = require("./db");
 
+async function point_cats_basic(uuid){
+    let cat_names = []
+    let pts = []
+    const org_id = await people.uuid_org_id(uuid);
+    const point_cats = await points.point_cats(org_id);
+    for (const cat of point_cats) {
+        cat_names.push(cat.name);
+        pts.push(await points.total_by_cat(uuid, cat.pts_cat_id));
+    }
+    return {"result": "success", "cat_names": cat_names, "points": pts};
+}
+
 async function point_dict(uuid) {
     const pts = {};
     const org_id = await people.uuid_org_id(uuid);
@@ -30,4 +42,5 @@ async function periods_dict(uuid) {
 module.exports = {
     point_dict,
     periods_dict,
+    point_cats_basic,
 };

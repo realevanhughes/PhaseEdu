@@ -8,7 +8,9 @@
   "main": "server.js",
   "scripts": {
     "educore": "node server.js",
-    "build": "npm install && cd react && npm install && npm run build"
+    "build": "npm install && cd react && npm install && npm run build",
+    "cleanup": "rm -rf ./logs/* && rm -rf ./objects/*",
+    "deepclean": "rm -rf ./logs/* && rm -rf ./objects/* && rm -rf ./node_modules/* && rm -rf ./react/node_modules/*"
   },
   "contributors": [
     {
