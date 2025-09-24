@@ -9,6 +9,34 @@ async function from_uuid(uuid){
     return rows.length > 0 ? rows : null;
 }
 
+async function names_from_uuid(uuid){
+    let li = []
+    let rows = await from_uuid(uuid);
+    for (const row of rows) {
+        const [rows2] = await db.query("SELECT name, class_id FROM classes WHERE class_id = ?", [row.class_id]);
+        li.push({"name": rows2[0].name, "id": rows2[0].class_id});
+    }
+    return {"result": "success", "list": li};
+}
+
+async function id_from_uuid(uuid){
+    let li = []
+    let rows = await from_uuid(uuid);
+    for (const row of rows) {
+        const [rows2] = await db.query("SELECT class_id FROM classes WHERE class_id = ?", [row.class_id]);
+        li.push(rows2[0].class_id);
+    }
+    return li;
+}
+
+async function is_in_class(uuid, class_id){
+    const classes = await id_from_uuid(uuid);
+    return classes.includes(class_id);
+}
+
 module.exports = {
     from_uuid,
+    names_from_uuid,
+    is_in_class,
+    id_from_uuid
 };

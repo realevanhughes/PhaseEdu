@@ -244,6 +244,7 @@ h2 {
 
 .classes > a {
     display: inline-block;
+    padding: 0.5em 0;
 }
 
 .donught-chart {
@@ -262,6 +263,7 @@ h2 {
 .class {
     border-bottom: 2px solid #0000001a;
     padding-bottom: 0.5em;
+    padding-top: 0.5em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -20,6 +20,7 @@ const points = require('./points');
 const orgs = require('./org');
 const composite = require('./composite');
 const presence = require('./presence');
+const events = require('./events');
 const classes = require('./classes');
 const {username_to_uuid, get_profile_oid} = require("./people");
 const utils = require('./utils');
@@ -235,6 +236,7 @@ const api_handlers = {
         const { oid } = req.params;
         logger.http({message: `API call made to getObject (SID: ${req.sessionID}) for the object ${oid}`});
         let object_info = await utils.object_info(oid);
+        console.log(object_info);
         if (object_info.access.includes(req.session.uuid) || object_info.access.includes("*")) {
             res.sendFile((object_info.location+oid), { root: path.join(__dirname) }, (err) => {
                 if (err) {
@@ -258,7 +260,7 @@ const api_handlers = {
 
             const owner = req.session.uuid;
             const org = req.session.org;
-            const access = [owner];
+            const access = "['"+owner+"']";
             const description = `Uploaded file ${originalName}`;
             const type = req.file.mimetype;
             const location = path.join("objects", "/");
@@ -288,10 +290,8 @@ const api_handlers = {
     },
     getProfileInfo: async (req, res) => {
         const { uuid } = req.params;
-        console.log(uuid);
         logger.http({message: `API call made to getProfileInfo (SID: ${req.sessionID}) for the user ${uuid}`});
         let user_data = await people.general_user_data(uuid)
-        console.log(user_data);
         user_data["result"] = "success";
         res.json(user_data);
     },
@@ -303,6 +303,17 @@ const api_handlers = {
         logger.http({message: `API call made to getPointPolarity (SID: ${req.sessionID})`});
         const point_polarity = await points.total_by_polarity(req.session.uuid);
         res.json(point_polarity);
+    },
+    getClassList: async (req, res) => {
+        logger.http({message: `API call made to getClassList (SID: ${req.sessionID})`});
+        const classes_list = await classes.names_from_uuid(req.session.uuid);
+        res.json(classes_list);
+
+    },
+    getUpcoming: async (req, res) => {
+        logger.http({message: `API call made to getUpcoming (SID: ${req.sessionID})`});
+        const upcoming = await events.upcoming(req.session.uuid)
+        res.json(upcoming);
     }
 };
 
@@ -456,6 +467,8 @@ const routeMap = {
     '/api/people/list': {type: "api", method: 'get', handler: api_handlers.getUsers, roles: ['dev', 'admin'], authRequired: true  },
     '/api/people/:uuid/about': {type: "api", method: 'get', handler: api_handlers.getProfileInfo, roles: [], authRequired: true  },
     '/api/whoami': {type: "api", method: 'get', handler: api_handlers.whoami, roles: [], authRequired: true  },
+    '/api/classes/list': {type: "api", method: 'get', handler: api_handlers.getClassList, roles: ['student', 'teacher', 'dev'], authRequired: true  },
+    '/api/events/upcoming': {type: "api", method: 'get', handler: api_handlers.getUpcoming, roles: [], authRequired: true  },
 
     '/api/object/download/:oid': {type: "api", method: 'get', handler: api_handlers.getFile, roles: [], authRequired: true  },
     '/api/object/:oid': {type: "api", method: 'get', handler: api_handlers.getObject, roles: [], authRequired: true  },
