@@ -102,6 +102,11 @@ async function get_profile_oid(uuid) {
     return rows.length > 0 ? rows[0].profile_icon : null;
 }
 
+async function groupings(uuid) {
+    const [rows] = await db.query("SELECT org, role, school_year FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows[0] : null;
+}
+
 
 module.exports = {
     username_to_uuid,
@@ -118,4 +123,5 @@ module.exports = {
     list_org,
     get_profile_oid,
     role,
+    groupings,
 };

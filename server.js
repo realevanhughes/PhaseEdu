@@ -236,7 +236,6 @@ const api_handlers = {
         const { oid } = req.params;
         logger.http({message: `API call made to getObject (SID: ${req.sessionID}) for the object ${oid}`});
         let object_info = await utils.object_info(oid);
-        console.log(object_info);
         if (object_info.access.includes(req.session.uuid) || object_info.access.includes("*")) {
             res.sendFile((object_info.location+oid), { root: path.join(__dirname) }, (err) => {
                 if (err) {
@@ -312,7 +311,7 @@ const api_handlers = {
     },
     getUpcoming: async (req, res) => {
         logger.http({message: `API call made to getUpcoming (SID: ${req.sessionID})`});
-        const upcoming = await events.upcoming(req.session.uuid)
+        const upcoming = await events.external_upcoming(req.session.uuid)
         res.json(upcoming);
     }
 };

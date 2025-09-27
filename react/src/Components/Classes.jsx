@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 export default function Classes() {
-    let subjectName = "Computer Science";
     const [htmlContent, setHtmlContent] = React.useState(
         ""
     );
