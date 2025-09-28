@@ -68,6 +68,24 @@ async function add_conditional(uuid, on_action, message, redirect, final) {
     }
 }
 
+function timeToSeconds(timeStr) {
+    const [hours, minutes, seconds] = timeStr.split(':').map(Number);
+    return hours * 3600 + minutes * 60 + seconds;
+}
+function isTimeInRange(target, start, end) {
+    const targetSec = timeToSeconds(target);
+    const startSec = timeToSeconds(start);
+    const endSec = timeToSeconds(end);
+
+    return targetSec >= startSec && targetSec <= endSec;
+}
+
+async function room_id_info(room_id) {
+    const [rows] = await db.query("SELECT * FROM locations WHERE room_id = ?", [room_id]);
+    return rows.length > 0 ? rows[0] : null;
+}
+
+
 module.exports = {
     generate_id,
     get_unique_id,
@@ -76,4 +94,7 @@ module.exports = {
     new_object,
     view_conditional,
     delete_conditional,
+    timeToSeconds,
+    isTimeInRange,
+    room_id_info
 };
