@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import notificationIcon from "../assets/notification-icon.png";
 import settingsIcon from "../assets/settings-icon.png";
-import profilePicture from "../assets/profile-picture.png";
+import fallback from "../assets/fallback.png";
 
 export default function Header() {
-    const [accountData, setAccountData] = useState("Student"); // ✅ dynamic now
+    const [accountData, setAccountData] = useState("Student");
 
     useEffect(() => {
         fetch("/api/whoami")
@@ -38,7 +38,11 @@ export default function Header() {
                     <img id="settings-btn" src={settingsIcon} alt="Settings button" />
                 </button>
                 <button type="button">
-                    <img id="pfp-btn" src={`/api/object/${accountData.profile_icon}`} alt="User profile picture" />
+                    <img id="pfp-btn" 
+                    src={`/api/object/${accountData.profile_icon}`} 
+                    alt="profile"
+                    onError={(e) => {e.target.onerror = null; e.target.src = fallback; }}
+                    />
                 </button>
                 <p id="account-type-text">| {accountData.firstname} {accountData.lastname} ({accountData.role})</p>
             </section>

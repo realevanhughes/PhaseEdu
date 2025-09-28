@@ -1,18 +1,33 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
-import Header from "./Components/Header.jsx";
-import Main from "./Components/Main.jsx";
-import SideBar from "./Components/SideBar.jsx";
+import HomePage from "./pages/HomePage";
+import { AssignmentsPage } from "./pages/AssignmentsPage.jsx";
+import { TimetablesPage } from "./pages/TimetablesPage.jsx";
+import { FeedbackPage } from "./pages/FeedbackPage.jsx";
+import { ClassesPage } from "./pages/ClassesPage.jsx";
+import { CalendarPage } from "./pages/CalendarPage.jsx";
+import { BehaviourPage } from "./pages/BehaviourPage.jsx";
+import { AttendancePage } from "./pages/AttendancePage.jsx";
+import { Layout } from "./Layout.jsx";
 
+function App() {
 
-const root = createRoot(document.getElementById("root"));
-root.render (
-    <>
-        <Header/>
-        <div className="page-layout">
-            <SideBar/>
-            <Main/>
-        </div>
-    </>
-);
+    return (
+        <Router>
+            <Routes>
+                <Route element={<Layout/>}>
+                    <Route path="/" element={<HomePage />}/>
+                    <Route path="/ClassesPage" element={<ClassesPage />}/>
+                    <Route path="/AssignmentsPage" element={<AssignmentsPage />}/>
+                    <Route path="/FeedbackPage" element={<FeedbackPage />}/>
+                    <Route path="/CalendarPage" element={<CalendarPage />}/>
+                    <Route path="/TimetablesPage" element={<TimetablesPage />}/>
+                    <Route path="/BehaviourPage" element={<BehaviourPage />}/>
+                    <Route path="/AttendancePage" element={<AttendancePage />}/>
+                </Route>
+            </Routes>
+        </Router>
+    )
+}
+
+export default App;

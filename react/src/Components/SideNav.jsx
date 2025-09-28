@@ -1,29 +1,31 @@
-export default function SideBar() {
+import { Link } from "react-router-dom";
+
+export default function SideNav() {
     return (
         <ul className="side-nav">
             <li className="nav-btn">
-                <a href="#">Home</a>
+                <Link to="/">Home</Link>
             </li>
             <li className="nav-btn">
-                <a href="#">Classes</a>
+                <Link to="/ClassesPage">Classes</Link>
             </li>
             <li className="nav-btn">
-                <a href="#">Assignments</a>
+                <Link to="/AssignmentsPage">Assignments</Link>
             </li>
             <li className="nav-btn">
-                <a href="#">Feedback</a>
+                <Link to="/FeedbackPage">Feedback</Link>
             </li>
             <li className="nav-btn">
-                <a href="#">Calendar</a>
+                <Link to="/CalendarPage">Calendar</Link>
             </li>
             <li className="nav-btn">
-                <a href="#">Timetables</a>
+                <Link to="/TimetablesPage">Timetables</Link>
             </li>
             <li className="nav-btn">
-                <a href="#">Behaviour</a>
+                <Link to="/BehaviourPage">Behaviour</Link>
             </li>
             <li className="nav-btn">
-                <a href="#">Attendance</a>
+                <Link to="/AttendancePage">Attendance</Link>
             </li>
         </ul>
     );
