@@ -5,7 +5,7 @@ import settingsIcon from "../assets/settings-icon.png";
 import fallback from "../assets/fallback.png";
 
 export default function Header() {
-    const [accountData, setAccountData] = useState("Student");
+    const [accountData, setAccountData] = useState({"username":"Loading","firstname":"Loading","lastname":"Loading","email":"Loading","role":"student","profile_icon":"EkT1S2Ss2z2iTXHMPHYH","pronouns":"They/Them","result":"success"});
 
     useEffect(() => {
         fetch("/api/whoami")
@@ -16,9 +16,7 @@ export default function Header() {
             })
             .then((res) => res.json())
             .then((json) => {
-                if (json.role) {
-                    setAccountData(json);
-                }
+                setAccountData(json);
             })
             .catch((err) => console.error("Error fetching account type:", err));
     }, []);
@@ -39,7 +37,7 @@ export default function Header() {
                 </button>
                 <button type="button">
                     <img id="pfp-btn" 
-                    src={`/api/object/${accountData.profile_icon}`} 
+                    src={`/api/object/${accountData.profile_icon}`}
                     alt="profile"
                     onError={(e) => {e.target.onerror = null; e.target.src = fallback; }}
                     />

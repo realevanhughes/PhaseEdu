@@ -57,7 +57,6 @@ export default function StudentSummary() {
         fetch('/api/points/polarity')
             .then(response => response.json())
             .then(json => {
-                console.log(json);
                 setBehaviourData({
                     labels: ["Good", "Bad"],
                     datasets: [{
@@ -74,7 +73,6 @@ export default function StudentSummary() {
         fetch('/api/points/dict')
             .then(response => response.json())
             .then(json => {
-                console.log(json);
                 setPointData({
                     labels: json.cat_names,
                     datasets: [{
@@ -91,7 +89,6 @@ export default function StudentSummary() {
         fetch('/api/presence/count')
             .then(response => response.json())
             .then(json => {
-                console.log(json);
                 setAttendanceData({
                     labels: json.status_types,
                     datasets: [{

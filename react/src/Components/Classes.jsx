@@ -10,14 +10,11 @@ export default function Classes() {
             .then(response => response.json())
         .then(json => {
             let classes_arr = json.list
-            console.log(classes_arr)
             let add = ""
             for (let new_class of classes_arr) {
-                console.log(new_class)
-                let new_obj = `\n<li className='class'>\n<a href='/classes/${new_class.id}'>${new_class.name}</a>\n</li>`
+                let new_obj = `\n<li className='class'>\n<a href='/#/Classes/${new_class.id}'>${new_class.name}</a>\n</li>`
                 add = add + new_obj;
             }
-            console.log(add);
             setHtmlContent(add);
         })
     }, []);

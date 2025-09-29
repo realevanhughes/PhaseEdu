@@ -44,14 +44,14 @@ async function external_upcoming(uuid, days) {
                 const end_date = new Date(row.end_time);
                 const set_date = new Date(row.created_at);
                 const room  = await utils.room_id_info(row.location)
-                console.log(room)
                 upcoming_events.push({
                     "event_id": row.event_id,
                     "description": row.description,
                     "location": room.name,
                     "start_time": start_date.toLocaleString(),
                     "end_time": end_date.toLocaleString(),
-                    "set_time": set_date.toLocaleString()
+                    "set_time": set_date.toLocaleString(),
+                    "color": row.color,
                 });
             }
         }
