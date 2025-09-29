@@ -12,7 +12,6 @@
 
 html, body {
     max-width: 100%;
-    overflow-x: hidden;
 }
 
 header {
@@ -144,6 +143,8 @@ h2 {
 
 .page-layout {
     display: flex;
+    width: auto;
+    overflow-x: auto;
 }
 
 #notification-btn,
@@ -200,7 +201,7 @@ h2 {
 .student-summary {
     display: grid;
     grid-template-columns: auto auto auto;
-    column-gap: 5em;
+    column-gap: 1em;
     border: 2px solid #0000001a;
     border-radius: 1rem;
     padding: 1em 3em;
@@ -230,6 +231,7 @@ h2 {
 .schedule-item {
     display: grid;
     grid-template-columns: 0.5fr 0.75fr 1fr 1.5fr 5fr;
+    margin: auto 1em;
 }
 
 .schedule > a {

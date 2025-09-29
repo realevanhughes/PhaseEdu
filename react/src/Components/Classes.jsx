@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Classes() {
     const [htmlContent, setHtmlContent] = React.useState(
@@ -21,7 +22,7 @@ export default function Classes() {
 
     return (
         <section className="classes">
-            <a href="#" className="h2"><h2>Classes</h2></a>
+            <Link to="/ClassesPage" className="h2"><h2>Classes</h2></Link>
             <ul className="classes-list" dangerouslySetInnerHTML={{ __html: htmlContent }}>
             </ul>
         </section>

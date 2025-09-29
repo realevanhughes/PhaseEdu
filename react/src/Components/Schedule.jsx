@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Schedule() {
     const [htmlContent, setHtmlContent] = React.useState(
@@ -26,7 +27,7 @@ export default function Schedule() {
 
     return (
         <section className="schedule">
-            <a href="#" className="h2"><h2>Schedule</h2></a>
+            <Link to="/CalendarPage" className="h2"><h2>Schedule</h2></Link>
             <ul className="schedule-list" dangerouslySetInnerHTML={{ __html: htmlContent }}></ul>
         </section>
     );
