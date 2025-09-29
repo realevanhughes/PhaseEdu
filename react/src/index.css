@@ -283,3 +283,8 @@ h2 {
     color: #0000008f;
 }
 
+
+.classes-box td {
+    border: 1px solid black;
+    padding: 0.5em;
+}

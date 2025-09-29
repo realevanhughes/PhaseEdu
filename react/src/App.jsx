@@ -8,6 +8,7 @@ import { ClassesPage } from "./pages/ClassesPage.jsx";
 import { CalendarPage } from "./pages/CalendarPage.jsx";
 import { BehaviourPage } from "./pages/BehaviourPage.jsx";
 import { AttendancePage } from "./pages/AttendancePage.jsx";
+import ClassPage from "./pages/ClassPage.jsx";
 import { Layout } from "./Layout.jsx";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                     <Route path="/TimetablesPage" element={<TimetablesPage />}/>
                     <Route path="/BehaviourPage" element={<BehaviourPage />}/>
                     <Route path="/AttendancePage" element={<AttendancePage />}/>
+                    <Route path="/Classes/:cid" element={<ClassPage />}/>
                 </Route>
             </Routes>
         </Router>

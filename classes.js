@@ -13,8 +13,18 @@ async function names_from_uuid(uuid){
     let li = []
     let rows = await from_uuid(uuid);
     for (const row of rows) {
-        const [rows2] = await db.query("SELECT name, class_id FROM classes WHERE class_id = ?", [row.class_id]);
-        li.push({"name": rows2[0].name, "id": rows2[0].class_id});
+        const [rows2] = await db.query("SELECT name, class_id, color FROM classes WHERE class_id = ?", [row.class_id]);
+        li.push({"name": rows2[0].name, "id": rows2[0].class_id, "color": rows2[0].color});
+    }
+    return {"result": "success", "list": li};
+}
+
+async function details_from_uuid(uuid){
+    let li = []
+    let rows = await from_uuid(uuid);
+    for (const row of rows) {
+        const [rows2] = await db.query("SELECT * FROM classes WHERE class_id = ?", [row.class_id]);
+        li.push(rows2[0]);
     }
     return {"result": "success", "list": li};
 }
@@ -34,9 +44,16 @@ async function is_in_class(uuid, class_id){
     return classes.includes(class_id);
 }
 
+async function class_information(class_id){
+    const [rows] = await db.query("SELECT * FROM classes WHERE class_id = ?", [class_id]);
+    return rows.length > 0 ? rows[0] : null;
+}
+
 module.exports = {
     from_uuid,
     names_from_uuid,
     is_in_class,
-    id_from_uuid
+    id_from_uuid,
+    class_information,
+    details_from_uuid
 };

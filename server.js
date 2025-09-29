@@ -236,7 +236,10 @@ const api_handlers = {
         const { oid } = req.params;
         logger.http({message: `API call made to getObject (SID: ${req.sessionID}) for the object ${oid}`});
         let object_info = await utils.object_info(oid);
-        if (object_info.access.includes(req.session.uuid) || object_info.access.includes("*")) {
+        if (object_info === undefined) {
+            res.status(404).send("Object not found");
+        }
+        if (JSON.parse(object_info.access).includes(req.session.uuid) || JSON.parse(object_info.access).includes("*")) {
             res.sendFile((object_info.location+oid), { root: path.join(__dirname) }, (err) => {
                 if (err) {
                     res.status(404).send("Object not found");
@@ -259,7 +262,8 @@ const api_handlers = {
 
             const owner = req.session.uuid;
             const org = req.session.org;
-            const access = "['"+owner+"']";
+            const access_arr = [owner]
+            const access = access_arr.toString();
             const description = `Uploaded file ${originalName}`;
             const type = req.file.mimetype;
             const location = path.join("objects", "/");
@@ -307,13 +311,47 @@ const api_handlers = {
         logger.http({message: `API call made to getClassList (SID: ${req.sessionID})`});
         const classes_list = await classes.names_from_uuid(req.session.uuid);
         res.json(classes_list);
-
     },
     getUpcoming: async (req, res) => {
         logger.http({message: `API call made to getUpcoming (SID: ${req.sessionID})`});
         const upcoming = await events.external_upcoming(req.session.uuid)
         res.json(upcoming);
-    }
+    },
+    getClassInfo: async (req, res) => {
+        const { class_id } = req.params;
+        logger.http({message: `API call made to getClassInfo (SID: ${req.sessionID})`});
+        if (await classes.is_in_class(req.session.uuid, class_id)) {
+            const info = await classes.class_information(class_id);
+            res.json({"result": "success", "contents": info});
+        }
+        else {
+            res.json({"result": "failed", "message": "Not a memeber of class " + class_id + " or invalid class."});
+        }
+    },
+    getDetailedClasses: async (req, res) => {
+        logger.http({ message: `API call made to getDetailedClasses (SID: ${req.sessionID})` });
+        let classes_list = await classes.details_from_uuid(req.session.uuid);
+        for (let item of classes_list.list) {
+            item.teacher_name = await people.uuid_to_name(item.teacher_uuid);
+            item.room_name = await utils.room_id_name(item.room_id);
+        }
+        console.log(classes_list);
+        res.json(classes_list);
+    },
+    resetProfileIcon: async (req, res) => {
+        logger.http({message: `API call made to resetProfileIcon (SID: ${req.sessionID})`});
+        let user_fullname = await people.uuid_to_name(req.session.uuid);
+        const result = await utils.set_generated_profile_icon(user_fullname, req.session.uuid, req.session.org)
+        res.json(result);
+    },
+    forceResetProfileIcon: async (req, res) => {
+        const { target } = req.params;
+        logger.http({message: `Admin API call made to resetProfileIcon (SID: ${req.sessionID})`});
+        let user_fullname = await people.uuid_to_name(target);
+        let user_org = await people.uuid_org_id(target);
+        const result = await utils.set_generated_profile_icon(user_fullname, target, user_org)
+        res.json(result);
+    },
 };
 
 const page_handlers = {
@@ -468,6 +506,10 @@ const routeMap = {
     '/api/whoami': {type: "api", method: 'get', handler: api_handlers.whoami, roles: [], authRequired: true  },
     '/api/classes/list': {type: "api", method: 'get', handler: api_handlers.getClassList, roles: ['student', 'teacher', 'dev'], authRequired: true  },
     '/api/events/upcoming': {type: "api", method: 'get', handler: api_handlers.getUpcoming, roles: [], authRequired: true  },
+    '/api/classes/:class_id/info': {type: "api", method: 'get', handler: api_handlers.getClassInfo, roles: [], authRequired: true  },
+    '/api/classes/list/detailed': {type: "api", method: 'get', handler: api_handlers.getDetailedClasses, roles: [], authRequired: true  },
+    '/api/reset-profile-image': {type: "api", method: 'get', handler: api_handlers.resetProfileIcon, roles: [], authRequired: true  },
+    '/api/reset-profile-image/:target': {type: "api", method: 'get', handler: api_handlers.forceResetProfileIcon, roles: ['dev', 'admin'], authRequired: true  },
 
     '/api/object/download/:oid': {type: "api", method: 'get', handler: api_handlers.getFile, roles: [], authRequired: true  },
     '/api/object/:oid': {type: "api", method: 'get', handler: api_handlers.getObject, roles: [], authRequired: true  },

@@ -1,5 +1,10 @@
 const db = require('./db');
 const baseLogger = require('./logger');
+const orgs = require('./org');
+const people = require('./people');
+const { createCanvas } = require('canvas');
+const path = require('path');
+const fs = require("fs");
 
 function generate_id(length=10) {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -85,6 +90,59 @@ async function room_id_info(room_id) {
     return rows.length > 0 ? rows[0] : null;
 }
 
+async function room_id_name(room_id) {
+    const [rows] = await db.query("SELECT name FROM locations WHERE room_id = ?", [room_id]);
+    return rows.length > 0 ? rows[0].name : null;
+}
+
+
+async function generate_profile_icon(name) {
+    const canvasSize = 200; // image size
+    const canvas = createCanvas(canvasSize, canvasSize);
+    const ctx = canvas.getContext('2d');
+
+    const colors = ["#FFB6C1", "#FFD700", "#ADFF2F", "#00CED1", "#FF7F50", "#60ff57", "#09a800"];
+    const colorIndex = name.charCodeAt(0) % colors.length;
+    const bgColor = colors[colorIndex];
+
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, canvasSize, canvasSize);
+
+    const initial = name[0].toUpperCase();
+    ctx.fillStyle = "#fff";
+    ctx.font = `${canvasSize * 0.5}px sans-serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(initial, canvasSize / 2, canvasSize / 2);
+
+    const buffer = canvas.toBuffer("image/png");
+
+    return {buffer, extension: "png", baseName: `${initial}_avatar`};
+}
+
+async function save_generated_image(name, uuid, org) {
+    const { buffer, extension, baseName } = await generate_profile_icon(name);
+
+    const owner = uuid;
+    const access = '["*"]'
+    const description = `Generated profile avatar for ${name}`;
+    const type = "image/png";
+    const location = path.join("objects", "/");
+
+    const objectInfo = await new_object(baseName, extension, owner, org, access, description, type, location);
+    const oid = objectInfo.oid;
+    const filePath = path.join(__dirname, "objects", oid);
+
+    fs.writeFileSync(filePath, buffer);
+
+    return objectInfo;
+}
+
+async function set_generated_profile_icon(name, uuid, org) {
+    let object_data = await save_generated_image(name, uuid, org);
+    let response = await db.query("UPDATE people SET profile_icon = ? WHERE uuid = ?", [object_data.oid, uuid]);
+    return object_data;
+}
 
 module.exports = {
     generate_id,
@@ -96,5 +154,9 @@ module.exports = {
     delete_conditional,
     timeToSeconds,
     isTimeInRange,
-    room_id_info
+    room_id_info,
+    room_id_name,
+    set_generated_profile_icon,
+    save_generated_image,
+    generate_profile_icon,
 };

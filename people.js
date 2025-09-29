@@ -107,6 +107,10 @@ async function groupings(uuid) {
     return rows.length > 0 ? rows[0] : null;
 }
 
+async function uuid_to_name(uuid) {
+    const [rows] = await db.query("SELECT firstname, lastname FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? (rows[0].firstname + " " + rows[0].lastname) : null;
+}
 
 module.exports = {
     username_to_uuid,
@@ -124,4 +128,5 @@ module.exports = {
     get_profile_oid,
     role,
     groupings,
+    uuid_to_name
 };
