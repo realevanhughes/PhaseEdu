@@ -298,6 +298,14 @@ const api_handlers = {
         user_data["result"] = "success";
         res.json(user_data);
     },
+    getExtendedProfileInfo: async (req, res) => {
+        const { uuid } = req.params;
+        logger.http({message: `API call made to getExtendedProfileInfo (SID: ${req.sessionID}) for the user ${uuid}`});
+        let user_data = await people.extended_user_data(uuid)
+        user_data["result"] = "success";
+        console.log(user_data);
+        res.json(user_data);
+    },
     whoami: async (req, res) => {
         logger.http({message: `API call made to whoami (SID: ${req.sessionID})`});
         res.json({"result": "success", "uuid": req.session.uuid})
@@ -503,6 +511,7 @@ const routeMap = {
     '/api/roles/list': {type: "api", method: 'get', handler: api_handlers.getRoles, roles: ['dev', 'admin'], authRequired: true  },
     '/api/people/list': {type: "api", method: 'get', handler: api_handlers.getUsers, roles: ['dev', 'admin'], authRequired: true  },
     '/api/people/:uuid/about': {type: "api", method: 'get', handler: api_handlers.getProfileInfo, roles: [], authRequired: true  },
+    '/api/people/:uuid/info': {type: "api", method: 'get', handler: api_handlers.getExtendedProfileInfo, roles: [], authRequired: true  },
     '/api/whoami': {type: "api", method: 'get', handler: api_handlers.whoami, roles: [], authRequired: true  },
     '/api/classes/list': {type: "api", method: 'get', handler: api_handlers.getClassList, roles: ['student', 'teacher', 'dev'], authRequired: true  },
     '/api/events/upcoming': {type: "api", method: 'get', handler: api_handlers.getUpcoming, roles: [], authRequired: true  },

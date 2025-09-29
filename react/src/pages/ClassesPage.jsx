@@ -34,20 +34,17 @@ export function ClassesPage() {
                         {classInfo.map((new_class) => (
                             <tr
                                 key={new_class.class_id}
-                                onClick={() =>
-                                    (window.location = `/#/Classes/${new_class.class_id}`)
-                                }
                                 style={{ cursor: "pointer" }}
                             >
-                                <td>{new_class.name}</td>
+                                <td onClick={() => (window.location = `/#/Classes/${new_class.class_id}`)}>{new_class.name}</td>
                                 <td>{new_class.subject}</td>
-                                <td>
+                                <td onClick={() => (window.location = `/#/People/${new_class.teacher_uuid}`)}>
                                     <UserTooltip uuid={new_class.teacher_uuid}>
                                         {new_class.teacher_name}
                                     </UserTooltip>
                                 </td>
-                                <td>{new_class.year_group}</td>
-                                <td>{new_class.room_name}</td>
+                                <td onClick={() => (window.location = `/#/Years/${new_class.year_group}`)}>{new_class.year_group}</td>
+                                <td onClick={() => (window.location = `/#/Locations/${new_class.room_id}`)}>{new_class.room_name}</td>
                             </tr>
                         ))}
                         </tbody>

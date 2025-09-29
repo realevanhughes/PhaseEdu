@@ -57,6 +57,11 @@ async function general_user_data(uuid){
     return rows.length > 0 ? rows[0] : null;
 }
 
+async function extended_user_data(uuid){
+    const [rows] = await db.query("SELECT username, firstname, lastname, email, role, profile_icon, pronouns, date_joined, school_year, special_action FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows[0] : null;
+}
+
 async function check_role(uuid, role) {
     const [rows] = await db.query("SELECT role, special_action FROM people WHERE uuid = ?", [uuid]);
     if (rows.length === 0) {
@@ -128,5 +133,6 @@ module.exports = {
     get_profile_oid,
     role,
     groupings,
-    uuid_to_name
+    uuid_to_name,
+    extended_user_data
 };
