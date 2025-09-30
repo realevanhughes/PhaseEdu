@@ -66,10 +66,10 @@ export function UserPage() {
                             <strong>Username:</strong> {userInfo.username}
                         </p>
                         <p>
-                            <strong>Email:</strong> {userInfo.email}
+                            <strong>Email:  </strong><a onClick={() => (window.location = `mailto:${userInfo.email}`)} className="email-tag">{userInfo.email}</a>
                         </p>
                         <p>
-                            <strong>School Year:</strong> {userInfo.school_year}
+                            <strong >School Year:</strong> {userInfo.school_year}
                         </p>
                         <p>
                             <strong>Date Joined:</strong>{" "}

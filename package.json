@@ -41,6 +41,7 @@
     "prompt-sync": "^4.2.0",
     "react-router-dom": "^7.9.1",
     "readline-sync": "^1.4.10",
+    "rrule": "^2.8.1",
     "winston": "^3.17.0"
   }
 }

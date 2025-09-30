@@ -4,6 +4,7 @@ const people = require('./people');
 const classes = require('./classes');
 const baseLogger = require('./logger');
 const path = require("path");
+const { RRule } = require("rrule");
 const logger = baseLogger.child({label: path.basename(__filename)});
 
 async function upcoming(uuid, days) {
@@ -59,8 +60,69 @@ async function external_upcoming(uuid, days) {
     return {"result": "success", "events": upcoming_events};
 }
 
+async function getCalendarEvents(classIds) {
+    if (!Array.isArray(classIds) || classIds.length === 0) {
+        return [];
+    }
+    // fetch events only for the given classes
+    const [rows] = await db.query(
+        "SELECT * FROM events WHERE class IN (?)",
+        [classIds]
+    );
+
+    const events = [];
+
+    for (const row of rows) {
+        const baseEvent = {
+            id: row.event_id,
+            title: row.description || "Untitled Event",
+            start: new Date(row.start_time),
+            end: new Date(row.end_time),
+            allDay: false,
+            resource: {
+                class: row.class,
+                location: row.location,
+                color: row.color,
+                creator_uuid: row.creator_uuid,
+            },
+        };
+
+        if (row.is_recurring && row.recurrence_rule) {
+            try {
+                const rule = RRule.fromString(row.recurrence_rule);
+
+                const dates = rule.between(
+                    new Date("2025-01-01"),
+                    new Date("2026-01-01"),
+                    true
+                );
+
+                for (const date of dates) {
+                    const duration =
+                        new Date(row.end_time).getTime() -
+                        new Date(row.start_time).getTime();
+
+                    events.push({
+                        ...baseEvent,
+                        start: date,
+                        end: new Date(date.getTime() + duration),
+                    });
+                }
+            } catch (err) {
+                console.error("Invalid recurrence rule:", row.recurrence_rule, err);
+                events.push(baseEvent);
+            }
+        } else {
+            events.push(baseEvent);
+        }
+    }
+
+    return events;
+}
+
 module.exports = {
     upcoming,
     time_to_period,
-    external_upcoming
+    external_upcoming,
+    getCalendarEvents
 };

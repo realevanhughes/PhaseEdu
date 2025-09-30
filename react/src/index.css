@@ -290,3 +290,33 @@ h2 {
     border: 1px solid black;
     padding: 0.5em;
 }
+
+.user-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    margin: 2px;
+    color: white;
+    border-radius: 9999px;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1.1rem;
+}
+.email-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    margin: 2px;
+    color: white;
+    border-radius: 9999px;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1.1rem;
+    background-color: #2a63e2;
+}
+.upcoming-calendar {
+    margin-top: 0.5em;
+    display: flex;
+}

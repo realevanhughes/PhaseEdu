@@ -35,6 +35,9 @@ export default function ClassPage() {
                     <main className="main-content">
                         <div>
                             <h1 className="text-2xl font-bold">{classInfo.name}</h1>
+                            <table>
+
+                            </table>
                             <p1>{classInfo.subject}</p1>
                         </div>
                     </main>

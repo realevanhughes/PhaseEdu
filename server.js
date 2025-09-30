@@ -24,6 +24,7 @@ const events = require('./events');
 const classes = require('./classes');
 const {username_to_uuid, get_profile_oid} = require("./people");
 const utils = require('./utils');
+const assignments = require('./assignments');
 const {route} = require("express/lib/application");
 const util = require("node:util");
 const {object_info} = require("./utils");
@@ -341,25 +342,70 @@ const api_handlers = {
         let classes_list = await classes.details_from_uuid(req.session.uuid);
         for (let item of classes_list.list) {
             item.teacher_name = await people.uuid_to_name(item.teacher_uuid);
+            item.teacher_color = await people.get_color(item.teacher_uuid);
             item.room_name = await utils.room_id_name(item.room_id);
         }
-        console.log(classes_list);
         res.json(classes_list);
     },
     resetProfileIcon: async (req, res) => {
         logger.http({message: `API call made to resetProfileIcon (SID: ${req.sessionID})`});
-        let user_fullname = await people.uuid_to_name(req.session.uuid);
-        const result = await utils.set_generated_profile_icon(user_fullname, req.session.uuid, req.session.org)
+        const result = await utils.reset_profile_image(req.session.uuid, req.session.org);
         res.json(result);
     },
     forceResetProfileIcon: async (req, res) => {
         const { target } = req.params;
         logger.http({message: `Admin API call made to resetProfileIcon (SID: ${req.sessionID})`});
-        let user_fullname = await people.uuid_to_name(target);
-        let user_org = await people.uuid_org_id(target);
-        const result = await utils.set_generated_profile_icon(user_fullname, target, user_org)
+        const org_id = await people.uuid_org_id(target);
+        const result = await utils.reset_profile_image(target, org_id);
         res.json(result);
     },
+    getClassMembers: async (req, res) => {
+        const { class_id } = req.params;
+        logger.http({message: `API call made to getClassMembers (SID: ${req.sessionID})`});
+        if (await classes.is_in_class(class_id)) {
+            const members = await classes.members(class_id);
+            res.json(members);
+        }
+        else {
+            res.json({"result": "failed", "message": "Not a memeber of class " + class_id + " or invalid class."});
+        }
+    },
+    getBulkRoles: async (req, res) => {
+        const uuids = req.query.ids
+        logger.http({message: `API call made to getBulkRoles (SID: ${req.sessionID})`});
+
+    },
+    getUpcomingCalendars: async (req, res) => {
+        logger.http({message: `API call made to getUpcomingCalendars (SID: ${req.sessionID})`});
+        let list = []
+        const classes_li = await classes.from_uuid(req.session.uuid)
+        classes_li.forEach((element) => {
+            list.push(element.class_id)
+        })
+        const upcoming = await events.getCalendarEvents(list);
+        res.json({"result": "success", "contents": upcoming});
+    },
+    bulkResetProfileIcon: async (req, res) => {
+        const users = await people.list()
+        for (let target of users){
+            if (target.username !== null){
+                const result = await utils.reset_profile_image(target.uuid, target.org);
+            }
+        }
+        res.json({"result": "success"});
+    },
+    getAssignments: async (req, res) => {
+        logger.http({message: `API call made to getAssignments (SID: ${req.sessionID})`});
+        const assignment_li = await assignments.view(req.session.uuid)
+        for (let item of assignment_li) {
+            item.teacher_name = await people.uuid_to_name(item.assignee_uuid);
+            item.teacher_color = await people.get_color(item.assignee_uuid);
+            item.class_name = await classes.get_name(item.class_id);
+            item.set_date = utils.formatUTC(utils.toUTC(item.set_date));
+            item.due_date_time = utils.formatUTC(utils.toUTC(item.due_date_time));
+        }
+        res.json({"result": "success", "list": assignment_li});
+    }
 };
 
 const page_handlers = {
@@ -519,6 +565,9 @@ const routeMap = {
     '/api/classes/list/detailed': {type: "api", method: 'get', handler: api_handlers.getDetailedClasses, roles: [], authRequired: true  },
     '/api/reset-profile-image': {type: "api", method: 'get', handler: api_handlers.resetProfileIcon, roles: [], authRequired: true  },
     '/api/reset-profile-image/:target': {type: "api", method: 'get', handler: api_handlers.forceResetProfileIcon, roles: ['dev', 'admin'], authRequired: true  },
+    '/api/dev/reset-profile-image/all': {type: "api", method: 'get', handler: api_handlers.bulkResetProfileIcon, roles: ['dev'], authRequired: true  },
+    '/api/events/all': {type: "api", method: 'get', handler: api_handlers.getUpcomingCalendars, roles: [], authRequired: true  },
+    '/api/assignments/list': {type: "api", method: 'get', handler: api_handlers.getAssignments, roles: [], authRequired: true  },
 
     '/api/object/download/:oid': {type: "api", method: 'get', handler: api_handlers.getFile, roles: [], authRequired: true  },
     '/api/object/:oid': {type: "api", method: 'get', handler: api_handlers.getObject, roles: [], authRequired: true  },

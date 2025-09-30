@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import UserTooltip from "../Components/UserTooltip";
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import {createTheme, ThemeProvider} from "@mui/material";
 export function ClassesPage() {
     const [classInfo, setClassInfo] = useState([]);
 
@@ -9,46 +15,63 @@ export function ClassesPage() {
             .then((response) => response.json())
             .then((json) => {
                 setClassInfo(json.list);
+                console.log(json.list);
             });
     }, []);
+
+    const theme = createTheme({
+        components: {
+            MuiTableCell: {
+                styleOverrides: {
+                    root: {
+                        fontFamily: "Inter, sans-serif",
+                        fontOpticalSizing: "auto",
+                        fontWeight: "normal",
+                        fontStyle: "normal",
+                        fontSize: "1.1rem",
+                    },
+                },
+            },
+        },
+    });
+
 
     return (
         <div className="page-layout">
             <main className="main-content">
                 <div style={{ width: "50em" }}>
                     <h1>Classes</h1>
-                    <table
-                        style={{ width: "100%", padding: "15px" }}
-                        className="classes-box"
-                    >
-                        <thead>
-                        <tr>
-                            <th>Class</th>
-                            <th>Subject</th>
-                            <th>Teacher</th>
-                            <th>Year Group</th>
-                            <th>Room</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {classInfo.map((new_class) => (
-                            <tr
-                                key={new_class.class_id}
-                                style={{ cursor: "pointer" }}
-                            >
-                                <td onClick={() => (window.location = `/#/Classes/${new_class.class_id}`)}>{new_class.name}</td>
-                                <td>{new_class.subject}</td>
-                                <td onClick={() => (window.location = `/#/People/${new_class.teacher_uuid}`)}>
-                                    <UserTooltip uuid={new_class.teacher_uuid}>
-                                        {new_class.teacher_name}
-                                    </UserTooltip>
-                                </td>
-                                <td onClick={() => (window.location = `/#/Years/${new_class.year_group}`)}>{new_class.year_group}</td>
-                                <td onClick={() => (window.location = `/#/Locations/${new_class.room_id}`)}>{new_class.room_name}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                    <ThemeProvider theme={theme}>
+                        <Table sx={{ minWidth: 1000 }}>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Name</TableCell>
+                                    <TableCell align="right">Subject</TableCell>
+                                    <TableCell align="right">Teacher</TableCell>
+                                    <TableCell align="right">Room</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {classInfo.map((row) => (
+                                    <TableRow
+                                        key={row.name}
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 }}}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            {row.name}
+                                        </TableCell>
+                                        <TableCell align="right">{row.subject}</TableCell>
+                                        <TableCell onClick={() => (window.location = `/#/People/${row.teacher_uuid}`)} align="right">
+                                            <UserTooltip uuid={row.teacher_uuid}>
+                                                <span className="user-tag" style={{"background-color": row.teacher_color}}>{row.teacher_name}</span>
+                                            </UserTooltip>
+                                        </TableCell>
+                                        <TableCell align="right">{row.room_name}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </ThemeProvider>
                 </div>
             </main>
         </div>

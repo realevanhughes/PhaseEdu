@@ -140,9 +140,9 @@ export default function StudentSummary() {
 
     return (
         <section className="student-summary">
-            <Link to="/BehaviourPage" className="h2"><h2>Behaviour</h2></Link>
-            <Link to="/PointsPage" className="h2"><h2>Points</h2></Link>
-            <Link to="/AttendancePage" className="h2"><h2>Attendance</h2></Link>
+            <Link to="/Behaviour" className="h2"><h2>Behaviour</h2></Link>
+            <Link to="/Points" className="h2"><h2>Points</h2></Link>
+            <Link to="/Attendance" className="h2"><h2>Attendance</h2></Link>
 
             <div className="donught-chart" id="behaviour-chart" style={{ width: "200px", height: "200px" }}>
                 <Doughnut

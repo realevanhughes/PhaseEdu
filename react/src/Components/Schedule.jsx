@@ -27,7 +27,7 @@ export default function Schedule() {
 
     return (
         <section className="schedule">
-            <Link to="/CalendarPage" className="h2"><h2>Schedule</h2></Link>
+            <Link to="/Calendar" className="h2"><h2>Schedule</h2></Link>
             <ul className="schedule-list" dangerouslySetInnerHTML={{ __html: htmlContent }}></ul>
         </section>
     );

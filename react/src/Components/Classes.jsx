@@ -13,7 +13,11 @@ export default function Classes() {
             let classes_arr = json.list
             let add = ""
             for (let new_class of classes_arr) {
-                let new_obj = `\n<li className='class'>\n<a href='/#/Classes/${new_class.id}'>${new_class.name}</a>\n</li>`
+                let new_obj = `
+                    <li className='class'>
+                        <a href='/#/Classes/${new_class.id}'>${new_class.name}</a>
+                        <hr>
+                    </li>`
                 add = add + new_obj;
             }
             setHtmlContent(add);
@@ -22,7 +26,7 @@ export default function Classes() {
 
     return (
         <section className="classes">
-            <Link to="/ClassesPage" className="h2"><h2>Classes</h2></Link>
+            <Link to="/Classes" className="h2"><h2>Classes</h2></Link>
             <ul className="classes-list" dangerouslySetInnerHTML={{ __html: htmlContent }}>
             </ul>
         </section>

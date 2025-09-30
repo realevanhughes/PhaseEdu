@@ -1,7 +1,6 @@
 const db = require('./db');
 const baseLogger = require('./logger');
 const orgs = require('./org');
-const people = require('./people');
 const { createCanvas } = require('canvas');
 const path = require('path');
 const fs = require("fs");
@@ -46,6 +45,11 @@ async function new_object(name, file_extension, owner, org, access, description,
     return {"result": "success", "message": "Created object "+oid+"!", "oid": oid};
 }
 
+async function delete_object(oid) {
+    const response = await db.query("DELETE FROM objects WHERE oid = ?", [oid]);
+    return response.affectedRows > 0 ? {"result": "success"} : {"result": "failed", "message": "no such object"};
+}
+
 async function view_conditional(uuid) {
     const [rows] = await db.query("SELECT * FROM special_action WHERE uuid = ?", [uuid]);
     return rows.length > 0 ? rows[0] : null;
@@ -85,6 +89,24 @@ function isTimeInRange(target, start, end) {
     return targetSec >= startSec && targetSec <= endSec;
 }
 
+function toUTC(isoString) {
+    return new Date(isoString);
+}
+
+function formatUTC(date) {
+    const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+        timeZone: 'UTC'
+    };
+
+    return date.toLocaleString('en-US', options);
+}
+
 async function room_id_info(room_id) {
     const [rows] = await db.query("SELECT * FROM locations WHERE room_id = ?", [room_id]);
     return rows.length > 0 ? rows[0] : null;
@@ -101,7 +123,7 @@ async function generate_profile_icon(name) {
     const canvas = createCanvas(canvasSize, canvasSize);
     const ctx = canvas.getContext('2d');
 
-    const colors = ["#FFB6C1", "#FFD700", "#ADFF2F", "#00CED1", "#FF7F50", "#60ff57", "#09a800"];
+    const colors = ["#fbf8cc", "#fde4cf", "#ffcfd2", "#f1c0e8", "#cfbaf0", "#a3c4f3", "#90dbf4", "#8eecf5", "#98f5e1", "#b9fbc0"];
     const colorIndex = name.charCodeAt(0) % colors.length;
     const bgColor = colors[colorIndex];
 
@@ -109,7 +131,7 @@ async function generate_profile_icon(name) {
     ctx.fillRect(0, 0, canvasSize, canvasSize);
 
     const initial = name[0].toUpperCase();
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = "#000000";
     ctx.font = `${canvasSize * 0.5}px sans-serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
@@ -117,11 +139,11 @@ async function generate_profile_icon(name) {
 
     const buffer = canvas.toBuffer("image/png");
 
-    return {buffer, extension: "png", baseName: `${initial}_avatar`};
+    return {buffer, extension: "png", baseName: `${initial}_avatar`, bgColor: bgColor};
 }
 
 async function save_generated_image(name, uuid, org) {
-    const { buffer, extension, baseName } = await generate_profile_icon(name);
+    const { buffer, extension, baseName, bgColor } = await generate_profile_icon(name);
 
     const owner = uuid;
     const access = '["*"]'
@@ -135,13 +157,28 @@ async function save_generated_image(name, uuid, org) {
 
     fs.writeFileSync(filePath, buffer);
 
-    return objectInfo;
+    return {"object": objectInfo, "color": bgColor};
 }
 
 async function set_generated_profile_icon(name, uuid, org) {
     let object_data = await save_generated_image(name, uuid, org);
-    let response = await db.query("UPDATE people SET profile_icon = ? WHERE uuid = ?", [object_data.oid, uuid]);
+    let response = await db.query("UPDATE people SET profile_icon = ?, color = ? WHERE uuid = ?", [object_data.object.oid, object_data.color, uuid]);
     return object_data;
+}
+
+async function reset_profile_image(uuid, org) {
+    const people = require('./people');
+    const old_pfp = await people.get_profile_oid(uuid);
+    const old_pfp_data = await object_info(old_pfp);
+    let user_fullname = await people.uuid_to_name(uuid);
+    const result2 = await set_generated_profile_icon(user_fullname, uuid, org)
+
+    if (old_pfp_data.owner === "0000000000"){
+        return {"result": "success", "message": "had to generate profile icon", "object": result2};
+    }
+    fs.rmSync(path.join(__dirname, old_pfp_data.location, old_pfp));
+    await delete_object(old_pfp);
+    return {"result": "success", "message": "reset to default", "object": result2};
 }
 
 module.exports = {
@@ -159,4 +196,8 @@ module.exports = {
     set_generated_profile_icon,
     save_generated_image,
     generate_profile_icon,
+    delete_object,
+    reset_profile_image,
+    toUTC,
+    formatUTC
 };

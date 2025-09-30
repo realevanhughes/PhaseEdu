@@ -7,25 +7,25 @@ export default function SideNav() {
                 <Link to="/">Home</Link>
             </li>
             <li className="nav-btn">
-                <Link to="/ClassesPage">Classes</Link>
+                <Link to="/Classes">Classes</Link>
             </li>
             <li className="nav-btn">
-                <Link to="/AssignmentsPage">Assignments</Link>
+                <Link to="/Assignments">Assignments</Link>
             </li>
             <li className="nav-btn">
-                <Link to="/FeedbackPage">Feedback</Link>
+                <Link to="/Feedback">Feedback</Link>
             </li>
             <li className="nav-btn">
-                <Link to="/CalendarPage">Calendar</Link>
+                <Link to="/Calendar">Calendar</Link>
             </li>
             <li className="nav-btn">
-                <Link to="/TimetablesPage">Timetables</Link>
+                <Link to="/Timetables">Timetables</Link>
             </li>
             <li className="nav-btn">
-                <Link to="/BehaviourPage">Behaviour</Link>
+                <Link to="/Behaviour">Behaviour</Link>
             </li>
             <li className="nav-btn">
-                <Link to="/AttendancePage">Attendance</Link>
+                <Link to="/Attendance">Attendance</Link>
             </li>
         </ul>
     );

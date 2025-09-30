@@ -19,13 +19,13 @@ function App() {
             <Routes>
                 <Route element={<Layout/>}>
                     <Route path="/" element={<HomePage />}/>
-                    <Route path="/ClassesPage" element={<ClassesPage />}/>
-                    <Route path="/AssignmentsPage" element={<AssignmentsPage />}/>
-                    <Route path="/FeedbackPage" element={<FeedbackPage />}/>
-                    <Route path="/CalendarPage" element={<CalendarPage />}/>
-                    <Route path="/TimetablesPage" element={<TimetablesPage />}/>
-                    <Route path="/BehaviourPage" element={<BehaviourPage />}/>
-                    <Route path="/AttendancePage" element={<AttendancePage />}/>
+                    <Route path="/Classes" element={<ClassesPage />}/>
+                    <Route path="/Assignments" element={<AssignmentsPage />}/>
+                    <Route path="/Feedback" element={<FeedbackPage />}/>
+                    <Route path="/Calendar" element={<CalendarPage />}/>
+                    <Route path="/Timetables" element={<TimetablesPage />}/>
+                    <Route path="/Behaviour" element={<BehaviourPage />}/>
+                    <Route path="/Attendance" element={<AttendancePage />}/>
                     <Route path="/Classes/:cid" element={<ClassPage />}/>
                     <Route path="/People/:uuid" element={<UserPage />}/>
                 </Route>

@@ -49,11 +49,32 @@ async function class_information(class_id){
     return rows.length > 0 ? rows[0] : null;
 }
 
+async function members(class_id){
+    let li = []
+    let rows = await await db.query("SELECT * FROM class_members WHERE class_id = ?", [class_id]);
+    for (const row of rows) {
+        li.push(row[0].uuid);
+    }
+    return {"result": "success", "members": li};
+}
+
+async function bulk_role(uuids){
+    const placeholders = uuids.map((_, i) => `$${i + 1}`).join(", ");
+    let rows = await await db.query("SELECT uuid, role FROM users WHERE uuid IN ?", [placeholders]);
+}
+
+async function get_name(class_id){
+    const [rows] = await db.query("SELECT name FROM classes WHERE class_id = ?", [class_id]);
+    return rows.length > 0 ? rows[0].name : null;
+}
+
 module.exports = {
     from_uuid,
     names_from_uuid,
     is_in_class,
     id_from_uuid,
     class_information,
-    details_from_uuid
+    details_from_uuid,
+    members,
+    get_name,
 };

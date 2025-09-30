@@ -53,12 +53,12 @@ async function check_uuid_password(uuid, password) {
 }
 
 async function general_user_data(uuid){
-    const [rows] = await db.query("SELECT username, firstname, lastname, email, role, profile_icon, pronouns FROM people WHERE uuid = ?", [uuid]);
+    const [rows] = await db.query("SELECT username, firstname, lastname, email, role, profile_icon, pronouns, color FROM people WHERE uuid = ?", [uuid]);
     return rows.length > 0 ? rows[0] : null;
 }
 
 async function extended_user_data(uuid){
-    const [rows] = await db.query("SELECT username, firstname, lastname, email, role, profile_icon, pronouns, date_joined, school_year, special_action FROM people WHERE uuid = ?", [uuid]);
+    const [rows] = await db.query("SELECT username, firstname, lastname, email, role, profile_icon, pronouns, date_joined, school_year, special_action, color FROM people WHERE uuid = ?", [uuid]);
     return rows.length > 0 ? rows[0] : null;
 }
 
@@ -117,6 +117,16 @@ async function uuid_to_name(uuid) {
     return rows.length > 0 ? (rows[0].firstname + " " + rows[0].lastname) : null;
 }
 
+async function pick_color(uuid, color) {
+    let response = await db.query("UPDATE people SET color = ? WHERE uuid = ?", [color, uuid]);
+    return response.affectedRows > 0 ? {"result": "success"} : {"result": "failed"};
+}
+
+async function get_color(uuid) {
+    const [rows] = await db.query("SELECT color FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows[0].color : null;
+}
+
 module.exports = {
     username_to_uuid,
     uuid_to_username,
@@ -134,5 +144,7 @@ module.exports = {
     role,
     groupings,
     uuid_to_name,
-    extended_user_data
+    extended_user_data,
+    pick_color,
+    get_color,
 };
