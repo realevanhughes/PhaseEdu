@@ -11,6 +11,7 @@ import { AttendancePage } from "./pages/AttendancePage.jsx";
 import ClassPage from "./pages/ClassPage.jsx";
 import {UserPage} from "./pages/UserPage.jsx";
 import { Layout } from "./Layout.jsx";
+import {AssignmentPage} from "./pages/AssignmentPage.jsx";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/Attendance" element={<AttendancePage />}/>
                     <Route path="/Classes/:cid" element={<ClassPage />}/>
                     <Route path="/People/:uuid" element={<UserPage />}/>
+                    <Route path="/Assignments/:hw_id" element={<AssignmentPage />}/>
                 </Route>
             </Routes>
         </Router>

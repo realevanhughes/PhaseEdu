@@ -16,6 +16,12 @@ async function view(uuid) {
     return rows.length > 0 ? rows : null;
 }
 
+async function get_hw(hw_id) {
+    const [rows] = await db.query("SELECT * FROM homework WHERE hw_id IN (?)", [hw_id]);
+    return rows.length > 0 ? rows[0] : null;
+}
+
 module.exports = {
     view,
+    get_hw,
 }

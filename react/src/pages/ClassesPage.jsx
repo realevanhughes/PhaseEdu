@@ -43,17 +43,18 @@ export function ClassesPage() {
         {
             field: "teacher_name",
             headerName: "Teacher",
+            disableClickEventBubbling: true,
             width: 200,
             renderCell: (params) => (
                 <UserTooltip uuid={params.row.teacher_uuid}>
-                    <span className="user-tag" style={{"background-color": params.row.teacher_color}}>{params.row.teacher_name}</span>
+                    <span className="user-tag" style={{"background-color": params.row.teacher_color}} onClick={() => (window.location = `/#/People/${row.teacher_uuid}`)}>{params.row.teacher_name}</span>
                 </UserTooltip>
             ),
         },
         { field: 'room_name', headerName: 'Room', width: 200 },
         {
             field: "actions",
-            headerName: "",
+            headerName: "Open",
             width: 80,
             sortable: false,
             filterable: false,
@@ -61,7 +62,7 @@ export function ClassesPage() {
             renderCell: (params) => (
                 <IconButton
                     component="a"
-                    href={`/app#/Classes/${params.row.class_id}`}   // 👈 dynamic URL
+                    href={`/app#/Classes/${params.row.class_id}`}
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -79,7 +80,7 @@ export function ClassesPage() {
                 <div style={{ width: "50em" }}>
                     <h1>Classes</h1>
                     <ThemeProvider theme={theme}>
-                        <Paper sx={{ height: 400, width: '120%' }}>
+                        <Paper className="tbl">
                             <DataGrid
                                 rows={classInfo}
                                 columns={columns}

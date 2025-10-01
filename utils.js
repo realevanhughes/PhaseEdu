@@ -181,6 +181,17 @@ async function reset_profile_image(uuid, org) {
     return {"result": "success", "message": "reset to default", "object": result2};
 }
 
+async function get_bulk_file_info(oids, uuid) {
+    let [rows] = await db.query("SELECT * FROM objects WHERE oid IN (?)", [oids]);
+
+    rows = rows.filter(row => {
+        const access = JSON.parse(row.access);
+        return access.includes(uuid) || access.includes("*");
+    });
+
+    return { result: "success", list: rows };
+}
+
 module.exports = {
     generate_id,
     get_unique_id,
@@ -199,5 +210,6 @@ module.exports = {
     delete_object,
     reset_profile_image,
     toUTC,
-    formatUTC
+    formatUTC,
+    get_bulk_file_info
 };

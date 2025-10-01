@@ -405,6 +405,25 @@ const api_handlers = {
             item.due_date_time = utils.formatUTC(utils.toUTC(item.due_date_time));
         }
         res.json({"result": "success", "list": assignment_li});
+    },
+    getAssignment : async (req, res) => {
+        const { hw_id } = req.params;
+        logger.http({message: `API call made to getAssignment (SID: ${req.sessionID})`});
+        const assignment = await assignments.get_hw(hw_id)
+        assignment.teacher_name = await people.uuid_to_name(assignment.assignee_uuid);
+        assignment.teacher_color = await people.get_color(assignment.assignee_uuid);
+        assignment.class_name = await classes.get_name(assignment.class_id);
+        assignment.set_date = utils.formatUTC(utils.toUTC(assignment.set_date));
+        assignment.due_date_time = utils.formatUTC(utils.toUTC(assignment.due_date_time));
+        res.json({"result": "success", "assignment": assignment});
+    },
+    getBulkFileInfo: async (req, res) => {
+        const oids = JSON.parse(req.query.oids);
+        console.log("oids", oids);
+        logger.http({message: `API call made to getBulkFileInfo (SID: ${req.sessionID})`});
+        const files = await utils.get_bulk_file_info(oids, req.session.uuid);
+        console.log(files);
+        res.json(files);
     }
 };
 
@@ -568,7 +587,9 @@ const routeMap = {
     '/api/dev/reset-profile-image/all': {type: "api", method: 'get', handler: api_handlers.bulkResetProfileIcon, roles: ['dev'], authRequired: true  },
     '/api/events/all': {type: "api", method: 'get', handler: api_handlers.getUpcomingCalendars, roles: [], authRequired: true  },
     '/api/assignments/list': {type: "api", method: 'get', handler: api_handlers.getAssignments, roles: [], authRequired: true  },
+    '/api/assignments/item/:hw_id': {type: "api", method: 'get', handler: api_handlers.getAssignment, roles: [], authRequired: true  },
 
+    '/api/object/bulk/info/': {type: "api", method: 'get', handler: api_handlers.getBulkFileInfo, roles: [], authRequired: true  },
     '/api/object/download/:oid': {type: "api", method: 'get', handler: api_handlers.getFile, roles: [], authRequired: true  },
     '/api/object/:oid': {type: "api", method: 'get', handler: api_handlers.getObject, roles: [], authRequired: true  },
     '/api/object/upload': {type: "api", method: 'post', handler: api_handlers.uploadObject, roles: [], authRequired: true, middleware: [ upload.single("file") ] },

@@ -326,3 +326,25 @@ h2 {
     margin-top: 0.5em;
     display: flex;
 }
+.tbl {
+    width: calc(100vw - 18em);
+    height: 400px;
+}
+
+.md-div {
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    width: calc(100vw - 18em);
+}
+
+.markdown h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.markdown blockquote {
+    border-left: 4px solid #ccc;
+    padding-left: 1rem;
+    color: #666;
+    font-style: italic;
+}
