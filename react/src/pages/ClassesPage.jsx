@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import UserTooltip from "../Components/UserTooltip";
+import {createTheme, IconButton, ThemeProvider} from "@mui/material";
+import { DataGrid } from '@mui/x-data-grid';
+import Paper from '@mui/material/Paper';
+import { ChevronRight } from '@mui/icons-material';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import {createTheme, ThemeProvider} from "@mui/material";
 export function ClassesPage() {
     const [classInfo, setClassInfo] = useState([]);
 
@@ -14,8 +12,12 @@ export function ClassesPage() {
         fetch("/api/classes/list/detailed")
             .then((response) => response.json())
             .then((json) => {
-                setClassInfo(json.list);
-                console.log(json.list);
+                let li = json.list
+                for (let i = 0; i < li.length; i++) {
+                    li[i].id = i;
+                }
+                setClassInfo(li);
+                console.log(li);
             });
     }, []);
 
@@ -34,6 +36,41 @@ export function ClassesPage() {
             },
         },
     });
+    const paginationModel = { page: 0, pageSize: 5 };
+    const columns = [
+        { field: 'name', headerName: 'Name', width: 300 },
+        { field: 'subject', headerName: 'Subject', width: 200 },
+        {
+            field: "teacher_name",
+            headerName: "Teacher",
+            width: 200,
+            renderCell: (params) => (
+                <UserTooltip uuid={params.row.teacher_uuid}>
+                    <span className="user-tag" style={{"background-color": params.row.teacher_color}}>{params.row.teacher_name}</span>
+                </UserTooltip>
+            ),
+        },
+        { field: 'room_name', headerName: 'Room', width: 200 },
+        {
+            field: "actions",
+            headerName: "",
+            width: 80,
+            sortable: false,
+            filterable: false,
+            disableColumnMenu: true,
+            renderCell: (params) => (
+                <IconButton
+                    component="a"
+                    href={`/app#/Classes/${params.row.class_id}`}   // 👈 dynamic URL
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <ChevronRight />
+                </IconButton>
+            ),
+        },
+    ];
+
 
 
     return (
@@ -42,35 +79,16 @@ export function ClassesPage() {
                 <div style={{ width: "50em" }}>
                     <h1>Classes</h1>
                     <ThemeProvider theme={theme}>
-                        <Table sx={{ minWidth: 1000 }}>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Name</TableCell>
-                                    <TableCell align="right">Subject</TableCell>
-                                    <TableCell align="right">Teacher</TableCell>
-                                    <TableCell align="right">Room</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {classInfo.map((row) => (
-                                    <TableRow
-                                        key={row.name}
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 }}}
-                                    >
-                                        <TableCell component="th" scope="row">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell align="right">{row.subject}</TableCell>
-                                        <TableCell onClick={() => (window.location = `/#/People/${row.teacher_uuid}`)} align="right">
-                                            <UserTooltip uuid={row.teacher_uuid}>
-                                                <span className="user-tag" style={{"background-color": row.teacher_color}}>{row.teacher_name}</span>
-                                            </UserTooltip>
-                                        </TableCell>
-                                        <TableCell align="right">{row.room_name}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                        <Paper sx={{ height: 400, width: '120%' }}>
+                            <DataGrid
+                                rows={classInfo}
+                                columns={columns}
+                                initialState={{ pagination: { paginationModel } }}
+                                pageSizeOptions={[5, 10]}
+                                checkboxSelection
+                                sx={{ border: 0 }}
+                            />
+                        </Paper>
                     </ThemeProvider>
                 </div>
             </main>
