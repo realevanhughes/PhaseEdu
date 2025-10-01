@@ -143,7 +143,8 @@ h2 {
 
 .page-layout {
     display: flex;
-    width: auto;
+    width: calc(100vw - 12em);
+    margin-left: 12em;
     overflow-x: auto;
 }
 
