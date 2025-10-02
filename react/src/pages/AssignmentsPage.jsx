@@ -4,7 +4,7 @@ import UserTooltip from "../Components/UserTooltip";
 import {createTheme, IconButton, ThemeProvider} from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
-import { ChevronRight } from '@mui/icons-material';
+import { ChevronRight, Lock } from '@mui/icons-material';
 
 export function AssignmentsPage() {
     const [assignmentInfo, setAssignmentInfo] = useState([]);
@@ -53,12 +53,13 @@ export function AssignmentsPage() {
                 </UserTooltip>
             ),
         },
-        { field: 'set_date', headerName: 'Set', width: 200, sortable: true, },
-        { field: 'due_date_time', headerName: 'Due', width: 200, sortable: true, },
+        { field: 'status', headerName: 'Status', width: 100, sortable: true, },
+        { field: 'set_date', headerName: 'Set', width: 185, sortable: true, },
+        { field: 'due_date_time', headerName: 'Due', width: 185, sortable: true, },
         {
             field: "in_person",
             headerName: "Submission type",
-            width: 180,
+            width: 160,
             renderCell: (params) => (
                 params.row.in_person === 1 ? "In person" : "Online"
             ),
@@ -66,7 +67,7 @@ export function AssignmentsPage() {
         {
             field: "marked",
             headerName: "Marked",
-            width: 140,
+            width: 100,
             renderCell: (params) => (
                 params.row.marked === 1 ? "Yes" : "No"
             ),
@@ -78,17 +79,26 @@ export function AssignmentsPage() {
             sortable: false,
             filterable: false,
             disableColumnMenu: true,
-            renderCell: (params) => (
-                <IconButton
-                    component="a"
-                    href={`/app#/Assignments/${params.row.hw_id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <ChevronRight />
-                </IconButton>
-            ),
-        },
+            renderCell: (params) => {
+                if (params.row.status === "Handed in" || params.row.status === "Overdue") {
+                    return (
+                        <IconButton disabled>
+                            <Lock />
+                        </IconButton>
+                    );
+                }
+                return (
+                    <IconButton
+                        component="a"
+                        href={`/app#/Assignments/${params.row.hw_id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <ChevronRight />
+                    </IconButton>
+                );
+            },
+        }
     ];
 
     return (
@@ -105,6 +115,7 @@ export function AssignmentsPage() {
                                 pageSizeOptions={[5, 10]}
                                 checkboxSelection
                                 sx={{ border: 0 }}
+                                className="tbl-txt"
                             />
                         </Paper>
                     </ThemeProvider>

@@ -403,6 +403,7 @@ const api_handlers = {
             item.class_name = await classes.get_name(item.class_id);
             item.set_date = utils.formatUTC(utils.toUTC(item.set_date));
             item.due_date_time = utils.formatUTC(utils.toUTC(item.due_date_time));
+            item.status = await assignments.hw_status(item.hw_id, req.session.uuid, item.due_date_time)
         }
         res.json({"result": "success", "list": assignment_li});
     },
@@ -415,15 +416,61 @@ const api_handlers = {
         assignment.class_name = await classes.get_name(assignment.class_id);
         assignment.set_date = utils.formatUTC(utils.toUTC(assignment.set_date));
         assignment.due_date_time = utils.formatUTC(utils.toUTC(assignment.due_date_time));
+        assignment.status = await assignments.hw_status(assignment.hw_id, req.session.uuid, assignment.due_date_time)
         res.json({"result": "success", "assignment": assignment});
     },
     getBulkFileInfo: async (req, res) => {
+        console.log(req.query.oids)
         const oids = JSON.parse(req.query.oids);
         console.log("oids", oids);
         logger.http({message: `API call made to getBulkFileInfo (SID: ${req.sessionID})`});
         const files = await utils.get_bulk_file_info(oids, req.session.uuid);
         console.log(files);
         res.json(files);
+    },
+    getSubmission: async (req, res) => {
+        const { sub_id } = req.params;
+        logger.http({message: `API call made to getSubmission (SID: ${req.sessionID})`});
+        const result = await assignments.get_submission(sub_id)
+        res.json({"result": "success", "contents": result});
+    },
+    getSubmissions: async (req, res) => {
+        const { hw_id } = req.params;
+        logger.http({message: `API call made to getSubmissions (SID: ${req.sessionID})`});
+        const result = await assignments.get_submissions(hw_id)
+        res.json({"result": "success", "contents": result});
+    },
+    newSubmission: async (req, res) => {
+        let {homework_id, uuid, submission_date_time, linked_files} = req.body;
+        logger.http({message: `API call made to newSubmission (SID: ${req.sessionID})`});
+        const result = await assignments.new_submission(homework_id, uuid, submission_date_time, linked_files)
+        res.json(result);
+    },
+    updateSubmission: async (req, res) => {
+        let {linked_files} = req.body;
+        const { sub_id } = req.params;
+        logger.http({message: `API call made to updateSubmission (SID: ${req.sessionID})`});
+        const result = await assignments.new_submission(sub_id, utils.getCurrentTimestamp(), linked_files)
+        res.json(result);
+    },
+    finalizeSubmission: async (req, res) => {
+        const { sub_id } = req.params;
+        logger.http({message: `API call made to finalizeSubmission (SID: ${req.sessionID})`});
+        const result = await assignments.finalize_submission(sub_id)
+        res.json(result);
+    },
+    getPoints: async (req, res) => {
+        logger.http({message: `API call made to getPoints (SID: ${req.sessionID})`});
+        const all = await points.view(req.session.uuid)
+        for (let item of all) {
+            item.class_name = await classes.get_name(item.class_id)
+            item.assignee_name = await people.uuid_to_name(item.assignee_id)
+            item.category_name = (await points.cat_id_info(item.category)).name
+            item.good_date_time = utils.formatUTC(utils.toUTC(item.date_time));
+            item.teacher_name = await people.uuid_to_name(item.assignee_id);
+            item.teacher_color = await people.get_color(item.assignee_id);
+        }
+        res.json({"result": "success", "pts": all});
     }
 };
 
@@ -588,6 +635,12 @@ const routeMap = {
     '/api/events/all': {type: "api", method: 'get', handler: api_handlers.getUpcomingCalendars, roles: [], authRequired: true  },
     '/api/assignments/list': {type: "api", method: 'get', handler: api_handlers.getAssignments, roles: [], authRequired: true  },
     '/api/assignments/item/:hw_id': {type: "api", method: 'get', handler: api_handlers.getAssignment, roles: [], authRequired: true  },
+    '/api/assignments/submissions/:hw_id': {type: "api", method: 'get', handler: api_handlers.getSubmissions, roles: ['dev', 'student'], authRequired: true  },
+    '/api/assignments/submissions/item/:sub_id': {type: "api", method: 'get', handler: api_handlers.getSubmission, roles: ['dev', 'student'], authRequired: true  },
+    '/api/assignments/submissions/new': {type: "api", method: 'get', handler: api_handlers.newSubmission, roles: ['dev', 'student'], authRequired: true  },
+    '/api/assignments/submissions/item/:sub_id/update': {type: "api", method: 'get', handler: api_handlers.updateSubmission, roles: ['dev', 'student'], authRequired: true  },
+    '/api/assignments/submissions/item/:sub_id/finalize': {type: "api", method: 'get', handler: api_handlers.finalizeSubmission, roles: ['dev', 'student'], authRequired: true  },
+    '/api/points/list': {type: "api", method: 'get', handler: api_handlers.getPoints, roles: [], authRequired: true  },
 
     '/api/object/bulk/info/': {type: "api", method: 'get', handler: api_handlers.getBulkFileInfo, roles: [], authRequired: true  },
     '/api/object/download/:oid': {type: "api", method: 'get', handler: api_handlers.getFile, roles: [], authRequired: true  },

@@ -2,47 +2,103 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import UserTooltip from "../Components/UserTooltip.jsx";
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import {createTheme, IconButton, styled, ThemeProvider} from "@mui/material";
+import {createTheme, IconButton, Snackbar, styled, ThemeProvider} from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import CloseIcon from '@mui/icons-material/Close';
 import { ChevronRight, Download, CloudUpload, Send } from '@mui/icons-material';
 
 export function AssignmentPage() {
     const { hw_id } = useParams();
     const [assignmentInfo, setAssignmentInfo] = useState(null);
-    const [markdown, setMarkdown] = useState(`> Loading...
-    Please be patient, some large tasks take a minute to fetch.`);
-    const [linkedFileInfo, setLinkedFileInfo] = useState(null);
+    const [submissionInfo, setSubmissionInfo] = useState(null);
+    const [markdown, setMarkdown] = useState(
+        `> Loading...\nPlease be patient, some large tasks take a minute to fetch.`
+    );
+    const [linkedFileInfo, setLinkedFileInfo] = useState([]);
+    const [submissionFileInfo, setSubmissionFileInfo] = useState([]);
+    const [openNotif, setOpenNotif] = React.useState(false);
+
+    function formatOids(oids) {
+        if (!Array.isArray(oids)) {
+            try {
+                oids = JSON.parse(oids); // if backend gives a JSON string
+            } catch {
+                return "[]";
+            }
+        }
+        return encodeURIComponent(JSON.stringify(oids));
+    }
+
+    function sendSubmission() {
+        const result = fetch(`/api/assignments/submissions/item/${submissionInfo.submission_id}/finalize`)
+            .then(response => response.json())
+            .then(json => {
+                window.back();
+                }
+            )
+    }
 
     useEffect(() => {
-        fetch(`/api/assignments/item/${hw_id}`)
-            .then((response) => response.json())
-            .then((json) => {
-                setAssignmentInfo(json.assignment);
-                console.log(json.assignment);
-                fetch(`/api/object/${json.assignment.md}`)
-                    .then((response) => response.text())
-                    .then((text) => {
-                        setMarkdown(text);
-                        console.log(text);
-                        console.log(json.assignment.linked_files);
-                        fetch(`/api/object/bulk/info?oids=${json.assignment.linked_files}`)
-                            .then((response) => response.json())
-                            .then((json) => {
-                                let li = json.list
-                                for (let i = 0; i < li.length; i++) {
-                                    li[i].id = i;
-                                }
-                                setLinkedFileInfo(li);
-                                console.log(li);
-                            })
-                            .catch((err) => console.error("Error fetching linked items:", err));
-                    })
-                    .catch((err) => console.error("Error fetching markdown:", err));
-            });
-    }, []);
+        const fetchData = async () => {
+            try {
+                const assignmentRes = await fetch(`/api/assignments/item/${hw_id}`);
+                const assignmentJson = await assignmentRes.json();
+                const assignment = assignmentJson.assignment;
+                setAssignmentInfo(assignment);
+
+                const [markdownRes, submissionsRes] = await Promise.all([
+                    fetch(`/api/object/${assignment.md}`),
+                    fetch(`/api/assignments/submissions/${hw_id}`),
+                ]);
+
+                const [markdownText, submissionsJson] = await Promise.all([
+                    markdownRes.text(),
+                    submissionsRes.json(),
+                ]);
+
+                console.log({
+                    md: markdownText,
+                    submissions: submissionsJson,
+                });
+
+                setMarkdown(markdownText);
+                setSubmissionInfo(submissionsJson.contents);
+                console.log("submissionJSON", submissionsJson);
+
+                const studentQuery = formatOids(submissionsJson.contents.linked_files);
+                const teacherQuery = formatOids(assignment.linked_files);
+
+                console.log("studentOIDS", studentQuery, "teacherOIDS", teacherQuery);
+
+                const [studentFileRes, teacherFileRes] = await Promise.all([
+                    fetch(`/api/object/bulk/info?oids=${studentQuery}`),
+                    fetch(`/api/object/bulk/info?oids=${teacherQuery}`),
+                ]);
+
+                const [studentFiles, teacherFiles] = await Promise.all([
+                    studentFileRes.json(),
+                    teacherFileRes.json(),
+                ]);
+
+                setSubmissionFileInfo(
+                    (studentFiles.list || []).map(file => ({ ...file, source: "Student" }))
+                );
+                setLinkedFileInfo(
+                    (teacherFiles.list || []).map(file => ({ ...file, source: "Teacher" }))
+                );
+
+                console.log("teacher", linkedFileInfo, "student", submissionFileInfo);
+
+            } catch (err) {
+                console.error("Error fetching assignment data:", err);
+            }
+        };
+
+        fetchData();
+    }, [hw_id]);
 
     const theme = createTheme({
         components: {
@@ -64,6 +120,7 @@ export function AssignmentPage() {
         { field: 'name', headerName: 'Name', width: 300 },
         { field: 'file_extension', headerName: 'Extension', width: 100 },
         { field: 'description', headerName: 'Description', width: 400 },
+        { field: 'source', headerName: 'Source', width: 100 },
         {
             field: "open",
             headerName: "Open",
@@ -101,6 +158,10 @@ export function AssignmentPage() {
             ),
         },
     ];
+
+
+    const combinedRows = [...linkedFileInfo, ...submissionFileInfo];
+
     const VisuallyHiddenInput = styled('input')({
         clip: 'rect(0 0 0 0)',
         clipPath: 'inset(50%)',
@@ -112,6 +173,19 @@ export function AssignmentPage() {
         whiteSpace: 'nowrap',
         width: 1,
     });
+
+    const handleNotifClick = () => {
+        sendSubmission()
+        setOpenNotif(true);
+    };
+
+    const handleNotifClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenNotif(false);
+    };
 
 
     if (!assignmentInfo) {
@@ -126,6 +200,19 @@ export function AssignmentPage() {
             </div>
         );
     }
+
+    const notifAction = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleNotifClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
 
     return (
         <div className="page-layout">
@@ -142,9 +229,16 @@ export function AssignmentPage() {
                     </div>
                     <div style={{ paddingTop: "0.5rem", paddingBottom: "0.5rem" }}>
                         <Stack direction="row" spacing={2}>
-                            <Button variant="contained" endIcon={<Send />}>
+                            <Button variant="contained" endIcon={<Send />} onClick={handleNotifClick}>
                                 Submit
                             </Button>
+                            <Snackbar
+                                open={openNotif}
+                                autoHideDuration={6000}
+                                onClose={handleNotifClose}
+                                message="Homework submission sent!"
+                                action={notifAction}
+                            />
                             <Button variant="contained" color="error">
                                 Delete Progress
                             </Button>
@@ -175,12 +269,26 @@ export function AssignmentPage() {
                         <ThemeProvider theme={theme}>
                             <Paper className="tbl">
                                 <DataGrid
-                                    rows={linkedFileInfo}
+                                    rows={combinedRows}
                                     columns={columns}
+                                    getRowId={(row) => row.oid}
                                     initialState={{ pagination: { paginationModel } }}
                                     pageSizeOptions={[5, 10]}
                                     checkboxSelection
-                                    sx={{ border: 0 }}
+                                    sx={{
+                                        border: 0,
+                                        '& .MuiDataGrid-row.student-attached-row': {
+                                            backgroundColor: '#e0f7fa',
+                                        },
+                                        '& .MuiDataGrid-row.teacher-attached-row': {
+                                            backgroundColor: '#fce4ec',
+                                        },
+                                    }}
+                                    getRowClassName={(params) =>
+                                        params.row.source === "Student"
+                                            ? "student-attached-row"
+                                            : "teacher-attached-row"
+                                    }
                                 />
                             </Paper>
                         </ThemeProvider>

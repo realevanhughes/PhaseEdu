@@ -331,6 +331,13 @@ h2 {
     height: 400px;
 }
 
+.tbl-txt .MuiDataGrid-cell {
+    font-size: 1rem;
+}
+.tbl-txt .MuiDataGrid-columnHeaderTitle {
+    font-size: 1rem;
+}
+
 .md-div {
     border: 2px solid rgba(0, 0, 0, 0.1);
     width: calc(100vw - 18em);
@@ -347,4 +354,18 @@ h2 {
     padding-left: 1rem;
     color: #666;
     font-style: italic;
+}
+
+.MuiDataGrid-row.student-attached-row {
+    background-color: #e0f7fa;
+}
+
+.MuiDataGrid-row.teacher-attached-row {
+    background-color: #fce4ec;
+}
+
+.vertical-center {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
 }
