@@ -26,8 +26,8 @@ async function get_submission(submission_id) {
     return rows.length > 0 ? rows[0] : null;
 }
 
-async function get_submissions(hw_id) {
-    const [rows] = await db.query("SELECT * FROM homework_submissions WHERE homework_id = ?", [hw_id]);
+async function get_submissions(hw_id, uuid) {
+    const [rows] = await db.query("SELECT * FROM homework_submissions WHERE homework_id = ? AND uuid = ?", [hw_id, uuid]);
     return rows.length > 0 ? rows[0] : null;
 }
 
@@ -53,12 +53,14 @@ async function update_submission(submission_id, submission_date_time, linked_fil
 }
 
 async function finalize_submission(submission_id) {
+    console.log("sub", submission_id);
     let result = await db.query("UPDATE homework_submissions SET final = ? WHERE submission_id = ?", [true, submission_id]);
+    console.log("res", result);
     if (result.affectedRows > 0) {
         return {"result": "success"};
     }
     else {
-        return {"result": "failed", "message": "no submission found"};
+        return {"result": "failed", "message": "no submission found or already finalized"};
     }
 }
 
@@ -79,6 +81,95 @@ async function hw_status(hw_id, uuid, due_date_time) {
     }
 }
 
+async function is_locked_sub(submission_id) {
+    const [rows] = await db.query(
+        "SELECT final, homework_id FROM homework_submissions WHERE submission_id = ?",
+        [submission_id]
+    );
+
+    // No submission → locked
+    if (rows.length === 0) {
+        console.log("no submission found");
+        return true;
+    }
+
+    const [rows2] = await db.query(
+        "SELECT due_date_time FROM homework WHERE hw_id = ?",
+        [rows[0].homework_id]
+    );
+
+    const targetDate = utils.toUTC(rows2[0].due_date_time.replace(' ', 'T') + 'Z');
+    const now = new Date();
+
+    // Final submission → locked
+    if (rows[0].final === 1) {
+        console.log("handed in");
+        return true;
+    }
+
+    // Past due date → locked
+    if (targetDate <= now) {
+        console.log("overdue");
+        return true;
+    }
+
+    // Otherwise → unlocked
+    console.log("no lock")
+    return false;
+}
+
+
+
+async function is_locked_hw(hw_id, uuid) {
+    const [rows] = await db.query(
+        "SELECT final FROM homework_submissions WHERE uuid = ? AND homework_id = ?",
+        [uuid, hw_id]
+    );
+
+    // No submission → locked
+    if (rows.length === 0) {
+        console.log("no submission found");
+        return false;
+    }
+
+    const [rows2] = await db.query(
+        "SELECT due_date_time FROM homework WHERE hw_id = ?",
+        [hw_id]
+    );
+
+    // Convert due date safely
+    const pretarget = rows2[0].due_date_time.toString();
+    const targetDate = utils.toUTC(pretarget.replace(' ', 'T') + 'Z');
+    const now = new Date();
+
+    // Final submission → locked
+    if (rows[0].final === 1) {
+        console.log("handed in");
+        return true;
+    }
+
+    // Past due date → locked
+    if (targetDate <= now) {
+        console.log("overdue");
+        return true;
+    }
+
+    // Otherwise → unlocked
+    console.log("no lock")
+    return false;
+}
+
+async function rm_submission(submission_id) {
+    let response = await db.query("DELETE FROM homework_submissions WHERE submission_id = ?", [submission_id]);
+    if (response.affectedRows > 0) {
+        return {"result": "success"};
+    }
+    else {
+        return {"result": "failed", "message": "no submission found to delete"};
+    }
+}
+
+
 module.exports = {
     view,
     get_hw,
@@ -88,4 +179,7 @@ module.exports = {
     update_submission,
     finalize_submission,
     hw_status,
+    is_locked_sub,
+    is_locked_hw,
+    rm_submission,
 }
