@@ -56,7 +56,7 @@ h2 {
 }
 
 .main-content {
-    margin-left: 15em;
+    margin-left: 3em;
     margin-top: 6em;
     display: flex;
 }
@@ -299,10 +299,15 @@ h2 {
     color: white;
     border-radius: 9999px;
     font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
     font-weight: normal;
-    font-style: normal;
     font-size: 1.1rem;
+    line-height: 1.4;  /* 👈 keeps the pill tight around the text */
+    vertical-align: middle;
+}
+
+.user-tooltip {
+    height: 1em;
+    align-self: center;
 }
 .email-tag {
     display: inline-block;
@@ -374,4 +379,48 @@ h2 {
     text-overflow: ellipsis;
     max-width: 100%;
     display: block;
+}
+
+.tbl {
+    width: calc(100vw - 18em);
+    height: 400px;
+}
+
+.tbl-txt .MuiDataGrid-cell {
+    font-size: 1rem;
+}
+.tbl-txt .MuiDataGrid-columnHeaderTitle {
+    font-size: 1rem;
+}
+
+.md-div {
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    width: calc(100vw - 18em);
+}
+
+.markdown h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.markdown blockquote {
+    border-left: 4px solid #ccc;
+    padding-left: 1rem;
+    color: #666;
+    font-style: italic;
+}
+
+.MuiDataGrid-row.student-attached-row {
+    background-color: #e0f7fa;
+}
+
+.MuiDataGrid-row.teacher-attached-row {
+    background-color: #fce4ec;
+}
+
+.vertical-center {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
 }

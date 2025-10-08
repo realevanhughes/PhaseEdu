@@ -107,6 +107,20 @@ function formatUTC(date) {
     return date.toLocaleString('en-US', options);
 }
 
+function getCurrentTimestamp() {
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0"); // 0-based
+    const day = String(now.getDate()).padStart(2, "0");
+
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
 async function room_id_info(room_id) {
     const [rows] = await db.query("SELECT * FROM locations WHERE room_id = ?", [room_id]);
     return rows.length > 0 ? rows[0] : null;
@@ -181,6 +195,17 @@ async function reset_profile_image(uuid, org) {
     return {"result": "success", "message": "reset to default", "object": result2};
 }
 
+async function get_bulk_file_info(oids, uuid) {
+    let [rows] = await db.query("SELECT * FROM objects WHERE oid IN (?)", [oids]);
+
+    rows = rows.filter(row => {
+        const access = JSON.parse(row.access);
+        return access.includes(uuid) || access.includes("*");
+    });
+
+    return { result: "success", list: rows };
+}
+
 module.exports = {
     generate_id,
     get_unique_id,
@@ -199,5 +224,7 @@ module.exports = {
     delete_object,
     reset_profile_image,
     toUTC,
-    formatUTC
+    formatUTC,
+    get_bulk_file_info,
+    getCurrentTimestamp
 };
