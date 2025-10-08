@@ -321,3 +321,57 @@ h2 {
     margin-top: 0.5em;
     display: flex;
 }
+
+.account-overview {
+    padding: 14px;
+}
+
+.account-overview:hover {
+    background: rgb(212, 212, 212);
+    cursor: pointer;
+    color: #fff;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 3.5em;
+    right: 0.25em;
+    width: 20em;
+    border: 0.1em solid #0000003a;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.11);
+    border-radius: 0.5em;
+    background-color: white;
+    z-index: 100;
+    padding: 0.5em;
+    margin-right: 0.3em;
+}
+
+.menu {
+    position: relative;
+    display: inline-block;
+}
+
+.account-overview {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5em;
+}
+
+.user-name {
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0;
+}
+
+.user-info {
+    max-width: 10em;
+}
+
+.user-info > p {
+    margin: 0 0.3em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: block;
+}

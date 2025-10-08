@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import StudentOverviewDropdown from "./StudentOverview"
 
 import notificationIcon from "../assets/notification-icon.png";
 import settingsIcon from "../assets/settings-icon.png";
@@ -21,6 +22,22 @@ export default function Header() {
             .catch((err) => console.error("Error fetching account type:", err));
     }, []);
 
+    
+    const [isDropdownVisible, setDropdownVisible] = useState(false);
+    const hideTimeout = useRef(null);
+    const handleMouseEnter = () => {
+        if (hideTimeout.current) {
+            clearTimeout(hideTimeout.current);
+        }
+        setDropdownVisible(true);
+    };
+
+    const handleMouseLeave = () => {
+        hideTimeout.current = setTimeout(() => {
+            setDropdownVisible(false);
+        }, 250);
+    };
+
     return (
         <header className="header">
             <a href="#"><h1>EduCore</h1></a>
@@ -35,13 +52,23 @@ export default function Header() {
                 <button type="button" className="rlv-btn-head">
                     <img id="settings-btn" src={settingsIcon} alt="Settings button" />
                 </button>
-                <button type="button">
-                    <img id="pfp-btn" 
-                    src={`/api/object/${accountData.profile_icon}`}
-                    alt="profile"
-                    onError={(e) => {e.target.onerror = null; e.target.src = fallback; }}
-                    />
-                </button>
+
+                <div
+                    className="menu"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    <button type="button">
+                        <img id="pfp-btn"
+                            src={`/api/object/${accountData.profile_icon}`}
+                            alt="profile"
+                            onError={(e) => { e.target.onerror = null; e.target.src = fallback; }}
+                        />
+                    </button>
+
+                    {isDropdownVisible && <StudentOverviewDropdown />}
+                </div>
+                
                 <p id="account-type-text">| {accountData.firstname} {accountData.lastname} ({accountData.role})</p>
             </section>
         </header>
