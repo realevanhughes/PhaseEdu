@@ -132,6 +132,11 @@ async function get_color(uuid) {
     return rows.length > 0 ? rows[0].color : null;
 }
 
+async function get_role(uuid) {
+    const [rows] = await db.query("SELECT role FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows[0] : null;
+}
+
 module.exports = {
     username_to_uuid,
     uuid_to_username,
@@ -152,5 +157,6 @@ module.exports = {
     extended_user_data,
     pick_color,
     get_color,
-    reduced_user_data
+    reduced_user_data,
+    get_role
 };

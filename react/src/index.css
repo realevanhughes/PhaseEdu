@@ -428,3 +428,7 @@ h2 {
     vertical-align: middle;
     line-height: normal;
 }
+
+.set-hw-div {
+    width: calc(100vw - 18em);
+}

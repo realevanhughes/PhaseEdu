@@ -13,6 +13,7 @@ import {UserPage} from "./pages/UserPage.jsx";
 import { Layout } from "./Layout.jsx";
 import {AssignmentPage} from "./pages/AssignmentPage.jsx";
 import {Document} from "./pages/DocumentViewer.jsx"
+import CreateHomework from "./pages/NewHomeworkPage.jsx"
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
                     <Route path="/People/:uuid" element={<UserPage />}/>
                     <Route path="/Assignments/:hw_id" element={<AssignmentPage />}/>
                     <Route path="/Document/:oid" element={<Document />}/>
+                    <Route path="/NewAssignment/" element={<CreateHomework />}/>
                 </Route>
             </Routes>
         </Router>

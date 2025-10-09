@@ -177,7 +177,8 @@ async function new_homework(uuid, class_id, set_date, due_date_time, marked, in_
         linked_files = []
     }
     const hw_id = await utils.get_unique_id("homework", "hw_id", 10)
-    let result = await db.query("INSERT INTO homework (hw_id, assignee_uuid, class_id, set_date, due_date_time, marked, in_person, points_awarded, name, md, linked_files) values (?, ?, ?, ?, ?, false)", [hw_id, uuid, class_id, set_date, due_date_time, marked, in_person, points, name, md, linked_files.toString()])
+    console.log("homework created", [hw_id, uuid, class_id, set_date, due_date_time, marked, in_person, points, name, md, linked_files.toString()]);
+    let result = await db.query("INSERT INTO homework (hw_id, assignee_uuid, class_id, set_date, due_date_time, marked, in_person, points_awarded, name, md, linked_files) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [hw_id, uuid, class_id, set_date, due_date_time, marked, in_person, points, name, md, linked_files.toString()])
     if (result.affectedRows > 0) {
         return {"result": "success", "hw_id": hw_id};
     }

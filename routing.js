@@ -490,14 +490,14 @@ const api_handlers = {
     },
     newHomework: async (req, res) => {
         let {class_id, due_date_time, marked, in_person, points, name, md, linked_files} = req.body;
-        if (!class_id || !due_date_time || !marked || !in_person || !points || !name || !md || !linked_files) {
+        logger.http({message: `API call made to newHomework (SID: ${req.sessionID})`});
+        if (!class_id || !due_date_time || !name || !md) {
             res.json({"result": "failed", "message": "Incomplete data"});
         }
         else {
             const oids = linked_files.map(f => f.oid);
             const linked_files_str = JSON.stringify(oids);
             const check = await classes.is_in_class(req.session.uuid, class_id);
-            logger.http({message: `API call made to newSubmission (SID: ${req.sessionID})`});
             const result = await assignments.new_homework(req.session.uuid, class_id, utils.getCurrentDate(), due_date_time, marked, in_person, points, name, md, linked_files_str)
             if (await check) {
                 res.json({"result": "failed", "message": "You are unable to create assignment for the given class"});
@@ -506,6 +506,19 @@ const api_handlers = {
                 res.json(result);
             }
         }
+    },
+    getRole: async (req, res) => {
+        const { uuid } = req.params;
+        logger.http({message: `API call made to getRole (SID: ${req.sessionID}) for the user ${uuid}`});
+        let user_data = await people.get_role(uuid)
+        user_data["result"] = "success";
+        res.json(user_data);
+    },
+    getMyRole: async (req, res) => {
+        logger.http({message: `API call made to getMyRole (SID: ${req.sessionID}) for the user ${req.session.uuid}`});
+        let user_data = await people.get_role(req.session.uuid)
+        user_data["result"] = "success";
+        res.json(user_data);
     },
 };
 
@@ -659,6 +672,8 @@ const routeMap = {
     '/api/people/list': {type: "api", method: 'get', handler: api_handlers.getUsers, roles: ['dev', 'admin'], authRequired: true  },
     '/api/people/:uuid/about': {type: "api", method: 'get', handler: api_handlers.getProfileInfo, roles: [], authRequired: true  },
     '/api/people/:uuid/info': {type: "api", method: 'get', handler: api_handlers.getExtendedProfileInfo, roles: [], authRequired: true  },
+    '/api/people/:uuid/role': {type: "api", method: 'get', handler: api_handlers.getRole, roles: [], authRequired: true  },
+    '/api/myrole': {type: "api", method: 'get', handler: api_handlers.getMyRole, roles: [], authRequired: true  },
     '/api/whoami': {type: "api", method: 'get', handler: api_handlers.whoami, roles: [], authRequired: true  },
     '/api/classes/list': {type: "api", method: 'get', handler: api_handlers.getClassList, roles: ['student', 'teacher', 'dev'], authRequired: true  },
     '/api/events/upcoming': {type: "api", method: 'get', handler: api_handlers.getUpcoming, roles: [], authRequired: true  },

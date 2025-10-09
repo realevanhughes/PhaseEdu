@@ -5,9 +5,11 @@ import {createTheme, IconButton, ThemeProvider} from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import { ChevronRight, Lock } from '@mui/icons-material';
+import Button from "@mui/material/Button";
 
 export function AssignmentsPage() {
     const [assignmentInfo, setAssignmentInfo] = useState([]);
+    const [myRole, setMyRole] = useState("student");
 
     useEffect(() => {
         fetch("/api/assignments/list")
@@ -20,6 +22,12 @@ export function AssignmentsPage() {
                 setAssignmentInfo(li);
                 console.log(li);
             });
+        fetch("/api/myrole")
+        .then((response) => response.json())
+        .then((json) => {
+            setMyRole(json.role);
+            console.log("Your role:", json.role);
+        })
     }, []);
 
     const theme = createTheme({
@@ -101,26 +109,66 @@ export function AssignmentsPage() {
         }
     ];
 
-    return (
-        <div className="page-layout">
-            <main className="main-content">
-                <div style={{ width: "50em" }}>
-                    <h1>Assignments</h1>
-                    <ThemeProvider theme={theme}>
-                        <Paper className="tbl">
-                            <DataGrid
-                                rows={assignmentInfo}
-                                columns={columns}
-                                initialState={{ pagination: { paginationModel } }}
-                                pageSizeOptions={[5, 10]}
-                                checkboxSelection
-                                sx={{ border: 0 }}
-                                className="tbl-txt"
-                            />
-                        </Paper>
-                    </ThemeProvider>
-                </div>
-            </main>
-        </div>
-    );
+    if (myRole === "student") {
+        return (
+            <div className="page-layout">
+                <main className="main-content">
+                    <div style={{ width: "50em" }}>
+                        <h1>Assignments (student view)</h1>
+                        <ThemeProvider theme={theme}>
+                            <Paper className="tbl">
+                                <DataGrid
+                                    rows={assignmentInfo}
+                                    columns={columns}
+                                    initialState={{ pagination: { paginationModel } }}
+                                    pageSizeOptions={[5, 10]}
+                                    checkboxSelection
+                                    sx={{ border: 0 }}
+                                    className="tbl-txt"
+                                />
+                            </Paper>
+                        </ThemeProvider>
+                    </div>
+                </main>
+            </div>
+        );
+    }
+    if (myRole === "teacher" || myRole === "dev" || myRole === "admin") {
+        return (
+            <div className="page-layout">
+                <main className="main-content">
+                    <div style={{ width: "50em" }}>
+                        <h1>Assignments (teacher view)</h1>
+                        <Button variant="contained" href="/app#/NewAssignment/" color="success">
+                            New
+                        </Button>
+                        <ThemeProvider theme={theme}>
+                            <Paper className="tbl">
+                                <DataGrid
+                                    rows={assignmentInfo}
+                                    columns={columns}
+                                    initialState={{ pagination: { paginationModel } }}
+                                    pageSizeOptions={[5, 10]}
+                                    checkboxSelection
+                                    sx={{ border: 0 }}
+                                    className="tbl-txt"
+                                />
+                            </Paper>
+                        </ThemeProvider>
+                    </div>
+                </main>
+            </div>
+        );
+    }
+    else {
+        return (
+            <div className="page-layout">
+                <main className="main-content">
+                    <div style={{ width: "50em" }}>
+                        <h1>Cannot ascertain role</h1>
+                    </div>
+                </main>
+            </div>
+        );
+    }
 }
