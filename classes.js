@@ -6,7 +6,7 @@ const logger = baseLogger.child({label: path.basename(__filename)});
 
 async function from_uuid(uuid){
     const [rows] = await db.query("SELECT class_id FROM class_members WHERE uuid = ?", [uuid]);
-    return rows.length > 0 ? rows : null;
+    return rows.length > 0 ? rows : [];
 }
 
 async function names_from_uuid(uuid){
@@ -52,8 +52,8 @@ async function class_information(class_id){
 async function members(class_id){
     let li = []
     let rows = await await db.query("SELECT * FROM class_members WHERE class_id = ?", [class_id]);
-    for (const row of rows) {
-        li.push(row[0].uuid);
+    for (const row of rows[0]) {
+        li.push(row.uuid);
     }
     return {"result": "success", "members": li};
 }

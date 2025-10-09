@@ -32,8 +32,11 @@ async function get_submissions(hw_id, uuid) {
 }
 
 async function new_submission(homework_id, uuid, submission_date_time, linked_files) {
+    if (linked_files === null) {
+        linked_files = []
+    }
     const submission_id = await utils.get_unique_id("homework_submissions", "submission_id", 10)
-    let result = await db.query("INSERT INTO homework_submissions (submission_id, homework_id, uuid, submission_date_time, linked_files, final) values (?, ?, ?, ?, ?, false)", [submission_id, homework_id, uuid, submission_date_time, linked_files])
+    let result = await db.query("INSERT INTO homework_submissions (submission_id, homework_id, uuid, submisson_date_time, linked_files, final) values (?, ?, ?, ?, ?, false)", [submission_id, homework_id, uuid, submission_date_time, linked_files.toString()])
     if (result.affectedRows > 0) {
         return {"result": "success", "submission_id": submission_id};
     }
@@ -43,7 +46,7 @@ async function new_submission(homework_id, uuid, submission_date_time, linked_fi
 }
 
 async function update_submission(submission_id, submission_date_time, linked_files) {
-    let result = await db.query("INSERT INTO homework_submissions (submission_date_time, linked_files) values (?, ?) WHERE submission_id = ?", [submission_date_time, linked_files, submission_id])
+    let result = await db.query("UPDATE homework_submissions SET linked_files = ?, submisson_date_time = ? WHERE submission_id = ?", [linked_files, submission_date_time, submission_id])
     if (result.affectedRows > 0) {
         return {"result": "success"};
     }
@@ -98,7 +101,7 @@ async function is_locked_sub(submission_id) {
         [rows[0].homework_id]
     );
 
-    const targetDate = utils.toUTC(rows2[0].due_date_time.replace(' ', 'T') + 'Z');
+    const targetDate = utils.toUTC((rows2[0].due_date_time.toString()).replace(' ', 'T') + 'Z');
     const now = new Date();
 
     // Final submission → locked
@@ -169,6 +172,29 @@ async function rm_submission(submission_id) {
     }
 }
 
+async function new_homework(uuid, class_id, set_date, due_date_time, marked, in_person, points, name, md, linked_files) {
+    if (linked_files === null) {
+        linked_files = []
+    }
+    const hw_id = await utils.get_unique_id("homework", "hw_id", 10)
+    let result = await db.query("INSERT INTO homework (hw_id, assignee_uuid, class_id, set_date, due_date_time, marked, in_person, points_awarded, name, md, linked_files) values (?, ?, ?, ?, ?, false)", [hw_id, uuid, class_id, set_date, due_date_time, marked, in_person, points, name, md, linked_files.toString()])
+    if (result.affectedRows > 0) {
+        return {"result": "success", "hw_id": hw_id};
+    }
+    else {
+        return {"result": "failed", "message": "invalid homework"};
+    }
+}
+
+async function rm_homework(hw_id) {
+    let response = await db.query("DELETE FROM homework WHERE hw_id = ?", [hw_id]);
+    if (response.affectedRows > 0) {
+        return {"result": "success"};
+    }
+    else {
+        return {"result": "failed", "message": "no homework found to delete"};
+    }
+}
 
 module.exports = {
     view,
@@ -182,4 +208,6 @@ module.exports = {
     is_locked_sub,
     is_locked_hw,
     rm_submission,
+    new_homework,
+    rm_homework,
 }

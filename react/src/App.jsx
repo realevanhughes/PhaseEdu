@@ -12,6 +12,7 @@ import ClassPage from "./pages/ClassPage.jsx";
 import {UserPage} from "./pages/UserPage.jsx";
 import { Layout } from "./Layout.jsx";
 import {AssignmentPage} from "./pages/AssignmentPage.jsx";
+import {Document} from "./pages/DocumentViewer.jsx"
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
                     <Route path="/Classes/:cid" element={<ClassPage />}/>
                     <Route path="/People/:uuid" element={<UserPage />}/>
                     <Route path="/Assignments/:hw_id" element={<AssignmentPage />}/>
+                    <Route path="/Document/:oid" element={<Document />}/>
                 </Route>
             </Routes>
         </Router>

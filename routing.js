@@ -12,9 +12,13 @@ const path = require("path");
 const fs = require("fs");
 const readline = require("readline-sync");
 const multer = require("multer");
+const mime = require("mime-types");
+const { promisify } = require("util");
+const libre = require("libreoffice-convert");
 
 const upload = multer({ storage: multer.memoryStorage() });
 const logger = baseLogger.child({label: path.basename(__filename)});
+const libreConvert = promisify(libre.convert);
 
 const api_handlers = {
     getPointDict: async (req, res) => {
@@ -85,6 +89,13 @@ const api_handlers = {
         logger.http({message: `API call made to getFile (SID: ${req.sessionID}) for the object ${oid}`});
         let object_info = await utils.object_info(oid);
         if (object_info.access.includes(req.session.uuid) || object_info.access.includes("*")) {
+            const mimeType = mime.lookup(object_info.file_extension) || "application/octet-stream";
+
+            res.setHeader("Content-Type", mimeType);
+            res.setHeader(
+                "Content-Disposition",
+                `attachment; filename="${(object_info.name+"."+object_info.file_extension)}"`
+            );
             res.download((object_info.location+oid), (object_info.name+"."+object_info.file_extension), (err) => {
                 if (err) {
                     res.status(404).send("Object not found");
@@ -97,20 +108,55 @@ const api_handlers = {
     },
     getObject: async (req, res) => {
         const { oid } = req.params;
-        logger.http({message: `API call made to getObject (SID: ${req.sessionID}) for the object ${oid}`});
-        let object_info = await utils.object_info(oid);
-        if (object_info === undefined) {
-            res.status(404).send("Object not found");
-        }
-        if (JSON.parse(object_info.access).includes(req.session.uuid) || JSON.parse(object_info.access).includes("*")) {
-            res.sendFile((object_info.location+oid), { root: path.join(__dirname) }, (err) => {
-                if (err) {
-                    res.status(404).send("Object not found");
+        logger.http({ message: `API call made to getObject (SID: ${req.sessionID}) for the object ${oid}` });
+
+        try {
+            const object_info = await utils.object_info(oid);
+            if (!object_info) return res.status(404).send("Object not found");
+
+            const accessList = JSON.parse(object_info.access);
+            if (!accessList.includes(req.session.uuid) && !accessList.includes("*")) {
+                return res.status(401).json({ error: "Unauthorized" });
+            }
+
+            const filePath = path.join(__dirname, object_info.location + oid);
+            const ext = object_info.file_extension.toLowerCase();
+
+            // Supported office formats for conversion
+            const convertible = ["docx", "doc", "pptx", "ppt", "xlsx", "xls"];
+            if (convertible.includes(ext)) {
+                try {
+                    const fileBuffer = fs.readFileSync(filePath);
+                    const pdfBuf = await libreConvert(fileBuffer, ".pdf", undefined);
+
+                    res.setHeader("Content-Type", "application/pdf");
+                    res.setHeader(
+                        "Content-Disposition",
+                        `inline; filename="${object_info.name}.pdf"`
+                    );
+                    return res.send(pdfBuf);
+                } catch (err) {
+                    logger.error(`Error converting ${ext} to PDF: ${err}`);
+                    return res.status(500).send("Error converting document to PDF");
                 }
-            });
-        }
-        else {
-            return res.status(401).json({error: 'Unauthorized'});
+            }
+            else {
+                const mimeType = mime.lookup(ext) || "application/octet-stream";
+                res.setHeader("Content-Type", mimeType);
+                res.setHeader(
+                    "Content-Disposition",
+                    `inline; filename="${object_info.name}.${ext}"`
+                );
+                return res.sendFile(filePath, (err) => {
+                    if (err) {
+                        logger.error(`Error sending file: ${err}`);
+                        res.status(404).send("Object not found");
+                    }
+                });
+            }
+        } catch (error) {
+            logger.error(`Error in getObject: ${error}`);
+            res.status(500).send("Internal Server Error");
         }
     },
     uploadObject: async (req, res) => {
@@ -120,12 +166,12 @@ const api_handlers = {
             }
 
             const originalName = req.file.originalname;
-            const fileExtension = path.extname(originalName).substring(1);
-            const baseName = path.basename(originalName, fileExtension);
+            const { name: baseName, ext } = path.parse(req.file.originalname);
+            const fileExtension = ext.substring(1);
 
             const owner = req.session.uuid;
             const org = req.session.org;
-            const access_arr = [owner]
+            const access_arr = '["'+owner+'"]';
             const access = access_arr.toString();
             const description = `Uploaded file ${originalName}`;
             const type = req.file.mimetype;
@@ -227,6 +273,7 @@ const api_handlers = {
         if (await classes.is_in_class(req.session.uuid, class_id)) {
             let li = []
             const members = await classes.members(class_id);
+            console.log(members);
             for (let item of members.members) {
                 let user_data = await people.reduced_user_data(item)
                 user_data.uuid = item;
@@ -294,16 +341,19 @@ const api_handlers = {
         }
     },
     getBulkFileInfo: async (req, res) => {
-        console.log(req.query.oids)
         const oids = JSON.parse(req.query.oids);
-        console.log("oids", oids);
-        logger.http({message: `API call made to getBulkFileInfo (SID: ${req.sessionID})`});
-        const files = await utils.get_bulk_file_info(oids, req.session.uuid);
-        console.log(files);
-        res.json(files);
+        if (oids.length === 0) {
+            res.json({"result": "failed", "message": "no objects"});
+        }
+        else {
+            logger.http({message: `API call made to getBulkFileInfo (SID: ${req.sessionID})`});
+            const files = await utils.get_bulk_file_info(oids, req.session.uuid);
+            res.json(files);
+        }
     },
     getSubmission: async (req, res) => {
         const { sub_id } = req.params;
+        console.log("sub", sub_id);
         const check = assignments.is_locked_sub(sub_id);
         logger.http({message: `API call made to getSubmission (SID: ${req.sessionID})`});
         const result = await assignments.get_submission(sub_id)
@@ -328,9 +378,11 @@ const api_handlers = {
     },
     newSubmission: async (req, res) => {
         let {homework_id, linked_files} = req.body;
+        const oids = linked_files.map(f => f.oid);
+        const linked_files_str = JSON.stringify(oids);
         const check = assignments.is_locked_hw(homework_id, req.session.uuid);
         logger.http({message: `API call made to newSubmission (SID: ${req.sessionID})`});
-        const result = await assignments.new_submission(homework_id, req.session.uuid, utils.getCurrentTimestamp(), linked_files)
+        const result = await assignments.new_submission(homework_id, req.session.uuid, utils.getCurrentTimestamp(), linked_files_str)
         if (await check) {
             res.json({"result": "failed", "message": "You are unable to modify a submitted assignment"});
         }
@@ -340,10 +392,13 @@ const api_handlers = {
     },
     updateSubmission: async (req, res) => {
         let {linked_files} = req.body;
+        const oids = linked_files.map(f => f.oid);
+        const linked_files_str = JSON.stringify(oids);
         const { sub_id } = req.params;
         const check = assignments.is_locked_sub(sub_id)
         logger.http({message: `API call made to updateSubmission (SID: ${req.sessionID})`});
-        const result = await assignments.new_submission(sub_id, utils.getCurrentTimestamp(), linked_files)
+        console.log("linked_files", linked_files);
+        const result = await assignments.update_submission(sub_id, utils.getCurrentTimestamp(), linked_files_str)
         if (await check) {
             res.json({"result": "failed", "message": "You are unable to modify a submitted assignment"});
         }
@@ -353,7 +408,6 @@ const api_handlers = {
     },
     finalizeSubmission: async (req, res) => {
         const { hw } = req.params;
-        console.log("hw", hw)
         const check = await assignments.is_locked_hw(hw, req.session.uuid)
         if (check) {
             console.log("islocked")
@@ -361,13 +415,12 @@ const api_handlers = {
         }
         else {
             logger.http({message: `API call made to finalizeSubmission (SID: ${req.sessionID})`});
-            let sub = (await assignments.get_submissions(hw, req.session.uuid)).submission_id
-            console.log("sub", sub)
+            let sub = await assignments.get_submissions(hw, req.session.uuid)
             if (hw.length < 10) {
                 res.json({"result": "failed", "message": "No such submission to finalize"});
             }
             else {
-                const result = await assignments.finalize_submission(sub)
+                const result = await assignments.finalize_submission(sub.submission_id)
                 res.json(result);
             }
 
@@ -395,17 +448,65 @@ const api_handlers = {
         }
         else {
             logger.http({message: `API call made to finalizeSubmission (SID: ${req.sessionID})`});
-            let sub = (await assignments.get_submissions(hw, req.session.uuid)).submission_id
+            let sub = (await assignments.get_submission(hw, req.session.uuid))
             console.log("sub", sub)
             if (hw.length < 10) {
                 res.json({"result": "failed", "message": "No such submission to remove"});
             }
             else {
-                const result = await assignments.rm_submission(sub)
+                console.log("linked_files",sub.linked_files )
+                const oids = JSON.parse(sub.linked_files);
+                console.log("oids", oids);
+                for (let object of oids) {
+                    console.log("object", object);
+                    let data = await utils.object_info(object)
+                    console.log("data", data)
+                    fs.rmSync(path.join(__dirname, data.location, object));
+                    await utils.delete_object(object);
+                }
+                const result = await assignments.rm_submission(sub.submission_id)
                 res.json(result);
             }
         }
-    }
+    },
+    getObjectInfo: async (req, res) => {
+        const { oid } = req.params;
+        logger.http({message: `API call made to getObjectInfo (SID: ${req.sessionID})`});
+        if (oid === undefined) {
+            res.status(404).send("Object not found");
+        }
+        let object_info = await utils.object_info(oid);
+        if (JSON.parse(object_info.access).includes(req.session.uuid) || JSON.parse(object_info.access).includes("*")) {
+            let file = await utils.object_info(oid);
+            console.log("file", file);
+            file.owner_name = await people.uuid_to_name(file.owner);
+            file.owner_color = await people.get_color(file.owner);
+            console.log("file", file);
+            res.json({"result": "success", "info": file});
+        }
+        else {
+            return res.status(401).json({error: 'Unauthorized'});
+        }
+    },
+    newHomework: async (req, res) => {
+        let {class_id, due_date_time, marked, in_person, points, name, md, linked_files} = req.body;
+        if (!class_id || !due_date_time || !marked || !in_person || !points || !name || !md || !linked_files) {
+            res.json({"result": "failed", "message": "Incomplete data"});
+        }
+        else {
+            const oids = linked_files.map(f => f.oid);
+            const linked_files_str = JSON.stringify(oids);
+            const check = await classes.is_in_class(req.session.uuid, class_id);
+            logger.http({message: `API call made to newSubmission (SID: ${req.sessionID})`});
+            const result = await assignments.new_homework(req.session.uuid, class_id, utils.getCurrentDate(), due_date_time, marked, in_person, points, name, md, linked_files_str)
+            if (await check) {
+                res.json({"result": "failed", "message": "You are unable to create assignment for the given class"});
+            }
+            else {
+                res.json(result);
+            }
+        }
+    },
 };
 
 const page_handlers = {
@@ -571,13 +672,15 @@ const routeMap = {
     '/api/assignments/item/:hw_id': {type: "api", method: 'get', handler: api_handlers.getAssignment, roles: [], authRequired: true  },
     '/api/assignments/submissions/:hw_id': {type: "api", method: 'get', handler: api_handlers.getSubmissions, roles: ['dev', 'student'], authRequired: true  },
     '/api/assignments/submissions/item/:sub_id': {type: "api", method: 'get', handler: api_handlers.getSubmission, roles: ['dev', 'student'], authRequired: true  },
-    '/api/assignments/submissions/new': {type: "api", method: 'get', handler: api_handlers.newSubmission, roles: ['dev', 'student'], authRequired: true  },
-    '/api/assignments/submissions/item/:sub_id/update': {type: "api", method: 'get', handler: api_handlers.updateSubmission, roles: ['dev', 'student'], authRequired: true  },
+    '/api/assignments/submissions/new': {type: "api", method: 'post', handler: api_handlers.newSubmission, roles: ['dev', 'student'], authRequired: true  },
+    '/api/assignments/submissions/item/:sub_id/update': {type: "api", method: 'post', handler: api_handlers.updateSubmission, roles: ['dev', 'student'], authRequired: true  },
     '/api/assignments/submissions/item/:hw/finalize': {type: "api", method: 'get', handler: api_handlers.finalizeSubmission, roles: ['dev', 'student'], authRequired: true  },
     '/api/points/list': {type: "api", method: 'get', handler: api_handlers.getPoints, roles: [], authRequired: true  },
     '/api/classes/:class_id/members': {type: "api", method: 'get', handler: api_handlers.getClassMembers, roles: [], authRequired: true  },
     '/api/assignments/submissions/item/:hw/delete': {type: "api", method: 'get', handler: api_handlers.rmSubmission, roles: ['dev', 'student'], authRequired: true  },
+    '/api/assignments/new': {type: "api", method: 'post', handler: api_handlers.newHomework, roles: ['teacher', 'dev', 'admin'], authRequired: true  },
 
+    '/api/object/item/:oid/info': {type: "api", method: 'get', handler: api_handlers.getObjectInfo, roles: [], authRequired: true  },
     '/api/object/bulk/info/': {type: "api", method: 'get', handler: api_handlers.getBulkFileInfo, roles: [], authRequired: true  },
     '/api/object/download/:oid': {type: "api", method: 'get', handler: api_handlers.getFile, roles: [], authRequired: true  },
     '/api/object/:oid': {type: "api", method: 'get', handler: api_handlers.getObject, roles: [], authRequired: true  },

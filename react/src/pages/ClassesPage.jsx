@@ -88,6 +88,7 @@ export function ClassesPage() {
                                 pageSizeOptions={[5, 10]}
                                 checkboxSelection
                                 sx={{ border: 0 }}
+                                className="tbl-txt"
                             />
                         </Paper>
                     </ThemeProvider>

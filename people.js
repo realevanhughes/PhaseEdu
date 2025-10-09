@@ -52,6 +52,11 @@ async function check_uuid_password(uuid, password) {
     }
 }
 
+async function reduced_user_data(uuid) {
+    const [rows] = await db.query("SELECT firstname, lastname, role, color FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows[0] : null;
+}
+
 async function general_user_data(uuid){
     const [rows] = await db.query("SELECT username, firstname, lastname, email, role, profile_icon, pronouns, color FROM people WHERE uuid = ?", [uuid]);
     return rows.length > 0 ? rows[0] : null;
@@ -147,4 +152,5 @@ module.exports = {
     extended_user_data,
     pick_color,
     get_color,
+    reduced_user_data
 };

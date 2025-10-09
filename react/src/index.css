@@ -398,6 +398,10 @@ h2 {
     width: calc(100vw - 18em);
 }
 
+.due-indicator-div {
+    width: calc(100vw - 18em);
+}
+
 .markdown h1 {
     font-size: 2rem;
     font-weight: bold;

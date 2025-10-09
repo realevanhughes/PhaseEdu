@@ -121,6 +121,13 @@ function getCurrentTimestamp() {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
+function getCurrentDate(date = new Date()) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+}
+
 async function room_id_info(room_id) {
     const [rows] = await db.query("SELECT * FROM locations WHERE room_id = ?", [room_id]);
     return rows.length > 0 ? rows[0] : null;
@@ -226,5 +233,6 @@ module.exports = {
     toUTC,
     formatUTC,
     get_bulk_file_info,
-    getCurrentTimestamp
+    getCurrentTimestamp,
+    getCurrentDate
 };

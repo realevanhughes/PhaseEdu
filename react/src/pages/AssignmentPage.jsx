@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import UserTooltip from "../Components/UserTooltip.jsx";
+import AssignmentDueIndicator from "../Components/AssignmentDueIndicator.jsx";
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import {createTheme, IconButton, Snackbar, styled, ThemeProvider} from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
@@ -8,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
-import { ChevronRight, Download, CloudUpload, Send } from '@mui/icons-material';
+import {ChevronRight, Download, CloudUpload, Send, DeleteForever, Save, DeleteOutlined} from '@mui/icons-material';
 
 export function AssignmentPage() {
     const { hw_id } = useParams();
@@ -33,13 +34,110 @@ export function AssignmentPage() {
     }
 
     function sendSubmission() {
-        const result = fetch(`/api/assignments/submissions/item/${submissionInfo.submission_id}/finalize`)
+        console.log("sending ", submissionInfo.submission_id)
+        const result = fetch(`/api/assignments/submissions/item/${assignmentInfo.hw_id}/finalize`)
             .then(response => response.json())
             .then(json => {
-                window.back();
+                close()
                 }
             )
     }
+
+    function rmSubmission() {
+        const result = fetch(`/api/assignments/submissions/item/${submissionInfo.submission_id}/delete`)
+            .then(response => response.json())
+            .then(json => {
+                close()
+                }
+            )
+    }
+    function saveSubmission() {
+        const result = fetch(`/api/assignments/submissions/item/${submissionInfo.submission_id}/`)
+            .then(response => response.json())
+            .then(json => {
+                    if (json.result === "failed") {
+                        console.log("no submission, making new");
+                        const result2 = fetch(`/api/assignments/submissions/new`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json; charset=UTF-8",
+                            },
+                            body: JSON.stringify({
+                                linked_files: submissionFileInfo,
+                                homework_id: assignmentInfo.hw_id,
+                            }),
+                        })
+                        .then(response => response.json())
+                        .then(json => {
+                            location.reload();
+                        }
+                        )
+                    }
+                    else {
+                        console.log("updating submission", submissionInfo.submission_id, submissionFileInfo);
+                        const result2 = fetch(`/api/assignments/submissions/item/${submissionInfo.submission_id}/update`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json; charset=UTF-8",
+                            },
+                            body: JSON.stringify({
+                                linked_files: submissionFileInfo,
+                            }),
+                        })
+                            .then(res => res.json())
+                            .then(json => {
+                                location.reload();
+                            });
+                    }
+                }
+            )
+    }
+
+    const handleFileChange = async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            // POST to your upload endpoint
+            const response = await fetch("/api/object/upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error("Upload failed");
+            }
+
+            // Expecting a JSON response like { oid: "12345" }
+            const data = await response.json();
+
+            console.log("upload resp", data);
+
+            if (data.oid) {
+                console.log(data.oid);
+                fetch(`/api/object/bulk/info?oids=${formatOids([data.oid])}`)
+                    .then(response => response.json())
+                .then(json => {
+                    console.log("uploaded file info", json)
+                    setSubmissionFileInfo((prev) => [
+                        ...prev,
+                        ...(json.list || []).map(file => ({ ...file, source: "Student" })),
+                    ]);
+                })
+
+            }
+
+            console.log("Upload complete:", data);
+        } catch (error) {
+            console.error("Error uploading file:", error);
+        }
+
+        // Reset the input so you can upload again
+        event.target.value = "";
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,6 +145,7 @@ export function AssignmentPage() {
                 const assignmentRes = await fetch(`/api/assignments/item/${hw_id}`);
                 const assignmentJson = await assignmentRes.json();
                 const assignment = assignmentJson.assignment;
+                console.log("assignment", assignment);
                 setAssignmentInfo(assignment);
 
                 const [markdownRes, submissionsRes] = await Promise.all([
@@ -59,23 +158,17 @@ export function AssignmentPage() {
                     submissionsRes.json(),
                 ]);
 
-                console.log({
-                    md: markdownText,
-                    submissions: submissionsJson,
-                });
-
                 setMarkdown(markdownText);
-                setSubmissionInfo(submissionsJson.contents);
-                console.log("submissionJSON", submissionsJson);
 
-                const studentQuery = formatOids(submissionsJson.contents.linked_files);
-                const teacherQuery = formatOids(assignment.linked_files);
+                // ✅ Protect against null contents
+                const submission = submissionsJson.contents || { linked_files: [] };
+                setSubmissionInfo(submission);
 
-                console.log("studentOIDS", studentQuery, "teacherOIDS", teacherQuery);
+                const studentQuery = formatOids(submission.linked_files);
 
                 const [studentFileRes, teacherFileRes] = await Promise.all([
                     fetch(`/api/object/bulk/info?oids=${studentQuery}`),
-                    fetch(`/api/object/bulk/info?oids=${teacherQuery}`),
+                    fetch(`/api/object/bulk/info?oids=${assignment.linked_files}`),
                 ]);
 
                 const [studentFiles, teacherFiles] = await Promise.all([
@@ -90,8 +183,6 @@ export function AssignmentPage() {
                     (teacherFiles.list || []).map(file => ({ ...file, source: "Teacher" }))
                 );
 
-                console.log("teacher", linkedFileInfo, "student", submissionFileInfo);
-
             } catch (err) {
                 console.error("Error fetching assignment data:", err);
             }
@@ -99,6 +190,7 @@ export function AssignmentPage() {
 
         fetchData();
     }, [hw_id]);
+
 
     const theme = createTheme({
         components: {
@@ -131,7 +223,7 @@ export function AssignmentPage() {
             renderCell: (params) => (
                 <IconButton
                     component="a"
-                    href={`/app#/Assignments/${params.row.hw_id}`}
+                    href={`/app#/Document/${params.row.oid}`}
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -174,8 +266,18 @@ export function AssignmentPage() {
         width: 1,
     });
 
-    const handleNotifClick = () => {
-        sendSubmission()
+    const handleNotifClick = (type) => {
+        console.log("action", type);
+        if (type === "send") {
+            sendSubmission()
+        }
+        if (type === "save") {
+            saveSubmission()
+        }
+
+        if (type === "delete") {
+            rmSubmission()
+        }
         setOpenNotif(true);
     };
 
@@ -229,8 +331,11 @@ export function AssignmentPage() {
                     </div>
                     <div style={{ paddingTop: "0.5rem", paddingBottom: "0.5rem" }}>
                         <Stack direction="row" spacing={2}>
-                            <Button variant="contained" endIcon={<Send />} onClick={handleNotifClick}>
-                                Submit
+                            <Button variant="contained" endIcon={<Send />} onClick={() => handleNotifClick("send")}>
+                                Hand in
+                            </Button>
+                            <Button variant="contained" endIcon={<Save />} onClick={() => handleNotifClick("save")} color="success">
+                                Save Progress
                             </Button>
                             <Snackbar
                                 open={openNotif}
@@ -239,10 +344,18 @@ export function AssignmentPage() {
                                 message="Homework submission sent!"
                                 action={notifAction}
                             />
-                            <Button variant="contained" color="error">
-                                Delete Progress
+                            <Button
+                                variant="contained"
+                                color="error"
+                                endIcon={<DeleteForever />}
+                                onClick={() => handleNotifClick("delete")}
+                            >
+                                Delete progress
                             </Button>
                         </Stack>
+                        <div className="due-indicator-div">
+                            <AssignmentDueIndicator assignmentInfo={assignmentInfo} />
+                        </div>
                     </div>
                     <h1>Task:</h1>
                     <div className="md-div" style={{ padding: 16 }}>
@@ -250,21 +363,21 @@ export function AssignmentPage() {
                     </div>
                     <div style={{ width: "50em", gap: "0.5rem" }}>
                         <h1>Files</h1>
-                        <Stack direction="row" spacing={2}>
-                            <Button
-                                component="label"
-                                role={undefined}
-                                variant="contained"
-                                tabIndex={-1}
-                                startIcon={<CloudUpload />}
-                            >
-                                Upload files
-                                <VisuallyHiddenInput
+                        <Stack direction="row" spacing={2} style={{ paddingBottom: "1em" }}>
+                            <div>
+                                <input
+                                    accept="*"
                                     type="file"
-                                    onChange={(event) => console.log(event.target.value) }
-                                    multiple
+                                    id="file-upload"
+                                    style={{ display: "none" }}
+                                    onChange={handleFileChange}
                                 />
-                            </Button>
+                                <label htmlFor="file-upload">
+                                    <Button variant="contained" component="span">
+                                        Upload File
+                                    </Button>
+                                </label>
+                            </div>
                         </Stack>
                         <ThemeProvider theme={theme}>
                             <Paper className="tbl">
