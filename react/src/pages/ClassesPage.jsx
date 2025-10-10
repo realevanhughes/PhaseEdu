@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserTooltip from "../Components/UserTooltip";
-import {createTheme, IconButton, ThemeProvider} from "@mui/material";
+import {CircularProgress, createTheme, IconButton, ThemeProvider} from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import { ChevronRight } from '@mui/icons-material';
@@ -73,7 +73,18 @@ export function ClassesPage() {
     ];
 
 
-
+    if ( classInfo.length === 0) {
+        return (
+            <div className="page-layout">
+                <main className="main-content">
+                    <div style={{ width: "50em" }}>
+                        <h1>Loading...</h1>
+                        <CircularProgress />
+                    </div>
+                </main>
+            </div>
+        );
+    }
     return (
         <div className="page-layout">
             <main className="main-content">

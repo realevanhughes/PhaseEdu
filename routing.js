@@ -520,6 +520,50 @@ const api_handlers = {
         user_data["result"] = "success";
         res.json(user_data);
     },
+    rmHomework: async (req, res) => {
+        logger.http({message: `API call made to rmHomework (SID: ${req.sessionID})`});
+        const { hw } = req.params;
+        const hw_info = await assignments.get_hw(hw)
+        if (!hw_info) {
+            res.json({"result": "failed", "message": "homework not found"});
+        }
+        else {
+            try {
+                if (hw_info.assignee_uuid === req.session.uuid) {
+                    const oids = JSON.parse(hw_info.linked_files);
+                    oids.push(hw_info.md);
+                    const all_submissions = await assignments.get_all_submissions(hw);
+                    console.log("all sub", all_submissions);
+                    if (all_submissions) {
+                        for (let item of all_submissions) {
+                            console.log("sub", item)
+                            let student_oids = JSON.parse(item.linked_files);
+                            for (let object of student_oids) {
+                                let student_oid_data = await utils.object_info(object)
+                                fs.rmSync(path.join(__dirname, student_oid_data.location, object));
+                                await utils.delete_object(object);
+                            }
+                            await assignments.rm_submission(item.submission_id)
+                        }
+                    }
+                    let result = await assignments.rm_homework(hw)
+                    for (let object of oids) {
+                        let oid_data = await utils.object_info(object)
+                        fs.rmSync(path.join(__dirname, oid_data.location, object));
+                        await utils.delete_object(object);
+                    }
+                    res.json(result);
+                }
+                else {
+                    res.json({"result": "failed", "message": "not allowed to edit this assignment"});
+                }
+            }
+            catch (err) {
+                res.json({"result": "failed", "message": "unknown reasons for fail"});
+            }
+
+        }
+    }
 };
 
 const page_handlers = {
@@ -694,6 +738,7 @@ const routeMap = {
     '/api/classes/:class_id/members': {type: "api", method: 'get', handler: api_handlers.getClassMembers, roles: [], authRequired: true  },
     '/api/assignments/submissions/item/:hw/delete': {type: "api", method: 'get', handler: api_handlers.rmSubmission, roles: ['dev', 'student'], authRequired: true  },
     '/api/assignments/new': {type: "api", method: 'post', handler: api_handlers.newHomework, roles: ['teacher', 'dev', 'admin'], authRequired: true  },
+    '/api/assignments/:hw/delete': {type: "api", method: 'get', handler: api_handlers.rmHomework, roles: ['teacher', 'dev', 'admin'], authRequired: true  },
 
     '/api/object/item/:oid/info': {type: "api", method: 'get', handler: api_handlers.getObjectInfo, roles: [], authRequired: true  },
     '/api/object/bulk/info/': {type: "api", method: 'get', handler: api_handlers.getBulkFileInfo, roles: [], authRequired: true  },

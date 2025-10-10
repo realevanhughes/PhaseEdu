@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {ThemeProvider, createTheme} from "@mui/material";
+import {ThemeProvider, createTheme, CircularProgress} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import {DataGrid} from "@mui/x-data-grid";
 import UserTooltip from "../Components/UserTooltip";
@@ -62,17 +62,17 @@ export default function ClassPage() {
         { field: 'role', headerName: 'Role', width: 185, sortable: true, },
     ];
 
-
-    if (classInfo === null) {
-        return(
-            <>
-                <div className="page-layout">
-                    <main className="main-content">
-                        <div className="p-6">Loading class info...</div>
-                    </main>
-                </div>
-            </>
-        )
+    if (classInfo === null || members === null) {
+        return (
+            <div className="page-layout">
+                <main className="main-content">
+                    <div style={{ width: "50em" }}>
+                        <h1>Loading...</h1>
+                        <CircularProgress />
+                    </div>
+                </main>
+            </div>
+        );
     }
     else {
         return(

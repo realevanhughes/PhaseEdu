@@ -3,6 +3,7 @@ import Paper from "@mui/material/Paper";
 import React, { useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
 import UserTooltip from "../Components/UserTooltip.jsx";
+import {CircularProgress} from "@mui/material";
 
 export function Document() {
     const { oid } = useParams();
@@ -22,8 +23,8 @@ export function Document() {
             <div className="page-layout">
                 <main className="main-content">
                     <div style={{ width: "50em" }}>
-                        <h1>File info</h1>
-                        <p>Loading...</p>
+                        <h1>Loading...</h1>
+                        <CircularProgress />
                     </div>
                 </main>
             </div>

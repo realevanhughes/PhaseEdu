@@ -19,8 +19,8 @@ export function UserPage() {
             <div className="page-layout">
                 <main className="main-content">
                     <div style={{ width: "50em" }}>
-                        <h1>User Info</h1>
-                        <p>Loading...</p>
+                        <h1>Loading...</h1>
+                        <CircularProgress />
                     </div>
                 </main>
             </div>

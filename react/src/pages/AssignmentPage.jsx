@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import UserTooltip from "../Components/UserTooltip.jsx";
 import AssignmentDueIndicator from "../Components/AssignmentDueIndicator.jsx";
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import {createTheme, IconButton, Snackbar, styled, ThemeProvider} from "@mui/material";
+import {CircularProgress, createTheme, IconButton, Snackbar, styled, ThemeProvider} from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -21,6 +21,7 @@ export function AssignmentPage() {
     const [linkedFileInfo, setLinkedFileInfo] = useState([]);
     const [submissionFileInfo, setSubmissionFileInfo] = useState([]);
     const [openNotif, setOpenNotif] = React.useState(false);
+    const [notifMessage, setNotifMessage] = React.useState("Complete!");
 
     function formatOids(oids) {
         if (!Array.isArray(oids)) {
@@ -38,7 +39,7 @@ export function AssignmentPage() {
         const result = fetch(`/api/assignments/submissions/item/${assignmentInfo.hw_id}/finalize`)
             .then(response => response.json())
             .then(json => {
-                close()
+                window.history.back();
                 }
             )
     }
@@ -47,7 +48,7 @@ export function AssignmentPage() {
         const result = fetch(`/api/assignments/submissions/item/${submissionInfo.submission_id}/delete`)
             .then(response => response.json())
             .then(json => {
-                close()
+                window.history.back();
                 }
             )
     }
@@ -270,13 +271,16 @@ export function AssignmentPage() {
         console.log("action", type);
         if (type === "send") {
             sendSubmission()
+            setNotifMessage("Sent successfully!")
         }
         if (type === "save") {
             saveSubmission()
+            setNotifMessage("Saved successfully!")
         }
 
         if (type === "delete") {
             rmSubmission()
+            setNotifMessage("Deleted successfully!")
         }
         setOpenNotif(true);
     };
@@ -295,8 +299,8 @@ export function AssignmentPage() {
             <div className="page-layout">
                 <main className="main-content">
                     <div style={{ width: "50em" }}>
-                        <h1>Assignment info</h1>
-                        <p>Loading...</p>
+                        <h1>Loading...</h1>
+                        <CircularProgress />
                     </div>
                 </main>
             </div>
@@ -341,7 +345,7 @@ export function AssignmentPage() {
                                 open={openNotif}
                                 autoHideDuration={6000}
                                 onClose={handleNotifClose}
-                                message="Homework submission sent!"
+                                message={notifMessage}
                                 action={notifAction}
                             />
                             <Button

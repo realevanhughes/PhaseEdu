@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserTooltip from "../Components/UserTooltip";
 import BehaviourDash from "../Components/BehaviourDash.jsx";
-import {createTheme, IconButton, ThemeProvider} from "@mui/material";
+import {CircularProgress, createTheme, IconButton, ThemeProvider} from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import PointsDashboard from "../Components/BehaviourDash.jsx";
@@ -53,13 +53,25 @@ export function BehaviourPage() {
         { field: 'category_name', headerName: 'Category', width: 200 },
     ];
 
-
+    if ( pointInfo.length === 0) {
+        return (
+            <div className="page-layout">
+                <main className="main-content">
+                    <div style={{ width: "50em" }}>
+                        <h1>Loading...</h1>
+                        <CircularProgress />
+                    </div>
+                </main>
+            </div>
+        );
+    }
 
     return (
         <>
             <div className="page-layout">
                 <main className="main-content">
                     <div style={{ width: "50em" }}>
+                        <h1>Behavior Statistics</h1>
                         <PointsDashboard pointsData={pointInfo} />
                         <h1>Points</h1>
                         <ThemeProvider theme={theme}>

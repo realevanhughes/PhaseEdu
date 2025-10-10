@@ -31,6 +31,11 @@ async function get_submissions(hw_id, uuid) {
     return rows.length > 0 ? rows[0] : null;
 }
 
+async function get_all_submissions(hw_id) {
+    const [rows] = await db.query("SELECT * FROM homework_submissions WHERE homework_id = ?", [hw_id]);
+    return rows.length > 0 ? rows : null;
+}
+
 async function new_submission(homework_id, uuid, submission_date_time, linked_files) {
     if (linked_files === null) {
         linked_files = []
@@ -211,4 +216,5 @@ module.exports = {
     rm_submission,
     new_homework,
     rm_homework,
+    get_all_submissions,
 }

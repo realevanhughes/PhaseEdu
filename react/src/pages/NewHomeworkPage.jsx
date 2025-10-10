@@ -72,6 +72,7 @@ export default function CreateHomework() {
     };
 
     async function uploadMD() {
+        console.log("sending MD");
         setUploading(true);
         setUploadError("");
 
@@ -83,25 +84,31 @@ export default function CreateHomework() {
 
             const response = await fetch("/api/object/upload", {
                 method: "POST",
-                body: data
+                body: data,
             });
 
             if (!response.ok) throw new Error("Upload failed");
 
             const json = await response.json();
-            setFormData({ ...formData, md: json.oid });
+            setFormData((prev) => ({ ...prev, md: json.oid }));
+            return json.oid; // ✅ Return it directly
         } catch (err) {
             console.error(err);
             setUploadError("Error uploading markdown file.");
+            return null;
         } finally {
             setUploading(false);
         }
-    };
+    }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await uploadMD()
-        if (!formData.md) {
+        console.log("sending HW");
+
+        const mdOid = await uploadMD(); // wait for upload
+
+        if (!mdOid) {
             alert("Please upload the markdown first!");
             return;
         }
@@ -110,11 +117,12 @@ export default function CreateHomework() {
             const response = await fetch("/api/assignments/new", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({ ...formData, md: mdOid }), // ✅ use the new OID
             });
 
             if (response.ok) {
                 alert("Homework created successfully!");
+                window.history.back();
             } else {
                 const error = await response.text();
                 alert("Failed to create homework: " + error);
@@ -124,6 +132,7 @@ export default function CreateHomework() {
             alert("An error occurred while creating homework.");
         }
     };
+
     if (myRole === "student") {
         return (
             <div className="page-layout">

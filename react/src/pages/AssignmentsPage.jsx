@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
 import UserTooltip from "../Components/UserTooltip";
 
-import {createTheme, IconButton, ThemeProvider} from "@mui/material";
+import {ButtonGroup, CircularProgress, createTheme, IconButton, Snackbar, ThemeProvider} from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
-import { ChevronRight, Lock } from '@mui/icons-material';
+import { ChevronRight, Lock, AddBox, DeleteSweep } from '@mui/icons-material';
 import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import CloseIcon from "@mui/icons-material/Close";
+
 
 export function AssignmentsPage() {
     const [assignmentInfo, setAssignmentInfo] = useState([]);
-    const [myRole, setMyRole] = useState("student");
+    const [myRole, setMyRole] = useState(null);
+    const [selectedRows, setSelectedRows] = useState([]);
+    const [openNotif, setOpenNotif] = React.useState(false);
+    const [notifMessage, setNotifMessage] = React.useState("Complete!");
 
     useEffect(() => {
         fetch("/api/assignments/list")
             .then((response) => response.json())
             .then((json) => {
-                let li = json.list
-                for (let i = 0; i < li.length; i++) {
-                    li[i].id = i;
-                }
-                setAssignmentInfo(li);
-                console.log(li);
+                setAssignmentInfo(json.list);
+                console.log(json.list);
             });
         fetch("/api/myrole")
         .then((response) => response.json())
@@ -29,6 +31,32 @@ export function AssignmentsPage() {
             console.log("Your role:", json.role);
         })
     }, []);
+    useEffect(() => {
+        setSelectedRows([]);
+    }, [myRole, assignmentInfo]);
+
+    function deleteHomework(){
+        for (let item of selectedRows) {
+            console.log("deleting item", item)
+            let result = fetch(`/api/assignments/${item}/delete`)
+                .then(response => response.json())
+                .then(json => {
+                        if (json.result === "failed") {
+                            alert(`Failed to delete item, ${json.message}`);
+                        }
+                    }
+                )
+        }
+        if (selectedRows.length === 0) {
+            setNotifMessage("Please select rows.")
+        }
+        else {
+            setNotifMessage("Deleted successfully!")
+            location.reload();
+        }
+
+    }
+
 
     const theme = createTheme({
         components: {
@@ -109,7 +137,52 @@ export function AssignmentsPage() {
         }
     ];
 
+    const handleNotifClick = (type) => {
+        console.log("action", type);
+        if (type === "delete") {
+            deleteHomework()
+        }
+        setOpenNotif(true);
+    };
+
+    const handleNotifClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenNotif(false);
+    };
+
+    const notifAction = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleNotifClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
+
+    if (!Array.isArray(assignmentInfo) || assignmentInfo.length === 0) {
+        console.log("Teacher page: data not ready yet");
+        return (
+            <div className="page-layout">
+                <main className="main-content">
+                    <div style={{ width: "50em" }}>
+                        <h1>Loading assignments...</h1>
+                        <CircularProgress />
+                    </div>
+                </main>
+            </div>
+        );
+    }
+
+
     if (myRole === "student") {
+        console.log("Using student page")
         return (
             <div className="page-layout">
                 <main className="main-content">
@@ -119,12 +192,23 @@ export function AssignmentsPage() {
                             <Paper className="tbl">
                                 <DataGrid
                                     rows={assignmentInfo}
-                                    columns={columns}
-                                    initialState={{ pagination: { paginationModel } }}
-                                    pageSizeOptions={[5, 10]}
+                                    columns={[
+                                        { field: "name", headerName: "Name", flex: 1 },
+                                        { field: "class_name", headerName: "Class", flex: 1 },
+                                        { field: "due_date_time", headerName: "Due", flex: 1 },
+                                    ]}
+                                    getRowId={(row) => row.hw_id}
                                     checkboxSelection
                                     sx={{ border: 0 }}
                                     className="tbl-txt"
+                                    pageSizeOptions={[5, 10]}
+                                    initialState={{
+                                        pagination: { paginationModel: { pageSize: 5, page: 0 } },
+                                    }}
+                                    rowSelectionModel={selectedRows}
+                                    onRowSelectionModelChange={(newSelection) => {
+                                        setSelectedRows(newSelection);
+                                    }}
                                 />
                             </Paper>
                         </ThemeProvider>
@@ -134,25 +218,49 @@ export function AssignmentsPage() {
         );
     }
     if (myRole === "teacher" || myRole === "dev" || myRole === "admin") {
+        console.log("Using teacher page", assignmentInfo);
         return (
             <div className="page-layout">
                 <main className="main-content">
                     <div style={{ width: "50em" }}>
                         <h1>Assignments (teacher view)</h1>
-                        <Button variant="contained" href="/app#/NewAssignment/" color="success">
-                            New
-                        </Button>
+                        <Stack direction="row" spacing={2}>
+                            <Button variant="contained" href="/app#/NewAssignment/" color="success">
+                                <AddBox />
+                            </Button>
+                            Bulk actions:
+                            <ButtonGroup variant="contained" aria-label="Basic button group">
+                                <Button variant="contained" onClick={() => handleNotifClick("delete")} color="error">
+                                    <DeleteSweep />
+                                </Button>
+                            </ButtonGroup>
+
+                        </Stack>
+                        <Snackbar
+                            open={openNotif}
+                            autoHideDuration={6000}
+                            onClose={handleNotifClose}
+                            message={notifMessage}
+                            action={notifAction}
+                        />
                         <ThemeProvider theme={theme}>
                             <Paper className="tbl">
                                 <DataGrid
                                     rows={assignmentInfo}
                                     columns={columns}
-                                    initialState={{ pagination: { paginationModel } }}
-                                    pageSizeOptions={[5, 10]}
+                                    getRowId={(row) => row.hw_id}
                                     checkboxSelection
                                     sx={{ border: 0 }}
                                     className="tbl-txt"
-                                />
+                                    pageSizeOptions={[5, 10]}
+                                    onRowSelectionModelChange={(newSelection) => {
+                                        console.log("Selected IDs:", newSelection)
+                                        setSelectedRows(newSelection.ids);
+                                    }}
+                                    initialState={{
+                                        pagination: { paginationModel: { pageSize: 5, page: 0 } },
+                                    }}
+                                    />
                             </Paper>
                         </ThemeProvider>
                     </div>
@@ -161,6 +269,7 @@ export function AssignmentsPage() {
         );
     }
     else {
+        console.log("Role error")
         return (
             <div className="page-layout">
                 <main className="main-content">
