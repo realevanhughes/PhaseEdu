@@ -127,8 +127,6 @@ export function AssignmentsPage() {
                     <IconButton
                         component="a"
                         href={`/app#/Assignments/${params.row.hw_id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
                     >
                         <ChevronRight />
                     </IconButton>

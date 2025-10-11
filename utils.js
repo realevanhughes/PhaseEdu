@@ -213,6 +213,16 @@ async function get_bulk_file_info(oids, uuid) {
     return { result: "success", list: rows };
 }
 
+async function change_access(oid, access) {
+    let response = await db.query("UPDATE objects SET access = ? WHERE oid = ?", [oid, access]);
+    if (response.affectedRows > 0) {
+        return({"result": "success", "message": "updated access levels"});
+    }
+    else {
+        return({"result": "failed", "message": "no such object"});
+    }
+}
+
 module.exports = {
     generate_id,
     get_unique_id,
@@ -234,5 +244,6 @@ module.exports = {
     formatUTC,
     get_bulk_file_info,
     getCurrentTimestamp,
-    getCurrentDate
+    getCurrentDate,
+    change_access
 };

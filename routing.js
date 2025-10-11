@@ -165,6 +165,13 @@ const api_handlers = {
                 return res.status(400).json({ error: "No file uploaded" });
             }
 
+            if (!req.access) {
+                let access = '["'+owner+'"]'
+            }
+            else{
+                let access = req.access.toString();
+            }
+
             const originalName = req.file.originalname;
             const { name: baseName, ext } = path.parse(req.file.originalname);
             const fileExtension = ext.substring(1);
@@ -563,6 +570,45 @@ const api_handlers = {
             }
 
         }
+    },
+    editObject: async (req, res) => {
+        try {
+            const {oid} = req.body;
+            if (!req.file) {
+                return res.status(400).json({ error: "No file uploaded" });
+            }
+            let object_info = await utils.object_info(oid);
+            if (object_info.access.includes(req.session.uuid) || object_info.access.includes("*")) {
+                const filePath = path.join(__dirname, "objects", oid);
+                fs.writeFileSync(filePath, req.file.buffer);
+
+                logger.http({ message: `Object modified (OID: ${oid}, SID: ${req.sessionID})` });
+
+                res.json({"result": "success"});
+            }
+            else {
+                return res.status(401).json({error: 'Unauthorized'});
+            }
+
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: "File upload failed" });
+        }
+    },
+    changeAccess: async (req, res) => {
+        const { oid } = req.params;
+        const { access_level } = req.body;
+        let object_info = await utils.object_info(oid);
+        if (!object_info){
+            res.status(500).json({ error: "No such object" });
+        }
+        else {
+            if (object_info.access.includes(req.session.uuid) || object_info.access.includes("*")) {
+                let result = await utils.change_access(oid, access_level.toString());
+                res.json(result);
+            }
+        }
+
     }
 };
 
@@ -741,10 +787,12 @@ const routeMap = {
     '/api/assignments/:hw/delete': {type: "api", method: 'get', handler: api_handlers.rmHomework, roles: ['teacher', 'dev', 'admin'], authRequired: true  },
 
     '/api/object/item/:oid/info': {type: "api", method: 'get', handler: api_handlers.getObjectInfo, roles: [], authRequired: true  },
+    '/api/object/item/:oid/access': {type: "api", method: 'post', handler: api_handlers.changeAccess, roles: [], authRequired: true  },
     '/api/object/bulk/info/': {type: "api", method: 'get', handler: api_handlers.getBulkFileInfo, roles: [], authRequired: true  },
     '/api/object/download/:oid': {type: "api", method: 'get', handler: api_handlers.getFile, roles: [], authRequired: true  },
     '/api/object/:oid': {type: "api", method: 'get', handler: api_handlers.getObject, roles: [], authRequired: true  },
     '/api/object/upload': {type: "api", method: 'post', handler: api_handlers.uploadObject, roles: [], authRequired: true, middleware: [ upload.single("file") ] },
+    '/api/object/modify': {type: "api", method: 'post', handler: api_handlers.editObject, roles: [], authRequired: true, middleware: [ upload.single("file") ] },
 
     '/api/login': {type: "login", method: 'post', handler: internal_handlers.login, roles: [], authRequired: false },
     '/api/quick-login': {type: "login", method: 'post', handler: internal_handlers.quick_login, roles: [], authRequired: false },

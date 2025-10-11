@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import UserTooltip from "../Components/UserTooltip.jsx";
 import AssignmentDueIndicator from "../Components/AssignmentDueIndicator.jsx";
+import CombinationFileTable from "../Components/CombinationFileTable.jsx";
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import {CircularProgress, createTheme, IconButton, Snackbar, styled, ThemeProvider} from "@mui/material";
+import {CircularProgress, IconButton, Snackbar, styled} from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
-import {ChevronRight, Download, CloudUpload, Send, DeleteForever, Save, DeleteOutlined} from '@mui/icons-material';
+import {Send, DeleteForever, Save} from '@mui/icons-material';
 
 export function AssignmentPage() {
     const { hw_id } = useParams();
@@ -193,66 +194,6 @@ export function AssignmentPage() {
     }, [hw_id]);
 
 
-    const theme = createTheme({
-        components: {
-            MuiTableCell: {
-                styleOverrides: {
-                    root: {
-                        fontFamily: "Inter, sans-serif",
-                        fontOpticalSizing: "auto",
-                        fontWeight: "normal",
-                        fontStyle: "normal",
-                        fontSize: "1.1rem",
-                    },
-                },
-            },
-        },
-    });
-    const paginationModel = { page: 0, pageSize: 5 };
-    const columns = [
-        { field: 'name', headerName: 'Name', width: 300 },
-        { field: 'file_extension', headerName: 'Extension', width: 100 },
-        { field: 'description', headerName: 'Description', width: 400 },
-        { field: 'source', headerName: 'Source', width: 100 },
-        {
-            field: "open",
-            headerName: "Open",
-            width: 80,
-            sortable: false,
-            filterable: false,
-            disableColumnMenu: true,
-            renderCell: (params) => (
-                <IconButton
-                    component="a"
-                    href={`/app#/Document/${params.row.oid}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <ChevronRight />
-                </IconButton>
-            ),
-        },
-        {
-            field: "download",
-            headerName: "Download",
-            width: 120,
-            sortable: false,
-            filterable: false,
-            disableColumnMenu: true,
-            renderCell: (params) => (
-                <IconButton
-                    component="a"
-                    href={`/api/object/download/${params.row.oid}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <Download />
-                </IconButton>
-            ),
-        },
-    ];
-
-
     const combinedRows = [...linkedFileInfo, ...submissionFileInfo];
 
     const VisuallyHiddenInput = styled('input')({
@@ -294,7 +235,7 @@ export function AssignmentPage() {
     };
 
 
-    if (!assignmentInfo) {
+    if (!assignmentInfo || combinedRows.length === 0) {
         return (
             <div className="page-layout">
                 <main className="main-content">
@@ -367,48 +308,7 @@ export function AssignmentPage() {
                     </div>
                     <div style={{ width: "50em", gap: "0.5rem" }}>
                         <h1>Files</h1>
-                        <Stack direction="row" spacing={2} style={{ paddingBottom: "1em" }}>
-                            <div>
-                                <input
-                                    accept="*"
-                                    type="file"
-                                    id="file-upload"
-                                    style={{ display: "none" }}
-                                    onChange={handleFileChange}
-                                />
-                                <label htmlFor="file-upload">
-                                    <Button variant="contained" component="span">
-                                        Upload File
-                                    </Button>
-                                </label>
-                            </div>
-                        </Stack>
-                        <ThemeProvider theme={theme}>
-                            <Paper className="tbl">
-                                <DataGrid
-                                    rows={combinedRows}
-                                    columns={columns}
-                                    getRowId={(row) => row.oid}
-                                    initialState={{ pagination: { paginationModel } }}
-                                    pageSizeOptions={[5, 10]}
-                                    checkboxSelection
-                                    sx={{
-                                        border: 0,
-                                        '& .MuiDataGrid-row.student-attached-row': {
-                                            backgroundColor: '#e0f7fa',
-                                        },
-                                        '& .MuiDataGrid-row.teacher-attached-row': {
-                                            backgroundColor: '#fce4ec',
-                                        },
-                                    }}
-                                    getRowClassName={(params) =>
-                                        params.row.source === "Student"
-                                            ? "student-attached-row"
-                                            : "teacher-attached-row"
-                                    }
-                                />
-                            </Paper>
-                        </ThemeProvider>
+                        <CombinationFileTable combinedRows={combinedRows} handleFileChange={handleFileChange}/>
                     </div>
                 </div>
             </main>

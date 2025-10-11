@@ -5,9 +5,10 @@ import {
     FormControlLabel,
     Button,
     Paper,
-    Stack, MenuItem, FormControl, Select, InputLabel, ThemeProvider
+    Stack, MenuItem, FormControl, Select, InputLabel, ThemeProvider, Box
 } from "@mui/material";
 import MDEditor from "@uiw/react-md-editor";
+import HalfCombinationFileTable from "../Components/HalfCombinationFileTable.jsx";
 
 export default function CreateHomework() {
     const [formData, setFormData] = useState({
@@ -26,6 +27,7 @@ export default function CreateHomework() {
     const [uploadError, setUploadError] = useState("");
     const [classes, setClasses] = useState([]);
     const [myRole, setMyRole] = useState("teacher");
+    const [files, setFiles] = useState([]);
 
     const formatDateTime = (date) => {
         const pad = (n) => String(n).padStart(2, "0");
@@ -71,6 +73,52 @@ export default function CreateHomework() {
         }
     };
 
+    const handleFileChange = async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const response = await fetch("/api/object/upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error("Upload failed");
+            }
+
+            const data = await response.json();
+
+            console.log("upload resp", data);
+
+            if (data.oid) {
+                let pre_existing_arr = formData.linked_files
+                pre_existing_arr.push(data.oid)
+                setFormData((prev) => ({ ...prev, linked_files: pre_existing_arr }));
+                console.log(data.oid);
+                fetch(`/api/object/bulk/info?oids=${formatOids([data.oid])}`)
+                    .then(response => response.json())
+                    .then(json => {
+                        console.log("uploaded file info", json)
+                        setFiles((prev) => [
+                            ...prev,
+                            ...(json.list || []).map(file => ({ ...file, source: "Teacher" })),
+                        ]);
+                    })
+
+            }
+
+            console.log("Upload complete:", data);
+        } catch (error) {
+            console.error("Error uploading file:", error);
+        }
+
+        event.target.value = "";
+    };
+
     async function uploadMD() {
         console.log("sending MD");
         setUploading(true);
@@ -91,7 +139,7 @@ export default function CreateHomework() {
 
             const json = await response.json();
             setFormData((prev) => ({ ...prev, md: json.oid }));
-            return json.oid; // ✅ Return it directly
+            return json.oid;
         } catch (err) {
             console.error(err);
             setUploadError("Error uploading markdown file.");
@@ -106,7 +154,7 @@ export default function CreateHomework() {
         e.preventDefault();
         console.log("sending HW");
 
-        const mdOid = await uploadMD(); // wait for upload
+        const mdOid = await uploadMD();
 
         if (!mdOid) {
             alert("Please upload the markdown first!");
@@ -117,7 +165,7 @@ export default function CreateHomework() {
             const response = await fetch("/api/assignments/new", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ ...formData, md: mdOid }), // ✅ use the new OID
+                body: JSON.stringify({ ...formData, md: mdOid }),
             });
 
             if (response.ok) {
@@ -150,117 +198,130 @@ export default function CreateHomework() {
                 <main className="main-content">
                     <Paper sx={{ p: 3, margin: "auto" }} className="set-hw-div">
                         <h1>Create New Homework</h1>
-
                         <form onSubmit={handleSubmit}>
-                            <Stack spacing={2}>
-                                <FormControl fullWidth>
-                                    <InputLabel id="class-select-label">Class</InputLabel>
-                                    <Select
-                                        labelId="class-select-label"
-                                        name="class_id"
-                                        value={formData.class_id}
-                                        onChange={handleChange}
-                                        required
-                                        variant="filled">
-                                        {classes.map((cls) => (
-                                            <MenuItem key={cls.id} value={cls.id}>
-                                            <span
+                            <Stack direction="row" spacing={3} alignItems="flex-start">
+                                <Box sx={{ flex: 1 }}>
+                                    <Stack spacing={2}>
+                                        <FormControl fullWidth>
+                                            <InputLabel id="class-select-label">Class</InputLabel>
+                                            <Select
+                                                labelId="class-select-label"
+                                                name="class_id"
+                                                value={formData.class_id}
+                                                onChange={handleChange}
+                                                required
+                                                variant="filled"
+                                            >
+                                                {classes.map((cls) => (
+                                                    <MenuItem key={cls.id} value={cls.id}>
+                                                        <span
+                                                            style={{
+                                                                display: "inline-block",
+                                                                width: 12,
+                                                                height: 12,
+                                                                borderRadius: "50%",
+                                                                backgroundColor: cls.color,
+                                                                marginRight: 8,
+                                                            }}
+                                                        />
+                                                        {cls.name}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
+
+                                        <TextField
+                                            label="Homework Name"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            required
+                                            fullWidth
+                                        />
+
+                                        <div>
+                                            <label
                                                 style={{
-                                                    display: "inline-block",
-                                                    width: 12,
-                                                    height: 12,
-                                                    borderRadius: "50%",
-                                                    backgroundColor: cls.color,
-                                                    marginRight: 8
+                                                    display: "block",
+                                                    fontWeight: 500,
+                                                    marginBottom: "0.3em",
+                                                }}
+                                            >
+                                                Due Date and Time
+                                            </label>
+                                            <input
+                                                type="datetime-local"
+                                                onChange={handleDateChange}
+                                                style={{
+                                                    width: "100%",
+                                                    padding: "0.5em",
+                                                    fontSize: "1em",
+                                                    border: "1px solid #ccc",
+                                                    borderRadius: "4px",
                                                 }}
                                             />
-                                                {cls.name}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                                <TextField
-                                    label="Homework Name"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <div>
-                                    <label
-                                        style={{
-                                            display: "block",
-                                            fontWeight: 500,
-                                            marginBottom: "0.3em"
-                                        }}
-                                    >
-                                        Due Date and Time
-                                    </label>
-                                    <input
-                                        type="datetime-local"
-                                        onChange={handleDateChange}
-                                        style={{
-                                            width: "100%",
-                                            padding: "0.5em",
-                                            fontSize: "1em",
-                                            border: "1px solid #ccc",
-                                            borderRadius: "4px"
-                                        }}
+                                        </div>
+
+                                        <TextField
+                                            label="Points"
+                                            name="points"
+                                            type="number"
+                                            value={formData.points}
+                                            onChange={handleChange}
+                                            required
+                                            fullWidth
+                                        />
+
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    checked={formData.marked}
+                                                    onChange={handleChange}
+                                                    name="marked"
+                                                />
+                                            }
+                                            label="Marked"
+                                        />
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    checked={formData.in_person}
+                                                    onChange={handleChange}
+                                                    name="in_person"
+                                                />
+                                            }
+                                            label="In Person"
+                                        />
+                                    </Stack>
+                                </Box>
+
+                                <Box sx={{ flex: 1 }}>
+                                    <HalfCombinationFileTable
+                                        combinedRows={files}
+                                        handleFileChange={handleFileChange}
                                     />
-                                </div>
-
-                                <TextField
-                                    label="Points"
-                                    name="points"
-                                    type="number"
-                                    value={formData.points}
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={formData.marked}
-                                            onChange={handleChange}
-                                            name="marked"
-                                        />
-                                    }
-                                    label="Marked"
-                                />
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={formData.in_person}
-                                            onChange={handleChange}
-                                            name="in_person"
-                                        />
-                                    }
-                                    label="In Person"
-                                />
-
-                                {/* Markdown Editor */}
+                                </Box>
+                            </Stack>
+                            <Box sx={{ mt: 3 }}>
                                 <div data-color-mode="light">
                                     <label
                                         style={{
                                             fontWeight: 500,
                                             marginBottom: "0.5em",
-                                            display: "block"
+                                            display: "block",
                                         }}
                                     >
                                         Task Description (Markdown)
                                     </label>
-                                    <MDEditor
-                                        value={mdContent}
-                                        onChange={setMdContent}
-                                        height={300}
-                                    />
+                                    <MDEditor value={mdContent} onChange={setMdContent} height={300} />
                                 </div>
+                            </Box>
 
-                                <Button type="submit" variant="contained" color="success">
-                                    Create Homework
-                                </Button>
-                            </Stack>
+                            <Button type="submit" variant="contained" color="success" sx={{ mt: 2 }}>
+                                Create Homework
+                            </Button>
                         </form>
+
                     </Paper>
                 </main>
             </div>

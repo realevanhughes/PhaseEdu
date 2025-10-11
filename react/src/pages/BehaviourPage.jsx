@@ -70,7 +70,7 @@ export function BehaviourPage() {
         <>
             <div className="page-layout">
                 <main className="main-content">
-                    <div style={{ width: "50em" }}>
+                    <div className="set-hw-div">
                         <h1>Behavior Statistics</h1>
                         <PointsDashboard pointsData={pointInfo} />
                         <h1>Points</h1>
