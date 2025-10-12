@@ -649,12 +649,24 @@ const page_handlers = {
 const dev_handlers = {
     account: async (req, res) => {
         res.send(`Session data: username=${req.session.user} uuid=${req.session.uuid} org=${req.session.org}`);
+    },
+    getEnvType: async (req, res) => {
+        res.json({"result": "success", "type": process.env.NODE_ENV});
+    },
+    getEnvDetails: async (req, res) => {
+        if (process.env.NODE_ENV === "dev") {
+            res.json({"result": "success", "type": process.env.NODE_ENV, "port": process.env.HOSTPORT, "hostname": process.env.HOSTPORT, "db_port": process.env.DB_PORT, "db_host": process.env.DB_HOST});
+        }
+        else {
+            res.json({"result": "failed", "message": "This is not a development server so server details are hidden."});
+        }
     }
 };
 
 const internal_handlers = {
     login: async (req, res) => {
         logger.log({level: 'http', message: `Login requested`});
+        console.log(req.body)
         const { username, password } = req.body;
         let uuidPromise;
         let uuid;
@@ -685,11 +697,20 @@ const internal_handlers = {
             }
             else {
                 logger.log({level: 'http', message: `Login failed!`});
-                res.send('Invalid username or password');
+                res.status(401).json({
+                    success: false,
+                    error: "invalid_credentials",
+                    message: "Invalid username or password",
+                });
             }
         }).catch(err => {
             logger.error(`Login failed: ${err.message || err}`);
-            res.status(500).send('Internal server error');
+            res.status(500).json({
+                success: false,
+                error: "server_error",
+                message: "An unexpected error occurred. Please try again later.",
+            });
+
         });
     },
     logout: async (req, res) => {
@@ -801,6 +822,8 @@ const routeMap = {
 
     '/dev/account': {type: "page", method: 'get', handler: dev_handlers.account, roles: ['dev'], authRequired: true  },
     '/dev': {type: "page", method: 'get', handler: page_handlers.file("web/html/dev-panel.html"), roles: ['dev'], authRequired: true  },
+    '/api/server/env': {type: "login", method: 'get', handler: dev_handlers.getEnvType, roles: [], authRequired: false  },
+    '/api/server/details': {type: "api", method: 'get', handler: dev_handlers.getEnvDetails, roles: ['dev'], authRequired: false  },
 
     '/': {type: "page", method: 'get', handler: page_handlers.redirect("/app"), roles: [], authRequired: true },
     '/dash': {type: "page", method: 'get', handler: page_handlers.file("web/html/dash.html"), roles: [], authRequired: true },
