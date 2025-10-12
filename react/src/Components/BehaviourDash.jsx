@@ -92,82 +92,78 @@ const PointsDashboard = ({ pointsData }) => {
     };
 
     return (
-        <Box p={3}>
-            <Grid container spacing={2} mb={3}>
-                <Grid item xs={12} sm={4}>
-                    <Paper sx={{ p: 2 }}>
-                        <Typography variant="h6">Total Points</Typography>
-                        <Typography variant="h4">{stats.totalPoints}</Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                    <Paper sx={{ p: 2 }}>
-                        <Typography variant="h6">Top Class</Typography>
-                        <Typography variant="h5">
-                            {Object.entries(stats.classesCount).sort(
-                                (a, b) => b[1] - a[1]
-                            )[0]?.[0] || "N/A"}
-                        </Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                    <Paper sx={{ p: 2 }}>
-                        <Typography variant="h6">Top Assignee</Typography>
-                        <Typography variant="h5">
-                            {Object.entries(stats.assigneesCount).sort(
-                                (a, b) => b[1] - a[1]
-                            )[0]?.[0] || "N/A"}
-                        </Typography>
-                    </Paper>
-                </Grid>
-            </Grid>
+        <>
+            <section className="stats-container1">
+                {/* Point total */}
+                <Paper sx={{ p: 2 }}>
+                    <Typography variant="h6">Total Points</Typography>
+                    <Typography variant="h4">{stats.totalPoints}</Typography>
+                </Paper>
 
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
-                    <Paper sx={{ p: 2 }}>
-                        <Typography variant="h6" mb={2}>
-                            <Class className="vertical-center"></Class>
-                            <spacer type="horizontal" width="800" height="10"> </spacer>
-                            Points per Class
-                        </Typography>
-                        <Bar data={classData} />
-                    </Paper>
-                </Grid>
+                {/* Top Class */}
+                <Paper sx={{ p: 2 }}>
+                    <Typography variant="h6">Top Class</Typography>
+                    <Typography variant="h5">
+                        {Object.entries(stats.classesCount).sort(
+                            (a, b) => b[1] - a[1]
+                        )[0]?.[0] || "N/A"}
+                    </Typography>
+                </Paper>
 
-                <Grid item xs={12} md={6}>
-                    <Paper sx={{ p: 2 }}>
-                        <Typography variant="h6" mb={2}>
-                            <Category className="vertical-center"></Category>
-                            <spacer type="horizontal" width="800" height="10"> </spacer>
-                            Points per Category
-                        </Typography>
-                        <Pie data={categoryData} />
-                    </Paper>
-                </Grid>
+                {/* Top Assignee */}
+                <Paper sx={{ p: 2 }}>
+                    <Typography variant="h6">Top Assignee</Typography>
+                    <Typography variant="h5">
+                        {Object.entries(stats.assigneesCount).sort(
+                            (a, b) => b[1] - a[1]
+                        )[0]?.[0] || "N/A"}
+                    </Typography>
+                </Paper>
+            </section>
+            
+            {/* Points per category */}
+            <Paper sx={{ p: 2 }}>
+                <Typography variant="h6" mb={2}>
+                    <Category className="vertical-center"></Category>
+                    <spacer type="horizontal" width="800" height="10"> </spacer>
+                    Points per Category
+                </Typography>
+                <Pie data={categoryData} />
+            </Paper>
 
-                <Grid item xs={12} md={6}>
-                    <Paper sx={{ p: 2 }}>
-                        <Typography variant="h6" mb={2}>
-                            <Person className="vertical-center"></Person>
-                            <spacer type="horizontal" width="800" height="10"> </spacer>
-                            Points per Assignee
-                        </Typography>
-                        <Bar data={assigneeData} />
-                    </Paper>
-                </Grid>
-
-                <Grid item xs={12} md={6}>
-                    <Paper sx={{ p: 2 }}>
-                        <Typography variant="h6" mb={2}>
-                            <AccessTime className="vertical-center"></AccessTime>
-                            <spacer type="horizontal" width="800" height="10"> </spacer>
-                            Points Over Time
-                        </Typography>
-                        <Line data={timeData} />
-                    </Paper>
-                </Grid>
-            </Grid>
-        </Box>
+            
+            <section className="stats-container2">
+                {/* Points per class */}
+                <Paper sx={{ p: 2 }}>
+                    <Typography variant="h6" mb={2}>
+                        <Class className="vertical-center"></Class>
+                        <spacer type="horizontal" width="800" height="10"> </spacer>
+                        Points per Class
+                    </Typography>
+                    <Bar data={classData} />
+                </Paper>
+                
+                {/* Points per assignee */}
+                <Paper sx={{ p: 2 }}>
+                    <Typography variant="h6" mb={2}>
+                        <Person className="vertical-center"></Person>
+                        <spacer type="horizontal" width="800" height="10"> </spacer>
+                        Points per Assignee
+                    </Typography>
+                    <Bar data={assigneeData} />
+                </Paper>
+            </section>
+            
+            {/* Points over time */}
+            <Paper sx={{ p: 2 }}>
+                <Typography variant="h6" mb={2}>
+                    <AccessTime className="vertical-center"></AccessTime>
+                    <spacer type="horizontal" width="800" height="10"> </spacer>
+                    Points Over Time
+                </Typography>
+                <Line data={timeData} />
+            </Paper>
+        </>
     );
 };
 

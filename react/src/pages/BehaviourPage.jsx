@@ -70,25 +70,32 @@ export function BehaviourPage() {
         <>
             <div className="page-layout">
                 <main className="main-content">
-                    <div className="set-hw-div">
-                        <h1>Behavior Statistics</h1>
+
+                    <div>
+                    <h1>Behavior Statistics</h1>
+                    <section className="behaviour-stats">
                         <PointsDashboard pointsData={pointInfo} />
-                        <h1>Points</h1>
-                        <ThemeProvider theme={theme}>
-                            <Paper className="tbl">
-                                <DataGrid
-                                    rows={pointInfo}
-                                    columns={columns}
-                                    initialState={{ pagination: { paginationModel } }}
-                                    pageSizeOptions={[5, 10]}
-                                    getRowId={(row) => row.point_id}
-                                    checkboxSelection
-                                    sx={{ border: 0 }}
-                                    className="tbl-txt"
-                                />
-                            </Paper>
-                        </ThemeProvider>
+                    </section>
+                    
+                    <h1>Points</h1>
+                    <ThemeProvider theme={theme}>
+                        <Paper className="tbl">
+                            <DataGrid
+                                rows={pointInfo}
+                                columns={columns}
+                                initialState={{ pagination: { paginationModel } }}
+                                pageSizeOptions={[5, 10]}
+                                getRowId={(row) => row.point_id}
+                                checkboxSelection
+                                sx={{ border: 0 }}
+                                className="tbl-txt"
+                            />
+                        </Paper>
+                    </ThemeProvider>
+                    
                     </div>
+
+
                 </main>
             </div>
         </>

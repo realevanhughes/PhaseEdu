@@ -13,11 +13,7 @@ export default function Classes() {
             let classes_arr = json.list
             let add = ""
             for (let new_class of classes_arr) {
-                let new_obj = `
-                    <li className='class'>
-                        <a href='/#/Classes/${new_class.id}'>${new_class.name}</a>
-                        <hr>
-                    </li>`
+                let new_obj = `\n<li class='class'>\n<a href='/#/Classes/${new_class.id}'>${new_class.name}</a>\n</li>`
                 add = add + new_obj;
             }
             setHtmlContent(add);

@@ -14,13 +14,10 @@ html, body {
     max-width: 100%;
 }
 
-header {
-    margin-top: 0;
-}
-
 body {
     margin: 0;
     padding: 0;
+    background-color: rgb(245, 245, 245);
 }
 
 ul {
@@ -44,11 +41,15 @@ button {
 h1 {
     font-size: 1.5em;
     font-weight: 600;
+    margin: 0;
+    padding: 0;
 }
 
 h2 {
     font-size: 1.2em;
     font-weight: 500;
+    margin: 0;
+    padding: 0;
 }
 
 .h2 :hover {
@@ -56,16 +57,20 @@ h2 {
 }
 
 .main-content {
-    margin-left: 14em;
-    margin-top: 6em;
+    margin-left: 2em;
     display: flex;
     align-items: stretch;
     min-height: calc(100vh - 6em);
 }
 
+.left-side-dashboard {
+    height: 100%;
+}
+
 
 .header {
     position: fixed;
+    margin-top: 0;
     height: 3em;
     width: 100%;
     padding: 0.5em 1em;
@@ -75,10 +80,12 @@ h2 {
     border-bottom: 0.11em solid black;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.11);
     background-color: white;
+    z-index: 10000;
 }
 
 .side-bar {
     display: flex;
+    z-index: 8000;
     flex-direction: column;
     height: calc(100vh - 4em);
     width: 12em;
@@ -86,6 +93,7 @@ h2 {
     margin-top: 4em;
     border-right: 0.11em solid black;
     background-color: white;
+    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.11);
 }
 .side-nav {
     border-bottom: 0.05em solid rgb(0, 0, 0);
@@ -148,6 +156,8 @@ h2 {
     width: calc(100vw - 12em);
     margin-left: 12em;
     overflow-x: auto;
+    padding-top: 6em;
+    min-width: max-content;
 }
 
 #notification-btn,
@@ -210,9 +220,12 @@ h2 {
     padding: 1em 0;
     margin: auto 2em 1em auto;
     width: 50em;
+    height: 14em;
     overflow: hidden;
     justify-content: space-around;
     text-align: center;
+    background-color: white;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.062);
 }
 
 .points-summary > p{
@@ -226,9 +239,10 @@ h2 {
     border-radius: 1rem;
     padding: 1em 0 1em 3em;
     width: 47em;
-    min-height: 12em;
-    max-height: 25em;
+    height: 19em;
     margin-bottom: 3em;
+    background-color: white;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.062);
 }
 
 .schedule-item {
@@ -257,8 +271,11 @@ h2 {
     border-radius: 1rem;
     padding: 1em;
     width: 11em;
-    min-height: calc(100vh - 14em);
+    height: 36em;
     margin-bottom: 3em;
+    margin-right: 2em;
+    background-color: white;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.062);
 }
 
 .classes > a {
@@ -311,7 +328,7 @@ h2 {
     font-family: "Inter", sans-serif;
     font-weight: normal;
     font-size: 1.1rem;
-    line-height: 1.4;  /* 👈 keeps the pill tight around the text */
+    line-height: 1.4;
     vertical-align: middle;
 }
 
@@ -344,7 +361,7 @@ h2 {
 .account-overview:hover {
     background: rgb(212, 212, 212);
     cursor: pointer;
-    color: #fff;
+    color: #ffffff;
 }
 
 .dropdown-menu {
@@ -394,7 +411,13 @@ h2 {
 .tbl {
     width: calc(100vw - 18em);
     height: 400px;
+    border-radius: 1rem;
+    background: white;
+    overflow: hidden;
+    margin-bottom: 2em;
 }
+
+
 
 .tbl-txt .MuiDataGrid-cell {
     font-size: 1rem;
@@ -463,4 +486,34 @@ h2 {
     font-weight: bold;
     background: #fff;
     box-sizing: border-box;
+}
+
+.behaviour-stats {
+    display: flex;
+    gap: 1em;
+    height: auto;
+    margin-right: 2em;
+}
+
+.stats-container1 {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.stats-container2 {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: space-between;
+}
+
+.calendar-container {
+    padding: 1em;
+    width: 80em;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    margin-bottom: 2em;
+    margin-right: 2em;
 }

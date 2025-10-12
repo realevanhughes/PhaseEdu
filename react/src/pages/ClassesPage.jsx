@@ -89,18 +89,26 @@ export function ClassesPage() {
         <div className="page-layout">
             <main className="main-content">
                 <div style={{ width: "50em" }}>
-                    <h1>Classes</h1>
+                    
                     <ThemeProvider theme={theme}>
-                        <Paper className="tbl">
-                            <DataGrid
-                                rows={classInfo}
-                                columns={columns}
-                                initialState={{ pagination: { paginationModel } }}
-                                pageSizeOptions={[5, 10]}
-                                checkboxSelection
-                                sx={{ border: 0 }}
-                                className="tbl-txt"
-                            />
+                        <Paper className="tbl" style={{ padding: "1em"}}>
+                            
+                                <h1>Classes</h1>
+                                <DataGrid
+                                    rows={classInfo}
+                                    columns={columns}
+                                    initialState={{ pagination: { paginationModel } }}
+                                    pageSizeOptions={[5, 10]}
+                                    checkboxSelection
+                                    sx={{
+                                        border: 0,
+                                        '& .MuiDataGrid-footerContainer': {
+                                            paddingBottom: '1em', // Adjust as needed
+                                        }
+                                    }}
+                                    className="tbl-txt"
+                                />
+                            
                         </Paper>
                     </ThemeProvider>
                 </div>

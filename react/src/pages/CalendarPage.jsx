@@ -4,9 +4,11 @@ export function CalendarPage() {
         <>
             <div className="page-layout">
                 <main className="main-content">
-                    <div>
+                    <div className="calendar-container">
                         <h1>Calendar</h1>
-                        <UpcomingCalendar />
+                        <div style={{ display: 'flex' }}>
+                            <UpcomingCalendar />
+                        </div>
                     </div>
                 </main>
             </div>

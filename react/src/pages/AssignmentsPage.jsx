@@ -178,7 +178,7 @@ export function AssignmentsPage() {
         );
     }
 
-
+    // Student View
     if (myRole === "student") {
         console.log("Using student page")
         return (
@@ -215,34 +215,38 @@ export function AssignmentsPage() {
             </div>
         );
     }
+
+    // Teacher View
     if (myRole === "teacher" || myRole === "dev" || myRole === "admin") {
         console.log("Using teacher page", assignmentInfo);
         return (
             <div className="page-layout">
                 <main className="main-content">
-                    <div style={{ width: "50em" }}>
-                        <h1>Assignments (teacher view)</h1>
-                        <Stack direction="row" spacing={2}>
-                            <Button variant="contained" href="/app#/NewAssignment/" color="success">
-                                <AddBox />
-                            </Button>
-                            Bulk actions:
-                            <ButtonGroup variant="contained" aria-label="Basic button group">
-                                <Button variant="contained" onClick={() => handleNotifClick("delete")} color="error">
-                                    <DeleteSweep />
-                                </Button>
-                            </ButtonGroup>
-
-                        </Stack>
+                    <div style={{ width: "50em"}}>
                         <Snackbar
                             open={openNotif}
+                            style={{ marginRight: "10em" }}
                             autoHideDuration={6000}
                             onClose={handleNotifClose}
                             message={notifMessage}
                             action={notifAction}
                         />
+
                         <ThemeProvider theme={theme}>
-                            <Paper className="tbl">
+                            <Paper className="tbl" style={{ padding: "1em" }}>
+                                <h1>Assignments (teacher view)</h1>
+                                <Stack direction="row" spacing={2} marginTop="1em" marginBottom="1em" alignItems="center">
+                                    <Button variant="contained" href="/app#/NewAssignment/" color="success">
+                                        <AddBox />
+                                    </Button>
+                                    <span>Bulk actions:</span>
+                                    <ButtonGroup variant="contained" aria-label="Basic button group">
+                                        <Button variant="contained" onClick={() => handleNotifClick("delete")} color="error">
+                                            <DeleteSweep />
+                                        </Button>
+                                    </ButtonGroup>
+                                </Stack>
+                                
                                 <DataGrid
                                     rows={assignmentInfo}
                                     columns={columns}
@@ -258,7 +262,7 @@ export function AssignmentsPage() {
                                     initialState={{
                                         pagination: { paginationModel: { pageSize: 5, page: 0 } },
                                     }}
-                                    />
+                                />
                             </Paper>
                         </ThemeProvider>
                     </div>

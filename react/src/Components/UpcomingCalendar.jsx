@@ -52,14 +52,14 @@ export default function UpcomingCalendar() {
     }, []);
 
     return (
-        <div className="upcoming-calendar">
-            <div style={{ height: "80vh", padding: "20px" }}>
+        <>
+            <div style={{ height: "70vh", width: "45em", paddingTop: "0.5em", paddingRight: "1em" }}>
                 <Calendar
                     localizer={localizer}
                     events={events}
                     startAccessor="start"
                     endAccessor="end"
-                    style={{ height: "100%" }}
+                    style={{ height: "100%", background: "white", borderRadius: "1rem", boxShadow: "0 2px 8px rgba(0,0,0,0.07)" }}
                     onSelectEvent={(event) => setSelectedEvent(event)}
                     eventPropGetter={(event) => ({
                         style: {
@@ -68,6 +68,8 @@ export default function UpcomingCalendar() {
                             color: "white",
                             border: "none",
                             padding: "2px 6px",
+                            fontWeight: 500,
+                            fontFamily: "Inter, sans-serif",
                         },
                     })}
                 />
@@ -93,7 +95,6 @@ export default function UpcomingCalendar() {
                     <EventViewer event={selectedEvent} />
                 )}
             </div>
-
-        </div>
+        </>
     );
 }

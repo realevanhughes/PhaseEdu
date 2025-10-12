@@ -66,7 +66,7 @@ export default function Header() {
                         />
                     </button>
 
-                    {isDropdownVisible && <StudentOverviewDropdown />}
+                    {isDropdownVisible && <StudentOverviewDropdown accountData={accountData} />}
                 </div>
                 
                 <p id="account-type-text">| {accountData.firstname} {accountData.lastname} ({accountData.role})</p>
