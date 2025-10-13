@@ -1,5 +1,5 @@
 {
-  "name": "EduCore",
+  "name": "PhaseEdu",
   "version": "0.0.1",
   "description": "A powerful open-source student management platform.",
   "keywords": [
@@ -7,7 +7,7 @@
   ],
   "main": "server.js",
   "scripts": {
-    "educore": "node server.js",
+    "phase-edu": "node server.js",
     "build": "npm install && cd react && npm install && npm run build",
     "cleanup": "rm -rf ./logs/* && rm -rf ./objects/*",
     "deepclean": "rm -rf ./logs/* && rm -rf ./objects/* && rm -rf ./node_modules/* && rm -rf ./react/node_modules/*"
@@ -24,7 +24,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/realevanhughes/EduCore.git"
+    "url": "git+https://github.com/realevanhughes/PhaseEdu.git"
   },
   "private": true,
   "dependencies": {

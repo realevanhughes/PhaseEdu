@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import StudentOverviewDropdown from "./StudentOverview"
+import SineWaveHover from "./SineWaveHover"
 import { Settings, Notifications } from '@mui/icons-material';
 import fallback from "../assets/fallback.png";
+import logo from "../assets/waves800.png";
 
 export default function Header() {
     const [accountData, setAccountData] = useState({"username":"Loading","firstname":"Loading","lastname":"Loading","email":"Loading","role":"student","profile_icon":"EkT1S2Ss2z2iTXHMPHYH","pronouns":"They/Them","result":"success"});
@@ -38,9 +40,37 @@ export default function Header() {
 
     return (
         <header className="header">
-            <a href="#"><h1>EduCore</h1></a>
+            <div style={{ display: "flex", alignItems: "center" }}>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", marginRight: "0.5em" }}>
+                    <h1
+                        style={{
+                            margin: 0,
+                            fontFamily: "'Source Code Pro', monospace",
+                            fontWeight: 700,
+                            fontSize: "1.5em",
+                            color: "inherit",
+                            lineHeight: "1em",
+                        }}
+                    >
+                        Phase
+                    </h1>
+                    <span
+                        style={{
+                            fontFamily: "'Source Code Pro', monospace",
+                            fontSize: "0.65em",
+                            color: "inherit",
+                            opacity: 0.8,
+                        }}
+                    >
+                      education
+                    </span>
+                </div>
+                <SineWaveHover />
+            </div>
+
+
             <section className="header-btns">
-                <button type="button" className="rlv-btn-head">
+            <button type="button" className="rlv-btn-head">
                     <Notifications style={{width:'1.5em', height:'1.5em'}} />
                 </button>
                 <button type="button" className="rlv-btn-head">

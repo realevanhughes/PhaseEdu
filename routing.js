@@ -644,6 +644,17 @@ const page_handlers = {
         }
 
     },
+    favicon: async (req, res) => {
+        try {
+            const { ico } = req.params;
+            res.sendFile(path.join(__dirname, "react/src/assets/favicon_io", ico));
+        }
+        catch (err) {
+            logger.error(err);
+            res.status(500).json({ error: "Failed to load favicon" });
+        }
+
+    }
 };
 
 const dev_handlers = {
@@ -829,6 +840,7 @@ const routeMap = {
     '/dash': {type: "page", method: 'get', handler: page_handlers.file("web/html/dash.html"), roles: [], authRequired: true },
     '/login': {type: "login-page", method: 'get', handler: page_handlers.file("web/html/login.html"), roles: [], authRequired: false },
     '/warning': {type: "warning", method: 'get', handler: page_handlers.specialMessage, roles: [], authRequired: true },
+    '/ico/:ico': {type: "login-page", method: 'get', handler: page_handlers.favicon, roles: [], authRequired: false },
 
     '/internal/login': {type: "login", method: 'post', handler: internal_handlers.login, roles: [], authRequired: false },
     '/internal/quick-login': {type: "login", method: 'post', handler: internal_handlers.quick_login, roles: [], authRequired: false },
