@@ -48,6 +48,15 @@ async function give_point(uuid, class_id, assignee_id, value, comments, category
     await db.query("INSERT INTO points (point_id, uuid, class_id, assignee_id, value, comments, category) values (?, ?, ?, ?, ?, ?, ?)", [point_id, uuid, class_id, assignee_id, value, comments, category])
 }
 
+async function view(uuid) {
+    const [rows] = await db.query("SELECT * FROM points WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows : null;
+}
+
+async function cat_id_info(cat_id){
+    const [rows] = await db.query("SELECT * FROM point_cat WHERE pts_cat_id = ?", [cat_id]);
+    return rows.length > 0 ? rows[0] : null;
+}
 
 module.exports = {
     total,
@@ -55,4 +64,6 @@ module.exports = {
     total_by_cat,
     give_point,
     total_by_polarity,
+    view,
+    cat_id_info
 };

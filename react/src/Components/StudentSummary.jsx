@@ -7,6 +7,7 @@ import {
 
 import { Doughnut } from 'react-chartjs-2';
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 ChartJS.register(
     ArcElement,
@@ -57,9 +58,8 @@ export default function StudentSummary() {
         fetch('/api/points/polarity')
             .then(response => response.json())
             .then(json => {
-                console.log(json);
                 setBehaviourData({
-                    labels: ["Good", "Bad"],
+                    labels: ["Positive", "Negative"],
                     datasets: [{
                         data: json.contents,
                         backgroundColor: [
@@ -74,9 +74,8 @@ export default function StudentSummary() {
         fetch('/api/points/dict')
             .then(response => response.json())
             .then(json => {
-                console.log(json);
                 setPointData({
-                    labels: json.cat_names,
+                    labels: json.cat_names.map(label => label.length > 4 ? label.slice(0, 3) + '…' : label),
                     datasets: [{
                         data: json.points,
                         backgroundColor: [
@@ -91,9 +90,8 @@ export default function StudentSummary() {
         fetch('/api/presence/count')
             .then(response => response.json())
             .then(json => {
-                console.log(json);
                 setAttendanceData({
-                    labels: json.status_types,
+                    labels: json.status_types.map(label => label.length > 7 ? label.slice(0, 5) + '…' : label),
                     datasets: [{
                         data: json.count,
                         backgroundColor: [
@@ -109,19 +107,42 @@ export default function StudentSummary() {
 
     const behaviourOptions = {
         cutout: '75%',
+        plugins: {
+            legend: {
+                labels: {
+                    boxWidth: 10
+                }
+            }
+        }
     };
+
     const pointOptions = {
         cutout: '75%',
+        plugins: {
+            legend: {
+                labels: {
+                    boxWidth: 10
+                }
+            }
+        }
     };
+
     const attendanceOptions = {
         cutout: '75%',
+        plugins: {
+            legend: {
+                labels: {
+                    boxWidth: 10
+                }
+            }
+        }
     };
 
     return (
         <section className="student-summary">
-            <a href="#" className="h2"><h2>Behaviour</h2></a>
-            <a href="#" className="h2"><h2>Points</h2></a>
-            <a href="#" className="h2"><h2>Attendance</h2></a>
+            <Link to="/Behaviour" className="h2"><h2>Behaviour</h2></Link>
+            <Link to="/Points" className="h2"><h2>Points</h2></Link>
+            <Link to="/Attendance" className="h2"><h2>Attendance</h2></Link>
 
             <div className="donught-chart" id="behaviour-chart" style={{ width: "200px", height: "200px" }}>
                 <Doughnut

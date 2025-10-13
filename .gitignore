@@ -1,0 +1,8 @@
+/node_modules/**
+/package-lock.json
+/react/node_modules/**
+/.idea/**
+/ca-certificate.crt
+/.env
+.env
+ca-certificate.crt

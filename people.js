@@ -52,8 +52,18 @@ async function check_uuid_password(uuid, password) {
     }
 }
 
+async function reduced_user_data(uuid) {
+    const [rows] = await db.query("SELECT firstname, lastname, role, color FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows[0] : null;
+}
+
 async function general_user_data(uuid){
-    const [rows] = await db.query("SELECT username, firstname, lastname, email, role, profile_icon, pronouns FROM people WHERE uuid = ?", [uuid]);
+    const [rows] = await db.query("SELECT username, firstname, lastname, email, role, profile_icon, pronouns, color FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows[0] : null;
+}
+
+async function extended_user_data(uuid){
+    const [rows] = await db.query("SELECT username, firstname, lastname, email, role, profile_icon, pronouns, date_joined, school_year, special_action, color FROM people WHERE uuid = ?", [uuid]);
     return rows.length > 0 ? rows[0] : null;
 }
 
@@ -102,6 +112,30 @@ async function get_profile_oid(uuid) {
     return rows.length > 0 ? rows[0].profile_icon : null;
 }
 
+async function groupings(uuid) {
+    const [rows] = await db.query("SELECT org, role, school_year FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows[0] : null;
+}
+
+async function uuid_to_name(uuid) {
+    const [rows] = await db.query("SELECT firstname, lastname FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? (rows[0].firstname + " " + rows[0].lastname) : null;
+}
+
+async function pick_color(uuid, color) {
+    let response = await db.query("UPDATE people SET color = ? WHERE uuid = ?", [color, uuid]);
+    return response.affectedRows > 0 ? {"result": "success"} : {"result": "failed"};
+}
+
+async function get_color(uuid) {
+    const [rows] = await db.query("SELECT color FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows[0].color : null;
+}
+
+async function get_role(uuid) {
+    const [rows] = await db.query("SELECT role FROM people WHERE uuid = ?", [uuid]);
+    return rows.length > 0 ? rows[0] : null;
+}
 
 module.exports = {
     username_to_uuid,
@@ -118,4 +152,11 @@ module.exports = {
     list_org,
     get_profile_oid,
     role,
+    groupings,
+    uuid_to_name,
+    extended_user_data,
+    pick_color,
+    get_color,
+    reduced_user_data,
+    get_role
 };
