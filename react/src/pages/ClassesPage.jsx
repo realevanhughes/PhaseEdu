@@ -61,10 +61,8 @@ export function ClassesPage() {
             disableColumnMenu: true,
             renderCell: (params) => (
                 <IconButton
-                    component="a"
                     href={`/app#/Classes/${params.row.class_id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    component="a"
                 >
                     <ChevronRight />
                 </IconButton>
@@ -103,7 +101,7 @@ export function ClassesPage() {
                                     sx={{
                                         border: 0,
                                         '& .MuiDataGrid-footerContainer': {
-                                            paddingBottom: '1em', // Adjust as needed
+                                            paddingBottom: '1em',
                                         }
                                     }}
                                     className="tbl-txt"

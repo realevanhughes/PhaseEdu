@@ -427,6 +427,7 @@ h2 {
 }
 
 .md-div {
+    background: #fff;
     border: 2px solid rgba(0, 0, 0, 0.1);
     width: calc(100vw - 18em);
 }
@@ -516,4 +517,9 @@ h2 {
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
     margin-bottom: 2em;
     margin-right: 2em;
+}
+
+.nav-btn.active {
+    font-weight: bold;
+    color: #007bff;
 }

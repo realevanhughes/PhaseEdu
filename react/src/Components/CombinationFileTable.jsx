@@ -68,7 +68,7 @@ export default function CombinationFileTable({ combinedRows, handleFileChange })
     });
     return (
         <div>
-            <Stack direction="row" spacing={2} style={{ paddingBottom: "1em" }}>
+            <Stack direction="row" spacing={2} style={{ paddingBottom: "0.5em" }}>
                 <div>
                     <input
                         accept="*"

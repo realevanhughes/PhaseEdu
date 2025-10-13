@@ -166,7 +166,7 @@ const api_handlers = {
             }
 
             if (!req.access) {
-                let access = '["'+owner+'"]'
+                let access = '["'+req.session.uuid+'"]'
             }
             else{
                 let access = req.access.toString();

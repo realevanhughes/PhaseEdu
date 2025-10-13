@@ -4,13 +4,13 @@ import UserTooltip from "../Components/UserTooltip.jsx";
 import AssignmentDueIndicator from "../Components/AssignmentDueIndicator.jsx";
 import CombinationFileTable from "../Components/CombinationFileTable.jsx";
 import MarkdownPreview from '@uiw/react-markdown-preview';
-import {CircularProgress, IconButton, Snackbar, styled} from "@mui/material";
+import {CircularProgress, createTheme, IconButton, Snackbar, styled, ThemeProvider} from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
-import {Send, DeleteForever, Save} from '@mui/icons-material';
+import {Send, DeleteForever, Save, ChevronRight, Download} from '@mui/icons-material';
 
 export function AssignmentPage() {
     const { hw_id } = useParams();
@@ -275,7 +275,7 @@ export function AssignmentPage() {
                         </UserTooltip>
                     </div>
                     <div style={{ paddingTop: "0.5rem", paddingBottom: "0.5rem" }}>
-                        <Stack direction="row" spacing={2}>
+                        <Stack direction="row" spacing={2} style={{ paddingBottom: "0.5em" }}>
                             <Button variant="contained" endIcon={<Send />} onClick={() => handleNotifClick("send")}>
                                 Hand in
                             </Button>
@@ -302,7 +302,7 @@ export function AssignmentPage() {
                             <AssignmentDueIndicator assignmentInfo={assignmentInfo} />
                         </div>
                     </div>
-                    <h1>Task:</h1>
+                    <h1 style={{ paddingBottom: "0.5em" }}>Task:</h1>
                     <div className="md-div" style={{ padding: 16 }}>
                         <MarkdownPreview source={markdown} wrapperElement={{ "data-color-mode": "light" }} />
                     </div>

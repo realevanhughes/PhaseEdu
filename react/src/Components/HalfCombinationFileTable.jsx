@@ -10,11 +10,11 @@ import React from "react";
 export default function HalfCombinationFileTable({ combinedRows, handleFileChange }) {
     const columns = [
         { field: 'name', headerName: 'Name', width: 200 },
-        { field: 'file_extension', headerName: 'Extension', width: 80 },
+        { field: 'file_extension', headerName: 'Extension', width: 150 },
         {
             field: "open",
             headerName: "Open",
-            width: 80,
+            width: 120,
             sortable: false,
             filterable: false,
             disableColumnMenu: true,
@@ -32,7 +32,7 @@ export default function HalfCombinationFileTable({ combinedRows, handleFileChang
         {
             field: "download",
             headerName: "Download",
-            width: 80,
+            width: 120,
             sortable: false,
             filterable: false,
             disableColumnMenu: true,

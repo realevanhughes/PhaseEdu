@@ -178,7 +178,6 @@ export function AssignmentsPage() {
         );
     }
 
-    // Student View
     if (myRole === "student") {
         console.log("Using student page")
         return (
@@ -216,7 +215,6 @@ export function AssignmentsPage() {
         );
     }
 
-    // Teacher View
     if (myRole === "teacher" || myRole === "dev" || myRole === "admin") {
         console.log("Using teacher page", assignmentInfo);
         return (
@@ -254,14 +252,12 @@ export function AssignmentsPage() {
                                     checkboxSelection
                                     sx={{ border: 0 }}
                                     className="tbl-txt"
-                                    pageSizeOptions={[5, 10]}
                                     onRowSelectionModelChange={(newSelection) => {
                                         console.log("Selected IDs:", newSelection)
                                         setSelectedRows(newSelection.ids);
                                     }}
-                                    initialState={{
-                                        pagination: { paginationModel: { pageSize: 5, page: 0 } },
-                                    }}
+                                    initialState={{ pagination: { paginationModel } }}
+                                    pageSizeOptions={[5, 10]}
                                 />
                             </Paper>
                         </ThemeProvider>

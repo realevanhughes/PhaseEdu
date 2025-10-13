@@ -40,6 +40,17 @@ export default function CreateHomework() {
         return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
     };
 
+    function formatOids(oids) {
+        if (!Array.isArray(oids)) {
+            try {
+                oids = JSON.parse(oids);
+            } catch {
+                return "[]";
+            }
+        }
+        return encodeURIComponent(JSON.stringify(oids));
+    }
+
     useEffect(() => {
         fetch("/api/classes/list")
             .then((res) => res.json())
@@ -96,6 +107,9 @@ export default function CreateHomework() {
 
             if (data.oid) {
                 let pre_existing_arr = formData.linked_files
+                if (!pre_existing_arr) {
+                    pre_existing_arr = [];
+                }
                 pre_existing_arr.push(data.oid)
                 setFormData((prev) => ({ ...prev, linked_files: pre_existing_arr }));
                 console.log(data.oid);
@@ -152,7 +166,7 @@ export default function CreateHomework() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("sending HW");
+        console.log("sending HW", { ...formData, md: mdOid });
 
         const mdOid = await uploadMD();
 
@@ -197,7 +211,7 @@ export default function CreateHomework() {
             <div className="page-layout">
                 <main className="main-content">
                     <Paper sx={{ p: 3, margin: "auto" }} className="set-hw-div">
-                        <h1>Create New Homework</h1>
+                        <h1 style={{ paddingBottom: "0.5em" }}>Create New Homework</h1>
                         <form onSubmit={handleSubmit}>
                             <Stack direction="row" spacing={3} alignItems="flex-start">
                                 <Box sx={{ flex: 1 }}>

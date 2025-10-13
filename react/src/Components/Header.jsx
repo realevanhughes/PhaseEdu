@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import StudentOverviewDropdown from "./StudentOverview"
-
-import notificationIcon from "../assets/notification-icon.png";
-import settingsIcon from "../assets/settings-icon.png";
+import { Settings, Notifications } from '@mui/icons-material';
 import fallback from "../assets/fallback.png";
 
 export default function Header() {
@@ -43,14 +41,10 @@ export default function Header() {
             <a href="#"><h1>EduCore</h1></a>
             <section className="header-btns">
                 <button type="button" className="rlv-btn-head">
-                    <img
-                        id="notification-btn"
-                        src={notificationIcon}
-                        alt="Notifications button"
-                    />
+                    <Notifications style={{width:'1.5em', height:'1.5em'}} />
                 </button>
                 <button type="button" className="rlv-btn-head">
-                    <img id="settings-btn" src={settingsIcon} alt="Settings button" />
+                    <Settings style={{width:'1.5em', height:'1.5em'}}/>
                 </button>
 
                 <div
