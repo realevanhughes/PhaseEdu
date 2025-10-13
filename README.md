@@ -21,6 +21,11 @@ Multi organisation support was built in from the beginning which makes it ideal 
 ## Interface design
 We primarily tried to build using Google's material icons and MUI for improved user experience and familiarity.
 As mentioned above, markdown is a primary goal of ours to ensure that teachers have the most customizability when it comes to setting homework and assignments.
+<img width="1914" height="916" alt="image" src="https://github.com/user-attachments/assets/8e303aad-0dbd-402d-9d0f-d9ee2f0db79a" />
+<img width="1914" height="916" alt="image" src="https://github.com/user-attachments/assets/9cbad674-10ec-433d-9b85-b1bb38ccc22c" />
+<img width="1618" height="412" alt="image" src="https://github.com/user-attachments/assets/c115c149-f5d9-4f25-a83c-cd105a292c6e" />
+
+
 
 ## How it's built
 We have chosen to use a NodeJS based webserver built on top of a MySQL database for the backend.
