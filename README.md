@@ -1,4 +1,5 @@
 # PhaseEdu
+![Wave Logo](react/src/assets/waves200.png)
 ## Introduction
 This was an open-source project started by Evan Hughes (realevanhughes), Thomas Charleston; it is intended to be a replacement for expensive and poorly designed student management systems.
 It will allow teachers and administrators to assign homework, show timetables, give reward points and more.
