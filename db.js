@@ -18,10 +18,10 @@ const config = {
 };
 
 if (process.env.DBCERT && process.env.DBCERT.trim() !== '') {
-    logger.http({message: `DB is authenticated via cert ${process.env.DBCERT}`});
-    config.ssl = {
-        ca: fs.readFileSync(process.env.DBCERT)
-    };
+    const certPath = path.isAbsolute(process.env.DBCERT)
+        ? process.env.DBCERT
+        : path.resolve(__dirname, process.env.DBCERT);
+    config.ssl = { ca: fs.readFileSync(certPath) };
 }
 const pool = mysql.createPool(config);
 
