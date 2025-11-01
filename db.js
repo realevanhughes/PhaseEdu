@@ -18,6 +18,7 @@ const config = {
 };
 
 if (process.env.DBCERT && process.env.DBCERT.trim() !== '') {
+    logger.http({message: `DB is authenticated via cert ${process.env.DBCERT}`});
     config.ssl = {
         ca: fs.readFileSync(process.env.DBCERT)
     };
