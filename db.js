@@ -6,35 +6,23 @@ const path = require("path");
 const logger = baseLogger.child({label: path.basename(__filename)});
 
 
-let pool;
+const config = {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+};
 
 if (process.env.DBCERT && process.env.DBCERT.trim() !== '') {
-    pool = mysql.createPool({
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        ssl: {
-            ca: fs.readFileSync(__dirname + '/ca-certificate.crt')
-        },
-        waitForConnections: true,
-        connectionLimit: 10,
-        queueLimit: 0
-    });
-} else {
-    pool = mysql.createPool({
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        waitForConnections: true,
-        connectionLimit: 10,
-        queueLimit: 0
-    });
+    config.ssl = {
+        ca: fs.readFileSync(process.env.DBCERT)
+    };
 }
-
+const pool = mysql.createPool(config);
 
 
 const promisePool = pool.promise();
