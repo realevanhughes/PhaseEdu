@@ -18,6 +18,9 @@ const baseLogger = require('./logger');
 const people = require('./people');
 const routing = require('./routing');
 
+require('dotenv').config({ override: false });
+
+
 // Logger setup with component script
 const logger = baseLogger.child({label: path.basename(__filename)});
 
