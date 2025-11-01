@@ -7,7 +7,8 @@ const logger = baseLogger.child({label: path.basename(__filename)});
 
 
 let pool;
-if (process.env.DBCERT !== '') {
+
+if (process.env.DBCERT && process.env.DBCERT.trim() !== '') {
     pool = mysql.createPool({
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
@@ -20,9 +21,8 @@ if (process.env.DBCERT !== '') {
         waitForConnections: true,
         connectionLimit: 10,
         queueLimit: 0
-    })
-}
-else {
+    });
+} else {
     pool = mysql.createPool({
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
@@ -32,7 +32,7 @@ else {
         waitForConnections: true,
         connectionLimit: 10,
         queueLimit: 0
-    })
+    });
 }
 
 
