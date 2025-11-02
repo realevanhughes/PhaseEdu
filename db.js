@@ -22,10 +22,6 @@ if (process.env.DBCERT && process.env.DBCERT.trim() !== '') {
         ? process.env.DBCERT
         : path.resolve(__dirname, process.env.DBCERT);
     config.ssl = { ca: fs.readFileSync(certPath) };
-} else {
-    config.ssl = {
-        rejectUnauthorized: true
-    }
 }
 const pool = mysql.createPool(config);
 

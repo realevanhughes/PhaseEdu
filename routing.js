@@ -119,7 +119,8 @@ const api_handlers = {
                 return res.status(401).json({ error: "Unauthorized" });
             }
 
-            const filePath = path.join(__dirname, object_info.location + oid);
+            const filePath = path.join(object_info.location, oid);
+            console.log(filePath);
             const ext = object_info.file_extension.toLowerCase();
 
             // Supported office formats for conversion
@@ -182,7 +183,7 @@ const api_handlers = {
             const access = access_arr.toString();
             const description = `Uploaded file ${originalName}`;
             const type = req.file.mimetype;
-            const location = path.join("objects", "/");
+            const location = process.env.OBJECT_STORE;
 
             const objectInfo = await utils.new_object(
                 baseName,
