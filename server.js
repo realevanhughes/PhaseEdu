@@ -68,6 +68,7 @@ const app = express();
 const PORT = process.env.HOST_PORT;
 app.use(express.static('web/static'));
 app.use(express.json());
+app.set('trust proxy', true);
 app.use(express.urlencoded({ extended: true }));
 
 // Multer in-memory uploads
