@@ -120,7 +120,6 @@ const api_handlers = {
             }
 
             const filePath = path.join(object_info.location, oid);
-            console.log(filePath);
             const ext = object_info.file_extension.toLowerCase();
 
             // Supported office formats for conversion

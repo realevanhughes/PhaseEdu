@@ -3,6 +3,7 @@ const baseLogger = require('./logger');
 const orgs = require('./org');
 const { createCanvas } = require('canvas');
 const path = require('path');
+require('dotenv').config({ override: false });
 const fs = require("fs");
 
 function generate_id(length=10) {
@@ -170,7 +171,7 @@ async function save_generated_image(name, uuid, org) {
     const access = '["*"]'
     const description = `Generated profile avatar for ${name}`;
     const type = "image/png";
-    const location = path.join("objects", "/");
+    const location = process.env.OBJECT_STORE
 
     const objectInfo = await new_object(baseName, extension, owner, org, access, description, type, location);
     const oid = objectInfo.oid;
