@@ -28,10 +28,10 @@ export default function UpcomingCalendar() {
                     end: new Date(event.end),
                     allDay: event.allDay || false,
                     resource: event.resource || {
-                        class: event.class,
-                        location: event.location,
+                        class: event.class_name,
+                        location: event.location_name,
                         color: event.color,
-                        creator_uuid: event.creator_uuid,
+                        creator_uuid: event.creator_name,
                     },
                 }));
                 console.log("form", formatted);

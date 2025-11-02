@@ -11,7 +11,7 @@ import MDEditor from "@uiw/react-md-editor";
 import HalfCombinationFileTable from "../Components/HalfCombinationFileTable.jsx";
 
 export default function CreateHomework() {
-    const [formData, setFormData] = useState({
+    const [userData, setUserData] = useState({
         class_id: "",
         due_date_time: "",
         marked: false,
@@ -21,13 +21,6 @@ export default function CreateHomework() {
         md: "",
         linked_files: []
     });
-
-    const [mdContent, setMdContent] = useState("");
-    const [uploading, setUploading] = useState(false);
-    const [uploadError, setUploadError] = useState("");
-    const [classes, setClasses] = useState([]);
-    const [myRole, setMyRole] = useState("teacher");
-    const [files, setFiles] = useState([]);
 
     const formatDateTime = (date) => {
         const pad = (n) => String(n).padStart(2, "0");
@@ -40,173 +33,38 @@ export default function CreateHomework() {
         return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
     };
 
-    function formatOids(oids) {
-        if (!Array.isArray(oids)) {
-            try {
-                oids = JSON.parse(oids);
-            } catch {
-                return "[]";
-            }
-        }
-        return encodeURIComponent(JSON.stringify(oids));
-    }
 
     useEffect(() => {
-        fetch("/api/classes/list")
+        fetch("/api/people/me/info")
             .then((res) => res.json())
             .then((data) => {
-                if (data.result === "success") setClasses(data.list);
+                if (data.result === "success") setUserData(data);
             })
-            .catch((err) => console.error("Error fetching classes:", err));
-        fetch("/api/myrole")
-            .then((response) => response.json())
-            .then((json) => {
-                setMyRole(json.role);
-                console.log("Your role:", json.role);
-            })
+            .catch((err) => console.error("Error fetching user data:", err));
     }, []);
-
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData({
-            ...formData,
-            [name]: type === "checkbox" ? checked : value
-        });
-    };
-
-    const handleDateChange = (e) => {
-        const dateValue = new Date(e.target.value);
-        if (!isNaN(dateValue)) {
-            setFormData({
-                ...formData,
-                due_date_time: formatDateTime(dateValue)
-            });
-        }
-    };
-
-    const handleFileChange = async (event) => {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        const formData = new FormData();
-        formData.append("file", file);
-
-        try {
-            const response = await fetch("/api/object/upload", {
-                method: "POST",
-                body: formData,
-            });
-
-            if (!response.ok) {
-                throw new Error("Upload failed");
-            }
-
-            const data = await response.json();
-
-            console.log("upload resp", data);
-
-            if (data.oid) {
-                let pre_existing_arr = formData.linked_files
-                if (!pre_existing_arr) {
-                    pre_existing_arr = [];
-                }
-                pre_existing_arr.push(data.oid)
-                setFormData((prev) => ({ ...prev, linked_files: pre_existing_arr }));
-                console.log(data.oid);
-                fetch(`/api/object/bulk/info?oids=${formatOids([data.oid])}`)
-                    .then(response => response.json())
-                    .then(json => {
-                        console.log("uploaded file info", json)
-                        setFiles((prev) => [
-                            ...prev,
-                            ...(json.list || []).map(file => ({ ...file, source: "Teacher" })),
-                        ]);
-                    })
-
-            }
-
-            console.log("Upload complete:", data);
-        } catch (error) {
-            console.error("Error uploading file:", error);
-        }
-
-        event.target.value = "";
-    };
-
-    async function uploadMD() {
-        console.log("sending MD");
-        setUploading(true);
-        setUploadError("");
-
-        try {
-            const blob = new Blob([mdContent], { type: "text/markdown" });
-            const file = new File([blob], "task_description.md", { type: "text/markdown" });
-            const data = new FormData();
-            data.append("file", file);
-
-            const response = await fetch("/api/object/upload", {
-                method: "POST",
-                body: data,
-            });
-
-            if (!response.ok) throw new Error("Upload failed");
-
-            const json = await response.json();
-            setFormData((prev) => ({ ...prev, md: json.oid }));
-            return json.oid;
-        } catch (err) {
-            console.error(err);
-            setUploadError("Error uploading markdown file.");
-            return null;
-        } finally {
-            setUploading(false);
-        }
-    }
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("sending HW", { ...formData, md: mdOid });
-
-        const mdOid = await uploadMD();
-
-        if (!mdOid) {
-            alert("Please upload the markdown first!");
-            return;
-        }
 
         try {
-            const response = await fetch("/api/assignments/new", {
+            const response = await fetch("/api/people/update", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ ...formData, md: mdOid }),
+                body: JSON.stringify({ ...userData}),
             });
 
             if (response.ok) {
-                alert("Homework created successfully!");
+                alert("User updated successfully!");
                 window.history.back();
             } else {
                 const error = await response.text();
-                alert("Failed to create homework: " + error);
+                alert("Failed to update user: " + error);
             }
         } catch (err) {
             console.error(err);
-            alert("An error occurred while creating homework.");
+            alert("An error occurred while modifying user.");
         }
     };
-
-    if (myRole === "student") {
-        return (
-            <div className="page-layout">
-                <main className="main-content">
-                    <div style={{ width: "50em" }}>
-                        <h1 style={{color: "red"}}>You are not permitted to access this. Please go back.</h1>
-                    </div>
-                </main>
-            </div>
-        );
-    }
-    else {
         return (
             <div className="page-layout">
                 <main className="main-content">
@@ -216,34 +74,6 @@ export default function CreateHomework() {
                             <Stack direction="row" spacing={3} alignItems="flex-start">
                                 <Box sx={{ flex: 1 }}>
                                     <Stack spacing={2}>
-                                        <FormControl fullWidth>
-                                            <InputLabel id="class-select-label">Class</InputLabel>
-                                            <Select
-                                                labelId="class-select-label"
-                                                name="class_id"
-                                                value={formData.class_id}
-                                                onChange={handleChange}
-                                                required
-                                                variant="filled"
-                                            >
-                                                {classes.map((cls) => (
-                                                    <MenuItem key={cls.id} value={cls.id}>
-                                                        <span
-                                                            style={{
-                                                                display: "inline-block",
-                                                                width: 12,
-                                                                height: 12,
-                                                                borderRadius: "50%",
-                                                                backgroundColor: cls.color,
-                                                                marginRight: 8,
-                                                            }}
-                                                        />
-                                                        {cls.name}
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
-
                                         <TextField
                                             label="Homework Name"
                                             name="name"
@@ -340,5 +170,4 @@ export default function CreateHomework() {
                 </main>
             </div>
         );
-    }
 }

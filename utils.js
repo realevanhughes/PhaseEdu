@@ -223,6 +223,32 @@ async function change_access(oid, access) {
     }
 }
 
+async function check_perm(role, actionColumn) {
+    const validColumns = [
+        'username_change', 'password_change', 'firstname_change',
+        'lastname_change', 'date_joined_change', 'school_year_change',
+        'profile_icon_change', 'pronouns_change', 'color_change', 'on_behalf'
+    ];
+    if (!validColumns.includes(actionColumn)) {
+        return false;
+    }
+    const sql = `SELECT \`${actionColumn}\` AS allowed FROM perms WHERE role = ? LIMIT 1`;
+    const [rows] = await db.query(sql, [role]);
+
+    if (rows.length === 0) return false;
+    return Boolean(rows[0].allowed);
+}
+
+async function get_all_perms(role) {
+    const [rows] = await db.query('SELECT * FROM perms WHERE role = ? LIMIT 1', [role]);
+    if (rows.length === 0) return [];
+    const row = rows[0];
+    return Object.entries(row)
+        .filter(([key, value]) => key !== 'role' && Boolean(value))
+        .map(([key]) => key);
+}
+
+
 module.exports = {
     generate_id,
     get_unique_id,
@@ -245,5 +271,7 @@ module.exports = {
     get_bulk_file_info,
     getCurrentTimestamp,
     getCurrentDate,
-    change_access
+    change_access,
+    check_perm,
+    get_all_perms
 };
