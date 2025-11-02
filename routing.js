@@ -119,7 +119,7 @@ const api_handlers = {
                 return res.status(401).json({ error: "Unauthorized" });
             }
 
-            const filePath = path.join(__dirname, object_info.location + oid);
+            const filePath = path.join(object_info.location, oid);
             const ext = object_info.file_extension.toLowerCase();
 
             // Supported office formats for conversion
@@ -182,7 +182,7 @@ const api_handlers = {
             const access = access_arr.toString();
             const description = `Uploaded file ${originalName}`;
             const type = req.file.mimetype;
-            const location = path.join("objects", "/");
+            const location = process.env.OBJECT_STORE;
 
             const objectInfo = await utils.new_object(
                 baseName,
@@ -208,14 +208,20 @@ const api_handlers = {
         }
     },
     getProfileInfo: async (req, res) => {
-        const { uuid } = req.params;
+        let { uuid } = req.params;
+        if (uuid === "me") {
+            uuid = req.session.uuid;
+        }
         logger.http({message: `API call made to getProfileInfo (SID: ${req.sessionID}) for the user ${uuid}`});
         let user_data = await people.general_user_data(uuid)
         user_data["result"] = "success";
         res.json(user_data);
     },
     getExtendedProfileInfo: async (req, res) => {
-        const { uuid } = req.params;
+        let { uuid } = req.params;
+        if (uuid === "me") {
+            uuid = req.session.uuid;
+        }
         logger.http({message: `API call made to getExtendedProfileInfo (SID: ${req.sessionID}) for the user ${uuid}`});
         let user_data = await people.extended_user_data(uuid)
         user_data["result"] = "success";
@@ -268,7 +274,10 @@ const api_handlers = {
         res.json(result);
     },
     forceResetProfileIcon: async (req, res) => {
-        const { target } = req.params;
+        let { target } = req.params;
+        if (target === "me") {
+            target = req.session.uuid;
+        }
         logger.http({message: `Admin API call made to resetProfileIcon (SID: ${req.sessionID})`});
         const org_id = await people.uuid_org_id(target);
         const result = await utils.reset_profile_image(target, org_id);
@@ -304,7 +313,15 @@ const api_handlers = {
         classes_li.forEach((element) => {
             list.push(element.class_id)
         })
-        const upcoming = await events.getCalendarEvents(list);
+        let upcoming = await events.getCalendarEvents(list);
+        console.log("before", upcoming);
+        for (let item of upcoming) {
+            item.resource.class_name = await classes.get_name(item.resource.class);
+            item.resource.creator_name = await people.uuid_to_name(item.resource.creator_uuid)
+            item.resource.location_name = await utils.room_id_name(item.resource.location);
+            item.resource.creator_color = await people.get_color(item.resource.creator_uuid)
+        }
+        console.log("after", upcoming);
         res.json({"result": "success", "contents": upcoming});
     },
     bulkResetProfileIcon: async (req, res) => {
@@ -515,7 +532,10 @@ const api_handlers = {
         }
     },
     getRole: async (req, res) => {
-        const { uuid } = req.params;
+        let { uuid } = req.params;
+        if (uuid === "me") {
+            uuid = req.session.uuid;
+        }
         logger.http({message: `API call made to getRole (SID: ${req.sessionID}) for the user ${uuid}`});
         let user_data = await people.get_role(uuid)
         user_data["result"] = "success";
@@ -598,6 +618,7 @@ const api_handlers = {
     changeAccess: async (req, res) => {
         const { oid } = req.params;
         const { access_level } = req.body;
+        logger.http({message: `API call made to changeAccess (SID: ${req.sessionID}) for the object ${oid}`});
         let object_info = await utils.object_info(oid);
         if (!object_info){
             res.status(500).json({ error: "No such object" });
@@ -608,7 +629,18 @@ const api_handlers = {
                 res.json(result);
             }
         }
-
+    },
+    changeUserDetails: async (req, res) => {
+        logger.http({message: `API call made to changeUserDetails (SID: ${req.sessionID}) for the user ${req.session.uuid}`});
+        const { update } = req.body;
+        if (!update) {
+            res.status(400).json({ error: "No such person" });
+        }
+        if (update === {}) {
+            res.status(400).json({ error: "No updates to apply" });
+        }
+        const result = await people.update_user_details(req.session.uuid, update);
+        res.json(result);
     }
 };
 
@@ -817,6 +849,7 @@ const routeMap = {
     '/api/assignments/submissions/item/:hw/delete': {type: "api", method: 'get', handler: api_handlers.rmSubmission, roles: ['dev', 'student'], authRequired: true  },
     '/api/assignments/new': {type: "api", method: 'post', handler: api_handlers.newHomework, roles: ['teacher', 'dev', 'admin'], authRequired: true  },
     '/api/assignments/:hw/delete': {type: "api", method: 'get', handler: api_handlers.rmHomework, roles: ['teacher', 'dev', 'admin'], authRequired: true  },
+    '/api/people/update': {type: "api", method: 'post', handler: api_handlers.changeUserDetails, roles: [], authRequired: true  },
 
     '/api/object/item/:oid/info': {type: "api", method: 'get', handler: api_handlers.getObjectInfo, roles: [], authRequired: true  },
     '/api/object/item/:oid/access': {type: "api", method: 'post', handler: api_handlers.changeAccess, roles: [], authRequired: true  },

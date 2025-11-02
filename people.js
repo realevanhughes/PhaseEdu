@@ -103,7 +103,7 @@ async function list() {
 }
 
 async function list_org(org_id) {
-    const [rows] = await db.query("SELECT * FROM people WHERE org_id = ?", [org_id]);
+    const [rows] = await db.query("SELECT * FROM people WHERE org = ?", [org_id]);
     return rows;
 }
 
@@ -137,6 +137,22 @@ async function get_role(uuid) {
     return rows.length > 0 ? rows[0] : null;
 }
 
+async function update_user_details(uuid, updates) {
+    const entries = Object.entries(updates).filter(
+        ([, value]) => value !== null && value !== undefined
+    );
+    if (entries.length === 0) {
+        return null;
+    }
+    const setClauses = entries.map(([key]) => `\`${key}\` = ?`).join(', ');
+    const values = entries.map(([, value]) => value);
+    values.push(uuid);
+
+    const sql = `UPDATE people SET ${setClauses} WHERE uuid = ?`;
+    const [rows] = await db.query(sql, values);
+    return rows.affectedRows > 0 ? {"result": "success"} : {"result": "failed"};
+}
+
 module.exports = {
     username_to_uuid,
     uuid_to_username,
@@ -158,5 +174,6 @@ module.exports = {
     pick_color,
     get_color,
     reduced_user_data,
-    get_role
+    get_role,
+     update_user_details,
 };

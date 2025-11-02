@@ -18,6 +18,9 @@ const baseLogger = require('./logger');
 const people = require('./people');
 const routing = require('./routing');
 
+require('dotenv').config({ override: false });
+
+
 // Logger setup with component script
 const logger = baseLogger.child({label: path.basename(__filename)});
 
@@ -65,6 +68,7 @@ const app = express();
 const PORT = process.env.HOST_PORT;
 app.use(express.static('web/static'));
 app.use(express.json());
+app.set('trust proxy', true);
 app.use(express.urlencoded({ extended: true }));
 
 // Multer in-memory uploads

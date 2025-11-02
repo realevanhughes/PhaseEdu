@@ -70,12 +70,33 @@ export default function Header() {
 
 
             <section className="header-btns">
-            <button type="button" className="rlv-btn-head">
-                    <Notifications style={{width:'1.5em', height:'1.5em'}} />
-                </button>
-                <button type="button" className="rlv-btn-head">
-                    <Settings style={{width:'1.5em', height:'1.5em'}}/>
-                </button>
+                    <button type="button" className="rlv-btn-head transition-transform duration-200 hover:scale-110 wiggle">
+                        <Notifications style={{ width: '1.5em', height: '1.5em' }} />
+                    </button>
+
+                    <button type="button" className="rlv-btn-head transition-transform duration-200 hover:scale-110 rotate-hover">
+                        <Settings style={{ width: '1.5em', height: '1.5em' }} />
+                    </button>
+
+                    <style jsx>{`
+                        .wiggle:hover {
+                          animation: wiggle 0.4s ease-in-out;
+                        }
+                        @keyframes wiggle {
+                          0%, 100% { transform: rotate(0deg); }
+                          25% { transform: rotate(-10deg); }
+                          50% { transform: rotate(10deg); }
+                          75% { transform: rotate(-6deg); }
+                        }
+                        .rotate-hover {
+                            transition: transform 0.3s ease;
+                        }
+
+                        .rotate-hover:hover {
+                            transform: rotate(30deg);
+                        }
+                      `}
+                    </style>
 
                 <div
                     className="menu"

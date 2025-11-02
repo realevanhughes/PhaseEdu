@@ -3,6 +3,7 @@ const baseLogger = require('./logger');
 const orgs = require('./org');
 const { createCanvas } = require('canvas');
 const path = require('path');
+require('dotenv').config({ override: false });
 const fs = require("fs");
 
 function generate_id(length=10) {
@@ -170,11 +171,11 @@ async function save_generated_image(name, uuid, org) {
     const access = '["*"]'
     const description = `Generated profile avatar for ${name}`;
     const type = "image/png";
-    const location = path.join("objects", "/");
+    const location = process.env.OBJECT_STORE
 
     const objectInfo = await new_object(baseName, extension, owner, org, access, description, type, location);
     const oid = objectInfo.oid;
-    const filePath = path.join(__dirname, "objects", oid);
+    const filePath = path.join(process.env.OBJECT_STORE, oid);
 
     fs.writeFileSync(filePath, buffer);
 
@@ -197,7 +198,7 @@ async function reset_profile_image(uuid, org) {
     if (old_pfp_data.owner === "0000000000"){
         return {"result": "success", "message": "had to generate profile icon", "object": result2};
     }
-    fs.rmSync(path.join(__dirname, old_pfp_data.location, old_pfp));
+    fs.rmSync(path.join(process.env.OBJECT_STORE, old_pfp));
     await delete_object(old_pfp);
     return {"result": "success", "message": "reset to default", "object": result2};
 }
@@ -223,6 +224,32 @@ async function change_access(oid, access) {
     }
 }
 
+async function check_perm(role, actionColumn) {
+    const validColumns = [
+        'username_change', 'password_change', 'firstname_change',
+        'lastname_change', 'date_joined_change', 'school_year_change',
+        'profile_icon_change', 'pronouns_change', 'color_change', 'on_behalf'
+    ];
+    if (!validColumns.includes(actionColumn)) {
+        return false;
+    }
+    const sql = `SELECT \`${actionColumn}\` AS allowed FROM perms WHERE role = ? LIMIT 1`;
+    const [rows] = await db.query(sql, [role]);
+
+    if (rows.length === 0) return false;
+    return Boolean(rows[0].allowed);
+}
+
+async function get_all_perms(role) {
+    const [rows] = await db.query('SELECT * FROM perms WHERE role = ? LIMIT 1', [role]);
+    if (rows.length === 0) return [];
+    const row = rows[0];
+    return Object.entries(row)
+        .filter(([key, value]) => key !== 'role' && Boolean(value))
+        .map(([key]) => key);
+}
+
+
 module.exports = {
     generate_id,
     get_unique_id,
@@ -245,5 +272,7 @@ module.exports = {
     get_bulk_file_info,
     getCurrentTimestamp,
     getCurrentDate,
-    change_access
+    change_access,
+    check_perm,
+    get_all_perms
 };
