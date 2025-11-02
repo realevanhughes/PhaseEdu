@@ -175,7 +175,7 @@ async function save_generated_image(name, uuid, org) {
 
     const objectInfo = await new_object(baseName, extension, owner, org, access, description, type, location);
     const oid = objectInfo.oid;
-    const filePath = path.join(__dirname, "objects", oid);
+    const filePath = path.join(process.env.OBJECT_STORE, oid);
 
     fs.writeFileSync(filePath, buffer);
 
@@ -198,7 +198,7 @@ async function reset_profile_image(uuid, org) {
     if (old_pfp_data.owner === "0000000000"){
         return {"result": "success", "message": "had to generate profile icon", "object": result2};
     }
-    fs.rmSync(path.join(__dirname, old_pfp_data.location, old_pfp));
+    fs.rmSync(path.join(process.env.OBJECT_STORE, old_pfp));
     await delete_object(old_pfp);
     return {"result": "success", "message": "reset to default", "object": result2};
 }
