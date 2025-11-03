@@ -7,13 +7,13 @@ import logo from "../assets/waves800.png";
 
 export default function Header() {
     const [accountData, setAccountData] = useState({"username":"Loading","firstname":"Loading","lastname":"Loading","email":"Loading","role":"student","profile_icon":"EkT1S2Ss2z2iTXHMPHYH","pronouns":"They/Them","result":"success"});
-
+    const [uuid, setUUID] = useState("0000000000");
     useEffect(() => {
         fetch("/api/whoami")
             .then((res) => res.json())
             .then((json) => {
-                const uuid = json.uuid;
-                return fetch(`/api/people/${uuid}/about`);
+                setUUID(json.uuid);
+                return fetch(`/api/people/${json.uuid}/about`);
             })
             .then((res) => res.json())
             .then((json) => {
@@ -111,7 +111,7 @@ export default function Header() {
                         />
                     </button>
 
-                    {isDropdownVisible && <StudentOverviewDropdown accountData={accountData} />}
+                    {isDropdownVisible && <StudentOverviewDropdown accountData={accountData} uuid={uuid} />}
                 </div>
                 
                 <p id="account-type-text">| {accountData.firstname} {accountData.lastname} ({accountData.role})</p>

@@ -703,6 +703,13 @@ const dev_handlers = {
         else {
             res.json({"result": "failed", "message": "This is not a development server so server details are hidden."});
         }
+    },
+    newAuthToken: async (req, res) => {
+        const now = new Date();
+        const oneYearFromNow = new Date(now);
+        oneYearFromNow.setFullYear(now.getFullYear() + 1);
+        const response = await utils.new_token("auth", 0, oneYearFromNow, "Generated auth token by "+req.session.uuid, req.session.uuid);
+        res.json(response);
     }
 };
 
@@ -810,6 +817,54 @@ const internal_handlers = {
             res.json({"result": "failed", "message": "This access restriction is final!"});
         }
         return await utils.delete_conditional(req.session.uuid)
+    },
+    authViaToken: async (req, res) => {
+        logger.log({level: 'http', message: `Login requested via token`});
+        const token = req.query.token;
+        if (!token || token.length !== 25) {
+            logger.log({level: 'http', message: `Login failed!`});
+            res.status(401).json({
+                success: false,
+                error: "invalid_credentials",
+                message: "Invalid token!",
+            });
+        }
+        else {
+            const details = await utils.view_token(token)
+            if (details === null) {
+                res.status(401).json({
+                    success: false,
+                    error: "invalid_credentials",
+                    message: "Token is not recognised!",
+                });
+            }
+            if (details.single_use) {
+                if (await utils.delete_token(token).result !== "success") {
+                    res.status(500).send('Internal server error');
+                }
+            }
+            if (details.token_type === "auth") {
+                const uuid = details.uuid;
+                req.session.user = await people.uuid_to_username(uuid);
+                req.session.uuid = uuid;
+                    people.year_group(uuid).then(year_group => {
+                        req.session.year_group = year_group;
+                        people.uuid_org_id(uuid).then(org_id => {
+                            const org = org_id;
+                            req.session.org = org;
+                            logger.log({level: 'http', message: `Token login granted (SID: ${req.sessionID}), sending uuid=${uuid} org=${org}`});
+                            res.redirect('/app');
+                        });
+                    })
+            }
+            else {
+                res.status(401).json({
+                    success: false,
+                    error: "invalid_credentials",
+                    message: "Incorrect token type! Cannot be used for auth.",
+                });
+            }
+        }
     }
 };
 
@@ -863,16 +918,20 @@ const routeMap = {
     '/api/quick-login': {type: "login", method: 'post', handler: internal_handlers.quick_login, roles: [], authRequired: false },
     '/api/logout': {type: "internal", method: 'get', handler: internal_handlers.logout, roles: ['student', 'dev', 'admin', 'teacher']},
     '/api/warning/dismiss': {type: "warning", method: 'post', handler: internal_handlers.dismissWarning, roles: [], authRequired: true },
+    '/api/token/login': {type: "login", method: 'post', handler: internal_handlers.authViaToken, roles: [], authRequired: false },
 
     '/dev/account': {type: "page", method: 'get', handler: dev_handlers.account, roles: ['dev'], authRequired: true  },
     '/dev': {type: "page", method: 'get', handler: page_handlers.file("web/html/dev-panel.html"), roles: ['dev'], authRequired: true  },
     '/api/server/env': {type: "login", method: 'get', handler: dev_handlers.getEnvType, roles: [], authRequired: false  },
-    '/api/server/details': {type: "api", method: 'get', handler: dev_handlers.getEnvDetails, roles: ['dev'], authRequired: false  },
+    '/api/server/details': {type: "api", method: 'get', handler: dev_handlers.getEnvDetails, roles: ['dev'], authRequired: true  },
+    '/dev/token/new/auth': {type: "api", method: 'get', handler: dev_handlers.newAuthToken, roles: ['dev'], authRequired: true  },
+
 
     '/': {type: "page", method: 'get', handler: page_handlers.redirect("/app"), roles: [], authRequired: true },
     '/dash': {type: "page", method: 'get', handler: page_handlers.file("web/html/dash.html"), roles: [], authRequired: true },
     '/login': {type: "login-page", method: 'get', handler: page_handlers.file("web/html/login.html"), roles: [], authRequired: false },
     '/warning': {type: "warning", method: 'get', handler: page_handlers.specialMessage, roles: [], authRequired: true },
+    '/login-via-token': {type: "login-page", method: 'get', handler: internal_handlers.authViaToken, roles: [], authRequired: false },
     '/ico/:ico': {type: "login-page", method: 'get', handler: page_handlers.favicon, roles: [], authRequired: false },
 
     '/internal/login': {type: "login", method: 'post', handler: internal_handlers.login, roles: [], authRequired: false },
