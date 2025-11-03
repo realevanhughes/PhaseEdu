@@ -1,0 +1,15 @@
+name: Restart Portainer stack
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Portainer API to redeploy stack
+        run: |
+          curl -X POST \
+            -H "x-api-key: ${{ secrets.PORTAINER_KEY }}" \
+            "${{ secrets.PORTAINER_URL }}/api/stacks/${{ secrets.STACK_ID }}/git/redeploy"
