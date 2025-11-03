@@ -249,6 +249,21 @@ async function get_all_perms(role) {
         .map(([key]) => key);
 }
 
+async function new_token(type, single_use, expiry, comment, uuid) {
+    let token = await get_unique_id("tokens", "token", 25)
+    await db.query("INSERT INTO tokens (token, token_type, single_use, expiry, comment, uuid) values (?, ?, ?, ?, ?, ?)", [token, type, single_use, expiry, comment, uuid]);
+    return {"result": "success", "message": "New token made", "token": token};
+}
+
+async function view_token(token) {
+    const [rows] = await db.query("SELECT * FROM tokens WHERE token = ? AND expiry > NOW()", [token]);
+    return rows.length > 0 ? rows[0] : null;
+}
+
+async function delete_token(token) {
+    const response = await db.query("DELETE FROM tokens WHERE token = ?", [token]);
+    return response.affectedRows > 0 ? {"result": "success"} : {"result": "failed", "message": "no such token"};
+}
 
 module.exports = {
     generate_id,
@@ -274,5 +289,8 @@ module.exports = {
     getCurrentDate,
     change_access,
     check_perm,
-    get_all_perms
+    get_all_perms,
+    new_token,
+    view_token,
+    delete_token
 };

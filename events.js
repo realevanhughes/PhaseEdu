@@ -8,11 +8,10 @@ const { RRule } = require("rrule");
 const logger = baseLogger.child({label: path.basename(__filename)});
 
 async function upcoming(uuid, days) {
-    let now = new Date();
     let upcoming_events = []
     const all_classes = await classes.id_from_uuid(uuid)
     for (const one_class of all_classes) {
-        const [rows] = await db.query("SELECT * FROM events WHERE class = ?", [one_class]);
+        const [rows] = await db.query("SELECT * FROM events WHERE class = ? AND start_time > NOW()", [one_class]);
         for (const row of rows) {
             if (all_classes.includes(row.class)) {
                 upcoming_events.push(row)
@@ -38,7 +37,7 @@ async function external_upcoming(uuid, days) {
     let upcoming_events = []
     const all_classes = await classes.id_from_uuid(uuid)
     for (const one_class of all_classes) {
-        const [rows] = await db.query("SELECT * FROM events WHERE class = ?", [one_class]);
+        const [rows] = await db.query("SELECT * FROM events WHERE class = ? AND start_time > NOW()", [one_class]);
         for (const row of rows) {
             if (all_classes.includes(row.class)) {
                 const start_date = new Date(row.start_time);
