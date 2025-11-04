@@ -196,7 +196,8 @@ const api_handlers = {
                 location
             );
             const oid = objectInfo.oid;
-            const filePath = path.join(__dirname, "objects", oid);
+            const filePath = path.join(process.env.OBJECT_STORE, oid);
+
             fs.writeFileSync(filePath, req.file.buffer);
 
             logger.http({ message: `New object uploaded (OID: ${oid}, SID: ${req.sessionID})` });
