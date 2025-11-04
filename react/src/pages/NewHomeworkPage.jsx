@@ -210,7 +210,7 @@ export default function CreateHomework() {
         return (
             <div className="page-layout">
                 <main className="main-content">
-                    <Paper sx={{ p: 3, margin: "auto" }} className="set-hw-div">
+                    <Paper sx={{ p: 3, margin: "auto" }} className="form-div">
                         <h1 style={{ paddingBottom: "0.5em" }}>Create New Homework</h1>
                         <form onSubmit={handleSubmit}>
                             <Stack direction="row" spacing={3} alignItems="flex-start">

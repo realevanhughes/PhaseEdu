@@ -14,6 +14,8 @@ import { Layout } from "./Layout.jsx";
 import {AssignmentPage} from "./pages/AssignmentPage.jsx";
 import {Document} from "./pages/DocumentViewer.jsx"
 import CreateHomework from "./pages/NewHomeworkPage.jsx"
+import NewNotePage from "./pages/NewNotePage.jsx"
+import NotePage from "./pages/NotePage.jsx"
 
 function App() {
 
@@ -34,6 +36,8 @@ function App() {
                     <Route path="/Assignments/:hw_id" element={<AssignmentPage />}/>
                     <Route path="/Document/:oid" element={<Document />}/>
                     <Route path="/NewAssignment/" element={<CreateHomework />}/>
+                    <Route path="/NewNote" element={<NewNotePage />}/>
+                    <Route path="/Notes/:note_id" element={<NotePage />}/>
                 </Route>
             </Routes>
         </Router>

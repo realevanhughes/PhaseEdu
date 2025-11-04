@@ -4,10 +4,12 @@ import SineWaveHover from "./SineWaveHover"
 import { Settings, Notifications } from '@mui/icons-material';
 import fallback from "../assets/fallback.png";
 import logo from "../assets/waves800.png";
+import {useNavigate} from "react-router-dom";
 
 export default function Header() {
     const [accountData, setAccountData] = useState({"username":"Loading","firstname":"Loading","lastname":"Loading","email":"Loading","role":"student","profile_icon":"EkT1S2Ss2z2iTXHMPHYH","pronouns":"They/Them","result":"success"});
     const [uuid, setUUID] = useState("0000000000");
+    const navigate = useNavigate();
     useEffect(() => {
         fetch("/api/whoami")
             .then((res) => res.json())
@@ -40,7 +42,7 @@ export default function Header() {
 
     return (
         <header className="header">
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ display: "flex", alignItems: "center" }} onClick={() => navigate("/")}>
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", marginRight: "0.5em" }}>
                     <h1
                         style={{

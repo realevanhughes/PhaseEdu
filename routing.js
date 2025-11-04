@@ -8,6 +8,7 @@ const events = require('./events');
 const classes = require('./classes');
 const utils = require('./utils');
 const assignments = require('./assignments');
+const notes = require('./notes');
 const path = require("path");
 const fs = require("fs");
 const readline = require("readline-sync");
@@ -641,6 +642,32 @@ const api_handlers = {
         }
         const result = await people.update_user_details(req.session.uuid, update);
         res.json(result);
+    },
+    getAllNotes: async (req, res) => {
+        logger.http({message: `API call made to viewAllNotes (SID: ${req.sessionID})`});
+        const li = await notes.view_all(req.session.uuid)
+        return res.json({"result": "success", "notes": li});
+    },
+    newNote: async (req, res) => {
+        logger.http({message: `API call made to newNote (SID: ${req.sessionID})`});
+        let {name, md} = req.body;
+        console.log(name, md);
+        const new_note = await notes.new_note(req.session.uuid, name, md);
+        return res.json(new_note);
+    },
+    getNote: async (req, res) => {
+        const { id } = req.params;
+        if (!id) {
+            return res.status(400).json({ error: "No such ID" });
+        }
+        const note = await notes.view(id)
+        if (!note) {
+            return res.status(400).json({ error: "No such note" });
+        }
+        if (note.owner !== req.session.uuid) {
+            return res.status(401).json({error: 'Unauthorized'});
+        }
+        return res.json({"result": "success", "note": note});
     }
 };
 
@@ -905,6 +932,9 @@ const routeMap = {
     '/api/assignments/new': {type: "api", method: 'post', handler: api_handlers.newHomework, roles: ['teacher', 'dev', 'admin'], authRequired: true  },
     '/api/assignments/:hw/delete': {type: "api", method: 'get', handler: api_handlers.rmHomework, roles: ['teacher', 'dev', 'admin'], authRequired: true  },
     '/api/people/update': {type: "api", method: 'post', handler: api_handlers.changeUserDetails, roles: [], authRequired: true  },
+    '/api/notes/all': {type: "api", method: 'get', handler: api_handlers.getAllNotes, roles: [], authRequired: true  },
+    '/api/notes/new': {type: "api", method: 'post', handler: api_handlers.newNote, roles: [], authRequired: true  },
+    '/api/notes/item/:id': {type: "api", method: 'get', handler: api_handlers.getNote, roles: [], authRequired: true  },
 
     '/api/object/item/:oid/info': {type: "api", method: 'get', handler: api_handlers.getObjectInfo, roles: [], authRequired: true  },
     '/api/object/item/:oid/access': {type: "api", method: 'post', handler: api_handlers.changeAccess, roles: [], authRequired: true  },
